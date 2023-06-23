@@ -13,6 +13,7 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+
 typedef struct s_list
 {
     int var;
@@ -20,6 +21,8 @@ typedef struct s_list
     struct s_list *prev;
     
 } t_list;
+char	*ft_substr(char const *s, unsigned int start, int len);
+int     ft_strlen(const char *str);
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
