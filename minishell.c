@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/06/25 20:33:58 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/06 12:36:34 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	add_elements(struct Node **head, const char *data)
 
 	newnode = (struct Node *)malloc(sizeof(struct Node));
 	// Allocate memory for the string and copy the data
-	newnode->data = (char *)malloc((strlen(data) + 1) * sizeof(char));
+	newnode->data = (char *)malloc((ft_strlen(data) + 1) * sizeof(char));
 	strcpy(newnode->data, data);
 	newnode->next = NULL;
 	if (*head == NULL)
@@ -179,12 +179,13 @@ int	main(void)
 		read = readline("minishell> ");
 		if (!read)
 			exit(0);
-		// add_history(read);
+		add_history(read);
+		
 		if (strcmp(read, "pwd") == 0) 
         	pwd();
 		if (strcmp(read, "cd") == 0) 
         	cd("..");
-		// cd("..");
+			
 		ft_start(read);
 		free(read);
 	}

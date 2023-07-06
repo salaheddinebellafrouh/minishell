@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/06/25 20:32:42 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/06 12:36:18 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <readline/history.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
 typedef struct s_redirection
 {

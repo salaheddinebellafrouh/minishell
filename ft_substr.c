@@ -1,4 +1,3 @@
-// hello world
 #include "minishell.h"
 
 int	ft_strlen(const char *str)
