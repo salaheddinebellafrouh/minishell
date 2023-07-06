@@ -6,12 +6,18 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/06/23 22:47:30 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/06/25 20:32:42 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
+
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 typedef struct s_redirection
 {
@@ -34,10 +40,7 @@ typedef struct s_list
 
 char	*ft_substr(char const *s, unsigned int start, int len);
 int     ft_strlen(const char *str);
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
-#include <unistd.h>
+void	cd(char *path);
+void    pwd();
 
 #endif

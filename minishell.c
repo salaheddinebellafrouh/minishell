@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tst.c                                              :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/06/17 23:51:03 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/06/25 20:33:58 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,12 @@ int	main(void)
 		read = readline("minishell> ");
 		if (!read)
 			exit(0);
-		add_history(read);
+		// add_history(read);
+		if (strcmp(read, "pwd") == 0) 
+        	pwd();
+		if (strcmp(read, "cd") == 0) 
+        	cd("..");
+		// cd("..");
 		ft_start(read);
 		free(read);
 	}
