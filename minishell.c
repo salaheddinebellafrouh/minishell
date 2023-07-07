@@ -6,14 +6,11 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/07 19:36:26 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/07 19:45:27 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 struct			Node
 {
@@ -182,12 +179,7 @@ int	main(void)
 		add_history(read);
 		// ft_start(read);
 		
-		if (strcmp(read, "pwd") == 0) 
-        	my_pwd();
-		if (strcmp(read, "cd") == 0) 
-        	my_cd("..");
-		if (strcmp(read, "exit") == 0)
-        	my_exit(NULL);
+		execute_built_ins(read);
 			
 		free(read);
 	}
