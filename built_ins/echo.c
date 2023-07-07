@@ -6,7 +6,15 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:58:58 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/06/25 19:58:59 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:14:48 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include"../minishell.h"
+
+void	my_echo(char *str, int flag)
+{
+	printf("%s", str);
+	if (flag == 1)
+		printf("\n");
+}

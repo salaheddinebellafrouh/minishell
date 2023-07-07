@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/07 19:45:27 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/07 21:30:20 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,10 +167,13 @@ void	ft_start(char *read)
 	printf("Linked List: ");
 	printList(head);
 }
-int	main(void)
+int	main(int ac, char **av, char **environ)
 {
 	char	*read;
 
+	(void)ac;
+	(void)av;
+	
 	while (1)
 	{
 		read = readline("minishell> ");
@@ -179,7 +182,7 @@ int	main(void)
 		add_history(read);
 		// ft_start(read);
 		
-		execute_built_ins(read);
+		execute_built_ins(read, environ);
 			
 		free(read);
 	}

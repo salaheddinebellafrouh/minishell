@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/07 19:45:11 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/07 21:32:38 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ char	*ft_substr(char const *s, unsigned int start, int len);
 int     ft_strlen(const char *str);
 int	    ft_atoi(char *str);
 // built in ---------------------------------------------------
-void	execute_built_ins(char *read);
+void	execute_built_ins(char *read, char **environ);
 void	my_cd(char *path);
 void    my_pwd();
 void    my_exit(char *exit_arg);
+void	my_echo(char *str, int flag);
+void	my_env(char **environ);
 //-------------------------------------------------------------
 
 #endif

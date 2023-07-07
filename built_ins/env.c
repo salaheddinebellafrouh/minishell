@@ -6,7 +6,18 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:01 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/06/25 19:59:02 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/07 21:32:29 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include"../minishell.h"
+
+void	my_env(char **environ)
+{
+    char **env = environ;
+    while (*env != NULL)
+	{
+        printf("%s\n", *env);
+        env++;
+    }
+}
