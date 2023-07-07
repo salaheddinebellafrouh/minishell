@@ -6,13 +6,13 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:58:54 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/06 12:46:10 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/07 19:12:10 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
 
-void	cd(char *path)
+void	my_cd(char *path)
 {
 	chdir(path);
 }

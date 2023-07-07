@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/06 12:36:34 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/07 19:36:26 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,13 +180,15 @@ int	main(void)
 		if (!read)
 			exit(0);
 		add_history(read);
+		// ft_start(read);
 		
 		if (strcmp(read, "pwd") == 0) 
-        	pwd();
+        	my_pwd();
 		if (strcmp(read, "cd") == 0) 
-        	cd("..");
+        	my_cd("..");
+		if (strcmp(read, "exit") == 0)
+        	my_exit(NULL);
 			
-		ft_start(read);
 		free(read);
 	}
 	return (0);

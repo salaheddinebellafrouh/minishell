@@ -6,13 +6,13 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:08 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/06 12:46:24 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/07 19:12:23 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
 
-void    pwd()
+void    my_pwd()
 {
     char cwd[1024];
     getcwd(cwd, sizeof(cwd));
