@@ -11,8 +11,8 @@ int	ft_strlen(const char *str)
 }
 char	*ft_substr(char const *s, unsigned int start, int len)
 {
-	char *s2;
-	int i;
+	char	*s2;
+	int		i;
 
 	i = 0;
 	if (!s)

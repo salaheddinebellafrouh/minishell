@@ -14,14 +14,14 @@
 
 void	execute_built_ins(char *read, char **environ)
 {
-    if (strcmp(read, "pwd") == 0) 
-        my_pwd();
-	else if (strcmp(read, "cd") == 0) 
-        my_cd("..");
+	if (strcmp(read, "pwd") == 0)
+		my_pwd();
+	else if (strcmp(read, "cd") == 0)
+		my_cd("..");
 	else if (strcmp(read, "exit") == 0)
-        my_exit(NULL);
+		my_exit(NULL);
 	else if (strcmp(read, "echo") == 0)
-        my_echo("8h f nhar", 1);
+		my_echo("8h f nhar", 1);
 	else if (strcmp(read, "env") == 0)
-        my_env(environ);
+		my_env(environ);
 }

@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/08 16:27:24 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/08 17:51:21 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,8 @@ t_list *copy_list(Node *source)
             else
             {
                 char **newArg = (char **)malloc((i + 2) * sizeof(char *));
+                newNode->redirect.redirect = (char **)malloc((i + 2) * sizeof(char *));
+
 				j = 0;
                 while (j <= i) 
 				{
@@ -173,7 +175,6 @@ t_list *copy_list(Node *source)
                 free(newNode->arg);
                 newNode->arg = newArg;
                 newNode->data_size = i + 2;
-                
                 newNode->arg[i] = strdup(source->data);
             }
             
@@ -190,19 +191,30 @@ t_list *copy_list(Node *source)
     
     return target;
 }
-void	print_copy(t_list *head)
-{
-	while (head != NULL)
-	{
-		for (int i = 0; i < head->data_size - 1; i++)
+void print_copy(t_list *list) {
+    while (list != NULL) {
+        
+        printf("Arguments: ");
+        for (int i = 0; list->arg[i] != NULL; i++) 
 		{
-			printf("*%s*\n", head->arg[i]);
-		}
-		printf("---------------\n");
-		head = head->next;
-	}
-	printf("\n");
+			if(list->arg[i])
+            printf("%s ", list->arg[i]);
+        }
+        printf("\n");
+        
+        // printf("Redirections: ");
+        // for (int i = 0; i < list->redirect.redirect_size; i++) 
+		// {
+		// 	if(list->redirect.redirect[i])
+        //     printf("%s ", list->redirect.redirect[i]);
+        // }
+        printf("-------PIPE-------\n");
+      
+        
+        list = list->next;
+    }
 }
+
 
 void	ft_start(char *read)
 {

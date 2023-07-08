@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/08 16:25:26 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/08 17:40:32 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 typedef struct s_redirection
 {
+    char **redirect;
+    int redirect_size;
     char **input_file;
     char **output_file;
     char **append_file;
@@ -37,6 +39,7 @@ typedef struct s_list
     struct s_list *next;
     struct s_list *prev;
     int           data_size;
+    char    **red;
 } t_list;
 
 // libft ------------------------------------------------------
