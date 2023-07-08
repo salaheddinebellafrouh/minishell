@@ -6,17 +6,17 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/08 16:15:30 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/08 16:27:24 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-struct			Node
+typedef struct			Node
 {
 	char		*data;
 	struct Node	*next;
-};
+}Node;
 
 void	add_elements(struct Node **head, const char *data)
 {
@@ -124,8 +124,89 @@ int	string_list(char *read, int i, struct Node **head)
 		add_elements(&(*head), ">");
 	return (i);
 }
+t_list *copy_list(Node *source)
+{
+    t_list *target;
+    t_list **targetPtr;
+    t_list *newNode;
+    int		i;
+	int		j;
+    target = NULL;
+    targetPtr = &target;
+    newNode = NULL;
+    i = 0;
+    
+    while (source != NULL)
+    {
+        if (strcmp(source->data, "|") == 0)
+        {
+            if (newNode != NULL)
+            {
+                *targetPtr = newNode;
+                targetPtr = &(newNode->next);
+                newNode = NULL;
+                i = 0;
+            }
+        }
+        else
+        {
+            if (newNode == NULL)
+            {
+                newNode = (t_list *)malloc(sizeof(t_list));
+                newNode->arg = (char **)malloc(2 * sizeof(char *));
+                newNode->arg[0] = strdup(source->data);
+                newNode->arg[1] = NULL;
+                newNode->data_size = 2;
+                newNode->next = NULL;
+            }
+            else
+            {
+                char **newArg = (char **)malloc((i + 2) * sizeof(char *));
+				j = 0;
+                while (j <= i) 
+				{
+                    newArg[j] = newNode->arg[j];
+					j++;
+                }
+                newArg[i + 1] = NULL;
+
+                free(newNode->arg);
+                newNode->arg = newArg;
+                newNode->data_size = i + 2;
+                
+                newNode->arg[i] = strdup(source->data);
+            }
+            
+            i++;
+        }
+        
+        source = source->next;
+    }
+    
+    if (newNode != NULL)
+    {
+        *targetPtr = newNode;
+    }
+    
+    return target;
+}
+void	print_copy(t_list *head)
+{
+	while (head != NULL)
+	{
+		for (int i = 0; i < head->data_size - 1; i++)
+		{
+			printf("*%s*\n", head->arg[i]);
+		}
+		printf("---------------\n");
+		head = head->next;
+	}
+	printf("\n");
+}
+
 void	ft_start(char *read)
 {
+	t_list		*copiedlist;
 	struct Node	*head;
 	char		*cp;
 	int			i;
@@ -138,7 +219,6 @@ void	ft_start(char *read)
 	head = NULL;
 	start = 0;
 	i = 0;
-	
 	check_syntax(read);
 	i = 0;
 	while (read[i])
@@ -163,13 +243,15 @@ void	ft_start(char *read)
 	cp = ft_substr(read, start, i - start);
 	if (cp != '\0' && ft_strlen(cp) != 0)
 		add_elements(&head, cp);
-	printf("Linked List: ");
-	printList(head);
+	copiedlist = copy_list(head);
+	print_copy(copiedlist);
+	// printf("Linked List: ");
+	// printList(head);
 }
-int	main(int ac, char **av, char **environ)
+int	main(int ac, char **av, char **env)
 {
 	char	*read;
-
+	(void)env;
 	(void)ac;
 	(void)av;
 	
@@ -179,9 +261,9 @@ int	main(int ac, char **av, char **environ)
 		if (!read)
 			exit(0);
 		add_history(read);
-		// ft_start(read);
+		ft_start(read);
 		
-		execute_built_ins(read, environ);
+		// execute_built_ins(read, environ);
 			
 		free(read);
 	}

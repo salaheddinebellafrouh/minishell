@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/07 21:32:38 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/08 16:25:26 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_list
     t_redirection redirect;
     struct s_list *next;
     struct s_list *prev;
+    int           data_size;
 } t_list;
 
 // libft ------------------------------------------------------
