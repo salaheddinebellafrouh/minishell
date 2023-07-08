@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/07 21:30:20 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/08 16:15:30 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	add_elements(struct Node **head, const char *data)
 	struct Node	*current;
 
 	newnode = (struct Node *)malloc(sizeof(struct Node));
-	// Allocate memory for the string and copy the data
 	newnode->data = (char *)malloc((ft_strlen(data) + 1) * sizeof(char));
 	strcpy(newnode->data, data);
 	newnode->next = NULL;
