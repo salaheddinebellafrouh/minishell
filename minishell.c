@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/09 16:12:14 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/09 18:36:18 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,185 +122,155 @@ int	string_list(char *read, int i, struct Node **head)
 		add_elements(&(*head), ">");
 	return (i);
 }
-t_list	*copy_list(Node *source)
+t_list *copy_list(Node *source)
 {
-	t_list	*target;
-	t_list	**targetPtr;
-	t_list	*newNode;
-	int		i;
-	int		j;
-	char	**newArg;
-	char	**redirect;
+    t_list *target = NULL;
+    t_list **targetPtr = &target;
+    t_list *newNode = NULL;
+    int i = 0;
+    int j = 0;
+    char **newArg = NULL;
+    char **newRedirect = NULL;
 
-	target = NULL;
-	targetPtr = &target;
-	newNode = NULL;
-	i = 0;
-	j = 0;
-	newArg = NULL;
-	redirect = NULL;
-	while (source != NULL)
-	{
-		if (strcmp(source->data, "|") == 0)
-		{
-			printf("-------------------\n");
-			if (newNode != NULL)
-			{
-				*targetPtr = newNode;
-				targetPtr = &(newNode->next);
-				newNode = NULL;
-				i = 0;
-			}
-		}
-		else
-		{
-			if (newNode == NULL)
-			{
-				if (strcmp(source->data, ">") == 0)
-				{
-					newNode = (t_list *)malloc(sizeof(t_list));
-					newNode->redirect.redirect = (char **)malloc(2
-							* sizeof(char *));
-					newNode->redirect.redirect[0] = strdup(source->data);
-					newNode->redirect.redirect[1] = NULL;
-					newNode->data_size = 2;
-					newNode->next = NULL;
-					printf("Redirect: %s\n", newNode->redirect.redirect[0]);
-				}
-				else
-				{
-					newNode = (t_list *)malloc(sizeof(t_list));
-					newNode->arg = (char **)malloc(2 * sizeof(char *));
-					newNode->arg[0] = strdup(source->data);
-					newNode->arg[1] = NULL;
-					newNode->data_size = 2;
-					newNode->next = NULL;
-					printf("Arg: %s\n", newNode->arg[0]);
-				}
-			}
-			else
-			{
-				if (strcmp(source->data, ">") == 0 || strcmp(source->data,
-						"<") == 0 || strcmp(source->data, "<<") == 0
-					|| strcmp(source->data, ">>") == 0)
-				{
-					redirect = (char **)malloc((i + 2) * sizeof(char *));
-					j = 0;
-					while (j < i)
-					{
-						redirect[j] = newNode->arg[j];
-						j++;
-					}
-					redirect[i] = strdup(source->data);
-					redirect[i + 1] = NULL;
-					free(newNode->arg);
-					newNode->arg = redirect;
-					newNode->data_size = i + 2;
-					printf("Redirect: %s\n", newNode->arg[i]);
-				}
-				else
-				{
-					newArg = (char **)malloc((i + 2) * sizeof(char *));
-					j = 0;
-					while (j < i)
-					{
-						newArg[j] = newNode->arg[j];
-						j++;
-					}
-					newArg[i] = strdup(source->data);
-					newArg[i + 1] = NULL;
-					free(newNode->arg);
-					newNode->arg = newArg;
-					newNode->data_size = i + 2;
-					printf("Arg: %s\n", newNode->arg[i]);
-				}
-			}
-			i++;
-		}
-		source = source->next;
-	}
-	if (newNode != NULL)
-	{
-		*targetPtr = newNode;
-	}
-	return (target);
+    while (source != NULL)
+    {
+        if (strcmp(source->data, "|") == 0)
+        {
+            if (newNode != NULL)
+            {
+                *targetPtr = newNode;
+                targetPtr = &(newNode->next);
+                newNode = NULL;
+                i = 0;
+                j = 0;
+            }
+        }
+        else if (strcmp(source->data, ">") == 0 || strcmp(source->data, "<") == 0 || strcmp(source->data, "<<") == 0 || strcmp(source->data, ">>") == 0)
+        {
+            if (newNode == NULL)
+            {
+                newNode = (t_list *)malloc(sizeof(t_list));
+                newNode->redirect.redirect = (char **)malloc(2 * sizeof(char *));
+                newNode->redirect.redirect[0] = strdup(source->data);
+                newNode->redirect.redirect[1] = NULL;
+                newNode->data_size = 2;
+                newNode->next = NULL;
+            }
+            else
+            {
+                newRedirect = (char **)malloc((i + 2) * sizeof(char *));
+                for (int k = 0; k < i; k++)
+                {
+                    newRedirect[k] = strdup(newNode->redirect.redirect[k]);
+                    free(newNode->redirect.redirect[k]);
+                }
+                newRedirect[i] = strdup(source->data);
+                newRedirect[i + 1] = NULL;
+                free(newNode->redirect.redirect);
+                newNode->redirect.redirect = newRedirect;
+                newNode->data_size = i + 2;
+            }
+            i++;
+        }
+        else
+        {
+            if (newNode == NULL)
+            {
+                newNode = (t_list *)malloc(sizeof(t_list));
+                newNode->arg = (char **)malloc(2 * sizeof(char *));
+                newNode->arg[0] = strdup(source->data);
+                newNode->arg[1] = NULL;
+                newNode->data_size = 2;
+                newNode->next = NULL;
+            }
+            else
+            {
+                newArg = (char **)malloc((j + 2) * sizeof(char *));
+                for (int k = 0; k < j; k++)
+                {
+                    newArg[k] = strdup(newNode->arg[k]);
+                    free(newNode->arg[k]);
+                }
+                newArg[j] = strdup(source->data);
+                newArg[j + 1] = NULL;
+                free(newNode->arg);
+                newNode->arg = newArg;
+                newNode->data_size = j + 2;
+            }
+            j++;
+        }
+
+        source = source->next;
+    }
+
+    if (newNode != NULL)
+    {
+        *targetPtr = newNode;
+    }
+
+    return target;
 }
 
-// void print_copy(t_list* list) {
-//     while (list != NULL) {
-//         printf("Redirect: ");
-//         if (list->redirect.redirect != NULL) {
-//             int i = 0;
-//             while (list->redirect.redirect[i] != NULL) {
-//                 printf("%s ", list->redirect.redirect[i]);
-//                 i++;
-//             }
-//         }
-//         printf("\n");
 
-//         printf("Arg: ");
-//         if (list->arg != NULL) {
+
+
+// void print_copy(t_list *list)
+// {
+//     while (list != NULL)
+//     {
+//         if (list->redirect.redirect != NULL)
+//         {
 //             int i = 0;
-//             while (list->arg[i] != NULL) {
-//                 printf("%s ", list->arg[i]);
+//             while (list->redirect.redirect[i] != NULL)
+//             {
+//                 printf("Redirect*******: %s\n", list->redirect.redirect[i]);
 //                 i++;
 //             }
 //         }
-//         printf("\n");
+//         else if (list->arg != NULL)
+//         {
+//             int j = 0;
+//             while (list->arg[j] != NULL)
+//             {
+//                 printf("Arg*******: %s\n", list->arg[j]);
+//                 j++;
+//             }
+//         }
 
 //         list = list->next;
 //     }
 // }
-void	print_copy(t_list *list)
-{
-	int	i;
-	int	i;
 
-	while (list != NULL)
-	{
-		if (list->redirect.redirect != NULL)
-		{
-			i = 0;
-			while (list->redirect.redirect[i] != NULL)
-			{
-				printf("Redirect: %s\n", list->redirect.redirect[i]);
-				i++;
-			}
-		}
-		else if (list->arg != NULL)
-		{
-			i = 0;
-			while (list->arg[i] != NULL)
-			{
-				printf("Arg: %s\n", list->arg[i]);
-				i++;
-			}
-		}
-		list = list->next;
-	}
+
+void print_copy(t_list *list)
+{
+    while (list != NULL)
+    {
+        if (list->redirect.redirect != NULL)
+        {
+            int i = 0;
+            while (list->redirect.redirect[i] != NULL)
+            {
+                printf("Redirect: %s\n", list->redirect.redirect[i]);
+                i++;
+            }
+        }
+
+        if (list->arg != NULL)
+        {
+            int j = 0;
+            while (list->arg[j] != NULL)
+            {
+                printf("Arg: %s\n", list->arg[j]);
+                j++;
+            }
+        }
+		printf("----------\n");
+
+        list = list->next;
+    }
 }
 
-void	print_copy1(t_list *head)
-{
-	(void)head;
-	// while (head != NULL)
-	// {
-	// for (int i = 0; i < head->data_size - 1; i++)
-	// {
-	// 	if (head->arg[i])
-	// 		printf("*%s*\n", head->arg[i]);
-	// else if (head->redirect.redirect[i])
-	// printf("********\n");
-	// if(head->arg[0])
-	// 	printf("redirection : %s*\n", head->arg[0]);
-	//  if(head->redirect.redirect[1])
-	// 	printf("redirection : %s*\n", head->redirect.redirect[1]);
-	// 	}
-	// 	printf("---------------\n");
-	// 	head = head->next;
-	// }
-	printf("\n");
-}
 
 void	ft_start(char *read)
 {
@@ -342,7 +312,7 @@ void	ft_start(char *read)
 	if (cp != '\0' && ft_strlen(cp) != 0)
 		add_elements(&head, cp);
 	copiedlist = copy_list(head);
-	// print_copy(copiedlist);
+	print_copy(copiedlist);
 	// printf("Linked List: ");
 	// printList(head);
 }
