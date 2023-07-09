@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/08 17:51:21 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/09 16:14:48 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,20 +262,24 @@ void	ft_start(char *read)
 }
 int	main(int ac, char **av, char **env)
 {
-	char	*read;
-	(void)env;
+	char		*read;
+	t_builtins	*builts;
+
 	(void)ac;
 	(void)av;
 	
+	builts = malloc(sizeof(t_builtins));
+	fill_env(env, builts);
+
 	while (1)
 	{
 		read = readline("minishell> ");
 		if (!read)
 			exit(0);
 		add_history(read);
-		ft_start(read);
-		
-		// execute_built_ins(read, environ);
+		// ft_start(read);
+
+		execute_built_ins(read, builts);
 			
 		free(read);
 	}

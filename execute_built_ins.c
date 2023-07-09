@@ -6,13 +6,13 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/07 21:33:49 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/09 16:14:06 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_built_ins(char *read, char **environ)
+void	execute_built_ins(char *read, t_builtins *builts)
 {
 	if (strcmp(read, "pwd") == 0)
 		my_pwd();
@@ -23,5 +23,7 @@ void	execute_built_ins(char *read, char **environ)
 	else if (strcmp(read, "echo") == 0)
 		my_echo("8h f nhar", 1);
 	else if (strcmp(read, "env") == 0)
-		my_env(environ);
+		my_env(builts);
+	else if (strcmp(read, "unset") == 0)
+		my_unset("USER", builts);
 }
