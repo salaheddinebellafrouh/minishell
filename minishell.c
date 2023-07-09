@@ -352,7 +352,6 @@ void	ft_start(char *read)
 }
 int	main(int ac, char **av, char **env)
 {
-<<<<<<< HEAD
 	char		*read;
 	t_builtins	*builts;
 
@@ -362,28 +361,16 @@ int	main(int ac, char **av, char **env)
 	builts = malloc(sizeof(t_builtins));
 	fill_env(env, builts);
 
-=======
-	char	*read;
-
-	(void)env;
-	(void)ac;
-	(void)av;
->>>>>>> e0d2b5a35c6e093f124012ac80d5151c29499230
 	while (1)
 	{
 		read = readline("minishell> ");
 		if (!read)
 			exit(0);
 		add_history(read);
-<<<<<<< HEAD
 		// ft_start(read);
 
 		execute_built_ins(read, builts);
 			
-=======
-		ft_start(read);
-		// execute_built_ins(read, environ);
->>>>>>> e0d2b5a35c6e093f124012ac80d5151c29499230
 		free(read);
 	}
 	return (0);
