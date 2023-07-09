@@ -6,11 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/07/09 16:14:48 by nchaknan         ###   ########.fr       */
-=======
-/*   Updated: 2023/07/09 16:12:14 by sbellafr         ###   ########.fr       */
->>>>>>> e0d2b5a35c6e093f124012ac80d5151c29499230
+/*   Updated: 2023/07/09 16:32:48 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +253,6 @@ t_list	*copy_list(Node *source)
 // }
 void	print_copy(t_list *list)
 {
-	int	i;
 	int	i;
 
 	while (list != NULL)
