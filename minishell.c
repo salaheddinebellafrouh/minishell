@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/09 18:36:56 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/09 18:39:39 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,31 +244,31 @@ t_list *copy_list(Node *source)
 
 void print_copy(t_list *list)
 {
-	int	i;
-	int	i;
+    while (list != NULL)
+    {
+        if (list->redirect.redirect != NULL)
+        {
+            int i = 0;
+            while (list->redirect.redirect[i] != NULL)
+            {
+                printf("Redirect: %s\n", list->redirect.redirect[i]);
+                i++;
+            }
+        }
 
-	while (list != NULL)
-	{
-		if (list->redirect.redirect != NULL)
-		{
-			i = 0;
-			while (list->redirect.redirect[i] != NULL)
-			{
-				printf("Redirect: %s\n", list->redirect.redirect[i]);
-				i++;
-			}
-		}
-		else if (list->arg != NULL)
-		{
-			i = 0;
-			while (list->arg[i] != NULL)
-			{
-				printf("Arg: %s\n", list->arg[i]);
-				i++;
-			}
-		}
-		list = list->next;
-	}
+        if (list->arg != NULL)
+        {
+            int j = 0;
+            while (list->arg[j] != NULL)
+            {
+                printf("Arg: %s\n", list->arg[j]);
+                j++;
+            }
+        }
+		printf("----------\n");
+
+        list = list->next;
+    }
 }
 
 
@@ -318,25 +318,19 @@ void	ft_start(char *read)
 }
 int	main(int ac, char **av, char **env)
 {
-	char		*read;
-	t_builtins	*builts;
+	char	*read;
 
+	(void)env;
 	(void)ac;
 	(void)av;
-	
-	builts = malloc(sizeof(t_builtins));
-	fill_env(env, builts);
-
 	while (1)
 	{
 		read = readline("minishell> ");
 		if (!read)
 			exit(0);
 		add_history(read);
-		// ft_start(read);
-
-		execute_built_ins(read, builts);
-			
+		ft_start(read);
+		// execute_built_ins(read, environ);
 		free(read);
 	}
 	return (0);
