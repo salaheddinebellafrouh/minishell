@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/09 18:39:39 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/09 19:16:52 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ t_list *copy_list(Node *source)
                 newNode->redirect.redirect[1] = NULL;
                 newNode->data_size = 2;
                 newNode->next = NULL;
+                printf("Redirect: %s\n", newNode->redirect.redirect[0]);
             }
             else
             {
@@ -166,9 +167,10 @@ t_list *copy_list(Node *source)
                 }
                 newRedirect[i] = strdup(source->data);
                 newRedirect[i + 1] = NULL;
-                free(newNode->redirect.redirect);
+                // free(newNode->redirect.redirect);
                 newNode->redirect.redirect = newRedirect;
                 newNode->data_size = i + 2;
+                printf("Redirect: %s\n", newNode->redirect.redirect[i]);
             }
             i++;
         }
@@ -182,6 +184,7 @@ t_list *copy_list(Node *source)
                 newNode->arg[1] = NULL;
                 newNode->data_size = 2;
                 newNode->next = NULL;
+                printf("Arg: %s\n", newNode->arg[0]);
             }
             else
             {
@@ -193,9 +196,10 @@ t_list *copy_list(Node *source)
                 }
                 newArg[j] = strdup(source->data);
                 newArg[j + 1] = NULL;
-                free(newNode->arg);
+                // free(newNode->arg);
                 newNode->arg = newArg;
                 newNode->data_size = j + 2;
+                printf("Arg: %s\n", newNode->arg[j]);
             }
             j++;
         }
@@ -251,17 +255,23 @@ void print_copy(t_list *list)
             int i = 0;
             while (list->redirect.redirect[i] != NULL)
             {
+				if(list->redirect.redirect[i] != NULL)
                 printf("Redirect: %s\n", list->redirect.redirect[i]);
+				else
+					return ;
                 i++;
             }
         }
 
-        if (list->arg != NULL)
+       else  if (list->arg != NULL)
         {
             int j = 0;
             while (list->arg[j] != NULL)
             {
-                printf("Arg: %s\n", list->arg[j]);
+				if(list->arg[j] != NULL)
+               	 printf("*Arg: %s\n", list->arg[j]);
+				else
+					return ;
                 j++;
             }
         }
