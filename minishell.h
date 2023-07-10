@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/09 16:11:55 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/10 12:54:18 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,38 @@
 #include <unistd.h>
 #include <string.h>
 
-typedef struct s_redirection
-{
-    char **redirect;
-    int redirect_size;
-    char **input_file;
-    char **output_file;
-    char **append_file;
-} t_redirection;
+// typedef struct s_redirection
+// {
+//     char **redirect;
+//     int redirect_size;
+//     char **input_file; 
+//     /*<< skip for now */
+//     char **output_file;
+//     char **append_file;
+// } t_redirection;
 
-typedef struct s_list
-{
-    char    *cmd;
-    char    **arg;
-    int     flag;
-    int     pipe;
-    t_redirection redirect;
+typedef struct arg_list {
+    char *arg;
+    struct arg_list *next;
+} arg_list;
+
+typedef struct redirect_list {
+    char *redirect;
+    struct redirect_list *next;
+} redirect_list;
+
+typedef struct s_list {
+    char *cmd;
+    arg_list arg;
+    int flag;
+    int pipe;
+    redirect_list redirect;
     struct s_list *next;
     struct s_list *prev;
-    int           data_size;
-    char    **red;
+    int data_size;
+    char **red;
 } t_list;
+
 
 typedef struct s_builtins
 {
