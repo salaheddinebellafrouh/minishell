@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/09 16:14:06 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/11 13:15:45 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,8 @@ void	execute_built_ins(char *read, t_builtins *builts)
 		my_env(builts);
 	else if (strcmp(read, "unset") == 0)
 		my_unset("USER", builts);
+	else if (strcmp(read, "export") == 0)
+	{
+		my_export(builts, "USER", "lharba");
+	}
 }
