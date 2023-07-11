@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/11 15:41:41 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/11 16:43:41 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,36 +20,31 @@
 #include <unistd.h>
 #include <string.h>
 
-// typedef struct s_redirection
-// {
-//     char **redirect;
-//     int redirect_size;
-//     char **input_file; 
-//     /*<< skip for now */
-//     char **output_file;
-//     char **append_file;
-// } t_redirection;
-
 typedef struct arg_list {
     char *arg;
     struct arg_list *next;
 } arg_list;
+
+typedef struct redirect_file {
+    char *filename;
+    struct redirect_file *next;
+} redirect_file;
 
 typedef struct redirect_list {
     char *redirect;
     struct redirect_list *next;
 } redirect_list;
 
-typedef struct s_list {
+typedef struct t_list {
     char *cmd;
-    arg_list arg;
+    arg_list *arg;
     int flag;
     int pipe;
-    redirect_list redirect;
-    struct s_list *next;
-    struct s_list *prev;
+    struct t_list *next;
+    struct t_list *prev;
     int data_size;
-    char **red;
+    struct redirect_list *redirect;  // Changed to redirect_list* redirect
+    struct redirect_file *red_file;  // Added redirect_file* red_file for redirect.file
 } t_list;
 
 
@@ -68,7 +63,7 @@ char	*ft_strdup(const char *s1);
 int		ft_strncmp(char *s1, char *s2, int n);
 char	*ft_strjoin(char const *s1, char const *s2);
 // built in ---------------------------------------------------
-void	execute_built_ins(char *read, t_builtins *builts);
+void    execute_built_ins(char *read, t_builtins *builts, t_list *list);
 void	my_cd(char *path);
 void	my_pwd();
 void	my_exit(char *exit_arg);
