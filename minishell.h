@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/11 16:43:41 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/12 16:14:33 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+
+typedef struct Node
+{
+	char		*data;
+	struct Node	*next;
+}				Node;
 
 typedef struct arg_list {
     char *arg;
@@ -36,15 +42,11 @@ typedef struct redirect_list {
 } redirect_list;
 
 typedef struct t_list {
-    char *cmd;
-    arg_list *arg;
-    int flag;
-    int pipe;
+    Node *arg;
     struct t_list *next;
     struct t_list *prev;
-    int data_size;
-    struct redirect_list *redirect;  // Changed to redirect_list* redirect
-    struct redirect_file *red_file;  // Added redirect_file* red_file for redirect.file
+    Node *redirect;
+    Node *red_file;
 } t_list;
 
 

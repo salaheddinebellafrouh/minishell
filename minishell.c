@@ -6,26 +6,19 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/11 16:48:13 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/12 16:43:36 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-typedef struct Node
-{
-	char		*data;
-	struct Node	*next;
-}				Node;
-
-void	add_elements(struct Node **head, const char *data)
+void	add_elements(struct Node **head, char *data)
 {
 	struct Node	*newnode;
 	struct Node	*current;
 
 	newnode = (struct Node *)malloc(sizeof(struct Node));
-	newnode->data = (char *)malloc((ft_strlen(data) + 1) * sizeof(char));
-	strcpy(newnode->data, data);
+	newnode->data = strdup(data);
 	newnode->next = NULL;
 	if (*head == NULL)
 	{
@@ -100,7 +93,7 @@ void	check_syntax(char *read)
 		i++;
 	}
 	if (count == 1)
-		write(2, "Erreur\n", 7);
+		printf("Syntax Erreur\n");
 }
 int	string_list(char *read, int i, struct Node **head)
 {
@@ -123,148 +116,79 @@ int	string_list(char *read, int i, struct Node **head)
 	return (i);
 }
 
-t_list *copy_list(Node *source) {
-    t_list *target = NULL;
-    t_list *newNode = NULL;
-    arg_list *newArgList = NULL;
-    redirect_list *newRedirectList = NULL;
-    redirect_file *newRedirectFile = NULL;
+t_list	*init_list()
+{
+	t_list	*list;
 
-    while (source != NULL) {
-        if (strcmp(source->data, "|") == 0) {
-            if (newNode != NULL) {
-                newNode->next = target;
-                if (target != NULL) {
-                    target->prev = newNode;
-                }
-                target = newNode;
-                newNode = NULL;
-                newArgList = NULL;
-                newRedirectList = NULL;
-                newRedirectFile = NULL;
-            }
-        } else if (strcmp(source->data, ">") == 0 || strcmp(source->data, "<") == 0 ||
-                   strcmp(source->data, "<<") == 0 || strcmp(source->data, ">>") == 0) {
-            if (newNode == NULL) {
-                newNode = (t_list *)malloc(sizeof(t_list));
-                newNode->cmd = NULL;
-                newNode->arg = newArgList;
-                newNode->flag = 0;
-                newNode->pipe = 0;
-                newNode->next = NULL;
-                newNode->prev = NULL;
-                newNode->data_size = 0;
-                newNode->redirect = NULL;
-                newNode->red_file = NULL;
-                newArgList = NULL;
-            }
+	list = malloc(sizeof(t_list));
+	list->arg = NULL;
+	list->next = NULL;
+	list->prev = NULL;	
+	list->redirect = NULL;	
+	list->red_file = NULL;
+	return (list);
+}
 
-            redirect_list *tempRedirectNode = (redirect_list *)malloc(sizeof(redirect_list));
-            tempRedirectNode->redirect = strdup(source->data);
-            tempRedirectNode->next = newRedirectList;
-            newRedirectList = tempRedirectNode;
-            newNode->redirect = newRedirectList;
+t_list *copy_list(Node *source)
+{
+    t_list *returned;
+    t_list *currentList;
 
-            redirect_file *tempRedirectFile = (redirect_file *)malloc(sizeof(redirect_file));
-            tempRedirectFile->filename = strdup(source->next->data);
-            tempRedirectFile->next = newRedirectFile;
-            newRedirectFile = tempRedirectFile;
-            newNode->red_file = newRedirectFile;
-
-            source = source->next; // Skip the file name since it has been processed
-        } else {
-            if (newNode == NULL) {
-                newNode = (t_list *)malloc(sizeof(t_list));
-                newNode->cmd = NULL;
-                newNode->arg = NULL;  // Initialize arg to NULL
-                newNode->flag = 0;
-                newNode->pipe = 0;
-                newNode->next = NULL;
-                newNode->prev = NULL;
-                newNode->data_size = 0;
-                newNode->redirect = NULL;
-                newNode->red_file = NULL;
-                newArgList = NULL;
-            }
-
-            arg_list *tempArgNode = (arg_list *)malloc(sizeof(arg_list));
-            tempArgNode->arg = strdup(source->data);
-            tempArgNode->next = NULL;  // Set next to NULL initially
-            if (newArgList == NULL) {
-                newArgList = tempArgNode;
-                newNode->arg = newArgList;
-            } else {
-                arg_list *lastArg = newArgList;
-                while (lastArg->next != NULL) {
-                    lastArg = lastArg->next;
-                }
-                lastArg->next = tempArgNode;
-            }
+	returned = init_list();
+	currentList = returned;
+    while (source != NULL)
+    {
+        if (strcmp(source->data, "|") == 0)
+        {
+            currentList->next = init_list();
+			currentList = currentList->next;
         }
-
+        else if (strcmp(source->data, ">") == 0)
+        {
+			add_elements(&(currentList->redirect), source->data);
+			add_elements(&(currentList->red_file), source->next->data);
+			source = source->next;
+        }
+        else
+        {
+			add_elements(&(currentList->arg), source->data);
+        }
         source = source->next;
     }
-
-    if (newNode != NULL) {
-        newNode->next = target;
-        if (target != NULL) {
-            target->prev = newNode;
-        }
-        target = newNode;
-    }
-
-    // Traverse to the first node in the list
-    while (target != NULL && target->prev != NULL) {
-        target = target->prev;
-    }
-
-    return target;
+    return (returned);
 }
 
 
-
-void print_copy(t_list *list)
+void	print_copy(t_list *list)
 {
-	
-    while (list != NULL)
-    {
+	Node		*currentArg;
+	Node	*file;
+	Node	*red;
 
-        arg_list *currentArg = list->arg;
-		if (currentArg == NULL)
-                currentArg = (arg_list *)malloc(sizeof(arg_list));
-        while (currentArg != NULL)
-        {
-			if(currentArg->arg)
-            printf("Arg: %s\n", currentArg->arg);
-            currentArg = currentArg->next;
-        }
-		
-        redirect_list *currentRedirect = list->redirect;
-		if (currentRedirect == NULL)
-                currentRedirect = (redirect_list *)malloc(sizeof(redirect_list));
-        while (currentRedirect != NULL)
-        {
-            printf("Redirect: %s\n", currentRedirect->redirect);
-            currentRedirect = currentRedirect->next;
-        }
-
-        // redirect_file *file;
-		// file = &(list->redirect.file);
-		// if (file != NULL)
-		// {
-		// 	while (file)
-		// 	{
-		// 		printf("file name: %s\n", file->filename);
-		// 		file = file->next;
-		// 	}
-		// }
-
-  
-        list = list->next;
-    }
+	currentArg = NULL;
+	file = NULL;
+	while (list != NULL)
+	{
+		currentArg = list->arg;
+		while (currentArg != NULL)
+		{
+			printf("Arg: %s\n", currentArg->data);
+			currentArg = currentArg->next;
+		}
+		file = list->red_file;
+		if (file != NULL)
+		{
+			printf("Filename: %s\n", list->red_file->data);
+		}
+		red = list->redirect;
+		if (file != NULL)
+		{
+			printf("red: %s\n", red->data);
+		}
+		list = list->next;
+		printf("---------\n");
+	}
 }
-
-
 
 t_list	*ft_start(char *read)
 {
@@ -307,22 +231,25 @@ t_list	*ft_start(char *read)
 		add_elements(&head, cp);
 	copiedlist = copy_list(head);
 	// printf("%s\n", copiedlist->arg->arg);
-	// print_copy(copiedlist);
+	// copiedlist->arg = NULL;
+	// copiedlist->redirect = NULL;
+	// exit(0);
+	print_copy(copiedlist);
+	// exit(0);
 	// printf("Linked List: ");
 	// printList(head);
-return copiedlist;
+	return (copiedlist);
 }
 int	main(int ac, char **av, char **env)
 {
 	char		*read;
 	t_builtins	*builts;
 	t_list		*list;
+
 	(void)ac;
 	(void)av;
-	
 	builts = malloc(sizeof(t_builtins));
 	fill_env(env, builts);
-
 	while (1)
 	{
 		read = readline("minishell> ");
@@ -330,9 +257,7 @@ int	main(int ac, char **av, char **env)
 			exit(0);
 		add_history(read);
 		list = ft_start(read);
-
 		execute_built_ins(read, builts, list);
-			
 		free(read);
 	}
 	return (0);
