@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/12 16:14:33 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:06:27 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ typedef struct t_list {
     struct t_list *next;
     struct t_list *prev;
     Node *redirect;
-    Node *red_file;
+    Node *infiles;
+    Node *outfiles;
+    Node *hairdoc;
+
 } t_list;
 
 
