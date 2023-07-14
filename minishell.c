@@ -6,20 +6,22 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/12 20:26:54 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/14 17:24:17 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	add_elements(struct Node **head, char *data)
+void	add_to_list(struct Node **head, char *data, int type)
 {
 	struct Node	*newnode;
 	struct Node	*current;
 
 	newnode = (struct Node *)malloc(sizeof(struct Node));
 	newnode->data = strdup(data);
+	newnode->type = type;
 	newnode->next = NULL;
+	newnode->prev = NULL;
 	if (*head == NULL)
 	{
 		*head = newnode;
@@ -31,6 +33,31 @@ void	add_elements(struct Node **head, char *data)
 		{
 			current = current->next;
 		}
+		newnode->prev = current;
+		current->next = newnode;
+	}
+}
+void	add_elements(struct Node **head, char *data)
+{
+	struct Node	*newnode;
+	struct Node	*current;
+
+	newnode = (struct Node *)malloc(sizeof(struct Node));
+	newnode->data = strdup(data);
+	newnode->next = NULL;
+	newnode->prev = NULL;
+	if (*head == NULL)
+	{
+		*head = newnode;
+	}
+	else
+	{
+		current = *head;
+		while (current->next != NULL)
+		{
+			current = current->next;
+		}
+		newnode->prev = current;
 		current->next = newnode;
 	}
 }
@@ -94,10 +121,10 @@ char	*check_syntax(char *read)
 	}
 	if (count == 1)
 	{
-		printf("Syntax Erreur\n");
-		return NULL;
+		printf("minishell : Syntax Erreur\n");
+		return (NULL);
 	}
-	return read;
+	return (read);
 }
 int	string_list(char *read, int i, struct Node **head)
 {
@@ -153,25 +180,25 @@ t_list	*copy_list(Node *source)
 					">>") == 0 || strcmp(source->data, "<<") == 0
 				|| strcmp(source->data, "<") == 0)
 		{
-			add_elements(&(currentList->redirect), source->data);
+			add_to_list(&(currentList->redirect), source->data, 5);
 			if (strcmp(source->data, ">") == 0)
 			{
-				add_elements(&(currentList->infiles), source->next->data);
+				add_to_list(&(currentList->outfiles), source->next->data, 15);
 				source = source->next;
 			}
 			else if (strcmp(source->data, ">>") == 0)
 			{
-				add_elements(&(currentList->infiles), source->next->data);
+				add_to_list(&(currentList->outfiles), source->next->data, 16);
 				source = source->next;
 			}
 			else if (strcmp(source->data, "<") == 0)
 			{
-				add_elements(&(currentList->outfiles), source->next->data);
+				add_to_list(&(currentList->infiles), source->next->data, 17);
 				source = source->next;
 			}
 			else if (strcmp(source->data, "<<") == 0)
 			{
-				add_elements(&(currentList->hairdoc), source->next->data);
+				add_to_list(&(currentList->hairdoc), source->next->data, 18);
 				source = source->next;
 			}
 		}
@@ -205,7 +232,7 @@ void	print_copy(t_list *list)
 		file = list->infiles;
 		while (file != NULL)
 		{
-			printf("infiles: %s\n", file->data);
+			printf("infiles: %s type : %d\n", file->data, file->type);
 			file = file->next;
 		}
 		outfile = list->outfiles;
@@ -217,7 +244,7 @@ void	print_copy(t_list *list)
 		hairdoc = list->hairdoc;
 		while (hairdoc != NULL)
 		{
-			printf("outfiles: %s\n", hairdoc->data);
+			printf("hairdoc: %s\n", hairdoc->data);
 			hairdoc = hairdoc->next;
 		}
 		red = list->redirect;
@@ -232,30 +259,51 @@ void	print_copy(t_list *list)
 }
 Node	*syntax_error(Node *head)
 {
-	Node	*newnode = NULL;
+	Node	*newnode;
+
+	newnode = NULL;
 	newnode = head;
 	while (newnode)
 	{
-		if (strcmp(newnode->data, ">") == 0 || strcmp(newnode->data,
-					">>") == 0 || strcmp(newnode->data, "<<") == 0
-				|| strcmp(newnode->data, "<") == 0)
+		if (strcmp(newnode->data, ">") == 0 || strcmp(newnode->data, ">>") == 0
+			|| strcmp(newnode->data, "<<") == 0 || strcmp(newnode->data,
+				"<") == 0)
 		{
-			if(strcmp(newnode->next->data, "|") == 0)
+			if (!newnode->next)
 			{
-				while(head)
-				{
-					head->data = NULL;
-					head = head->next;
-				}
-				head = NULL;
+				free(newnode->data);
+				free(newnode);
 				printf("minishell: syntax error near unexpected token `newline'\n");
-				return head;
+				return (NULL);
+			}
+			if (strcmp(newnode->next->data, "|") == 0)
+			{
+				free(newnode->data);
+				free(newnode);
+				printf("minishell: syntax error near unexpected token `newline'\n");
+				return (NULL);
 			}
 		}
-	
+		else if (strcmp(newnode->data, "|") == 0)
+		{
+			if (!newnode->next || !newnode->prev)
+			{
+				free(newnode->data);
+				free(newnode);
+				printf("minishell: syntax error near unexpected token `|'\n");
+				return (NULL);
+			}
+			if (strcmp(newnode->next->data, "|") == 0)
+			{
+				free(newnode->data);
+				free(newnode);
+				printf("minishell: syntax error near unexpected token `|''\n");
+				return (NULL);
+			}
+		}
 		newnode = newnode->next;
 	}
-	return head;
+	return (head);
 }
 
 t_list	*ft_start(char *read)
@@ -273,9 +321,9 @@ t_list	*ft_start(char *read)
 	head = NULL;
 	start = 0;
 	i = 0;
-	read = check_syntax(read);
-	if(!read)
-		return NULL;
+	// read = check_syntax(read);
+	if (!read)
+		return (NULL);
 	i = 0;
 	while (read[i])
 	{
@@ -290,6 +338,7 @@ t_list	*ft_start(char *read)
 				cp = ft_substr(read, start, i - start);
 				if (cp != '\0' && ft_strlen(cp) != 0)
 					add_elements(&head, cp);
+				free(cp);
 				i = string_list(read, i, &head);
 				start += (i - start) + 1;
 			}
@@ -299,16 +348,25 @@ t_list	*ft_start(char *read)
 	cp = ft_substr(read, start, i - start);
 	if (cp != '\0' && ft_strlen(cp) != 0)
 		add_elements(&head, cp);
+	free(cp);
 	head = syntax_error(head);
+	if (!head)
+		return (NULL);
 	copiedlist = copy_list(head);
-	// print_copy(copiedlist);
+	print_copy(copiedlist);
+	while (head)
+	{
+		free(head->data);
+		free(head);
+		head = head->next;
+	}
 	return (copiedlist);
 }
 int	main(int ac, char **av, char **env)
 {
 	char		*read;
-	t_builtins	*builts;
 	t_list		*list;
+	t_builtins	*builts;
 
 	(void)ac;
 	(void)av;
@@ -321,7 +379,9 @@ int	main(int ac, char **av, char **env)
 			exit(0);
 		add_history(read);
 		list = ft_start(read);
-		execute_built_ins(read, builts, list);
+		if (list)
+			execute_built_ins(read, builts, list);
+		list = ft_free_list(list);
 		free(read);
 	}
 	return (0);

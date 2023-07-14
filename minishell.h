@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/12 19:06:27 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/14 17:23:51 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,18 @@
 typedef struct Node
 {
 	char		*data;
+    int         type;
 	struct Node	*next;
+	struct Node	*prev;
 }				Node;
 
-typedef struct arg_list {
-    char *arg;
-    struct arg_list *next;
-} arg_list;
+#define APPEND 16
+#define REDIRECTION_SYLBOL 5
+#define OUTFILE 15
+#define HAIRDOC 18
+#define infile 17
 
-typedef struct redirect_file {
-    char *filename;
-    struct redirect_file *next;
-} redirect_file;
 
-typedef struct redirect_list {
-    char *redirect;
-    struct redirect_list *next;
-} redirect_list;
 
 typedef struct t_list {
     Node *arg;
@@ -49,7 +44,6 @@ typedef struct t_list {
     Node *infiles;
     Node *outfiles;
     Node *hairdoc;
-
 } t_list;
 
 
@@ -77,6 +71,7 @@ void	fill_env(char **environ, t_builtins *builts);
 void	my_env(t_builtins *builts);
 void	my_unset(char *variable, t_builtins *builts);
 void	my_export(t_builtins *builts, char *variable, char *value);
-//-------------------------------------------------------------
+// parsing-------------------------------------------------------------
+t_list    *ft_free_list(t_list *list);
 
 #endif
