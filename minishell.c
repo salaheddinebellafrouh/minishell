@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/14 17:24:17 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/14 19:12:49 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,18 @@ void	add_elements(struct Node **head, char *data)
 	}
 }
 
-// void	printList(struct Node *head)
-// {
-// 	struct Node	*current;
+void	printList(struct Node *head)
+{
+	struct Node	*current;
 
-// 	current = head;
-// 	while (current != NULL)
-// 	{
-// 		printf("[%s]", current->data);
-// 		current = current->next;
-// 	}
-// 	printf("\n");
-// }
+	current = head;
+	while (current != NULL)
+	{
+		printf("[%s], token : %d\n", current->data, current->token);
+		current = current->next;
+	}
+	printf("\n");
+}
 int	ft_symbols(char c)
 {
 	if (c == ' ' || c == '>' || c == '<' || c == '|' || c == '>' || c == '\t')
@@ -305,7 +305,38 @@ Node	*syntax_error(Node *head)
 	}
 	return (head);
 }
-
+void	ft_token(Node *head)
+{
+	int	i;
+	Node	*current;
+	
+	current = head;
+	i = 0;
+	while(current)
+	{
+		i = 0;
+		while(current->data[i])
+		{
+			if(current->data[i] == '"')
+			{
+				current->token = DQUOTES;
+				break;
+			}
+			if(current->data[i] == '\'')
+			{
+				current->token = SQUOTES;
+				break;
+			}
+			if(current->data[i + 1] == '\0')
+			{
+				current->token = NQUOTES;
+				break;
+			}
+			i++;
+		}
+		current = current->next;
+	}
+}
 t_list	*ft_start(char *read)
 {
 	t_list		*copiedlist;
@@ -321,7 +352,7 @@ t_list	*ft_start(char *read)
 	head = NULL;
 	start = 0;
 	i = 0;
-	// read = check_syntax(read);
+	read = check_syntax(read);
 	if (!read)
 		return (NULL);
 	i = 0;
@@ -352,6 +383,8 @@ t_list	*ft_start(char *read)
 	head = syntax_error(head);
 	if (!head)
 		return (NULL);
+	ft_token(head);
+	// printList(head);
 	copiedlist = copy_list(head);
 	print_copy(copiedlist);
 	while (head)
@@ -360,7 +393,7 @@ t_list	*ft_start(char *read)
 		free(head);
 		head = head->next;
 	}
-	return (copiedlist);
+	return (NULL);
 }
 int	main(int ac, char **av, char **env)
 {

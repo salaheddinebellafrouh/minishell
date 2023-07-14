@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/14 17:23:51 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/14 18:44:55 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,22 @@ typedef struct Node
 {
 	char		*data;
     int         type;
+    int         token;
 	struct Node	*next;
 	struct Node	*prev;
 }				Node;
 
-#define APPEND 16
-#define REDIRECTION_SYLBOL 5
+#define REDIRECTION_SYMBOL 5
 #define OUTFILE 15
-#define HAIRDOC 18
+#define APPEND 16
 #define infile 17
+#define HAIRDOC 18
+
+/**********************/
+#define DQUOTES 19
+#define SQUOTES 20
+#define NQUOTES 21
+
 
 
 
