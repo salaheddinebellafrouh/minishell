@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/14 19:12:49 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/14 19:13:35 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -393,7 +393,7 @@ t_list	*ft_start(char *read)
 		free(head);
 		head = head->next;
 	}
-	return (NULL);
+	return (copiedlist);
 }
 int	main(int ac, char **av, char **env)
 {
