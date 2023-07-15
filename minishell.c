@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/14 19:13:35 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/15 12:31:12 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,38 +305,33 @@ Node	*syntax_error(Node *head)
 	}
 	return (head);
 }
-void	ft_token(Node *head)
+t_list	*ft_expand(t_list *list)
 {
 	int	i;
-	Node	*current;
-	
-	current = head;
+
 	i = 0;
-	while(current)
+	t_list *copy;
+	copy = list;
+	while(copy)
 	{
-		i = 0;
-		while(current->data[i])
+		while(copy->arg)
 		{
-			if(current->data[i] == '"')
+			i = 0;
+			while(copy->arg->data[i])
 			{
-				current->token = DQUOTES;
-				break;
+				if(copy->arg->data[i] == '$')
+				{
+					/********/
+				}	
 			}
-			if(current->data[i] == '\'')
-			{
-				current->token = SQUOTES;
-				break;
-			}
-			if(current->data[i + 1] == '\0')
-			{
-				current->token = NQUOTES;
-				break;
-			}
-			i++;
+			copy->arg = copy->arg->next;
 		}
-		current = current->next;
+		printf("-----------\n");
+		copy = copy->next;
 	}
+	return list;
 }
+
 t_list	*ft_start(char *read)
 {
 	t_list		*copiedlist;
@@ -383,15 +378,16 @@ t_list	*ft_start(char *read)
 	head = syntax_error(head);
 	if (!head)
 		return (NULL);
-	ft_token(head);
-	// printList(head);
 	copiedlist = copy_list(head);
 	print_copy(copiedlist);
+	// ft_expand(copiedlist);
 	while (head)
 	{
+		Node	*temp;
+		temp = head->next;
 		free(head->data);
 		free(head);
-		head = head->next;
+		head = temp;
 	}
 	return (copiedlist);
 }
@@ -412,10 +408,11 @@ int	main(int ac, char **av, char **env)
 			exit(0);
 		add_history(read);
 		list = ft_start(read);
-		if (list)
-			execute_built_ins(read, builts, list);
+		// if (list)
+			// execute_built_ins(read, builts, list);
 		list = ft_free_list(list);
 		free(read);
+		// system("leaks minishell");
 	}
 	return (0);
 }
