@@ -6,13 +6,13 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:04 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/15 12:16:25 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/15 13:01:35 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
 
-void	free_split(char **split)
+void	free_double_demen(char **split)
 {
 	int j;
 	
@@ -51,7 +51,7 @@ void	print_export(t_builtins *builts)
 		if(value)
 			printf("\"%s\"", value);	
 		printf("\n");
-		free_split(split);
+		free_double_demen(split);
 	}
 }
 
@@ -81,7 +81,7 @@ void	my_export(t_builtins *builts, char *arg)
 			if(value)
 				printf("\"%s\"", value);	
 			printf("\n");
-			free_split(split);
+			free_double_demen(split);
 		}
 	}
 
@@ -140,6 +140,6 @@ void	my_export(t_builtins *builts, char *arg)
 			free(builts->env);
 			builts->env = new_env;
 		}
-		free_split(split);
+		free_double_demen(split);
 	}	
 }

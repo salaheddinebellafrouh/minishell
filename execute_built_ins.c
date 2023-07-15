@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/15 12:42:39 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/15 13:03:34 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void	execute_built_ins(t_builtins *builts, t_list *list)
 			}
 		}
 	}
+	free_double_demen(builts->args_arr);
 }
 

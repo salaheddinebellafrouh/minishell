@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/15 12:45:01 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/15 13:01:48 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	my_unset(t_builtins *builts, char *variable);
 void	my_export(t_builtins *builts, char *arg);
 void	print_export(t_builtins *builts);
 int		if_equal_exist(char *str);
+void	free_double_demen(char **split);
 // parsing-------------------------------------------------------------
 t_list    *ft_free_list(t_list *list);
 
