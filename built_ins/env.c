@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:01 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/10 20:11:48 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/14 19:25:02 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,27 @@ void	fill_env(char **environ, t_builtins *builts)
 	builts->env[j] = NULL;
 }
 
+int if_equal_exist(char *str)
+{
+	int i;
+	
+	i = -1;
+	while(str[++i])
+	{
+		if(str[i] == '=')
+			return(1);
+	}
+	return(0);
+}
+
 void	my_env(t_builtins *builts)
 {
 	int j;
-
+	
 	j = -1;
 	while(builts->env[++j] != NULL)
-		printf("%s\n", builts->env[j]);
+	{
+		if(if_equal_exist(builts->env[j]))
+			printf("%s\n", builts->env[j]);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/14 19:13:35 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/15 12:31:29 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -386,13 +386,13 @@ t_list	*ft_start(char *read)
 	ft_token(head);
 	// printList(head);
 	copiedlist = copy_list(head);
-	print_copy(copiedlist);
-	while (head)
-	{
-		free(head->data);
-		free(head);
-		head = head->next;
-	}
+	// print_copy(copiedlist);
+	// while (head)
+	// {
+	// 	free(head->data);
+	// 	free(head);
+	// 	head = head->next;
+	// }
 	return (copiedlist);
 }
 int	main(int ac, char **av, char **env)
@@ -413,8 +413,8 @@ int	main(int ac, char **av, char **env)
 		add_history(read);
 		list = ft_start(read);
 		if (list)
-			execute_built_ins(read, builts, list);
-		list = ft_free_list(list);
+			execute_built_ins(builts, list);
+		// list = ft_free_list(list);
 		free(read);
 	}
 	return (0);

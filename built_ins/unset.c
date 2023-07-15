@@ -6,13 +6,13 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:12 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/10 20:14:53 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/14 19:47:06 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
 
-void	my_unset(char *variable, t_builtins *builts)
+void	my_unset(t_builtins *builts, char *variable)
 {
 	int j = 0;
 	int len;
