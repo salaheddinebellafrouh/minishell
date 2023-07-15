@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/15 13:03:34 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/15 13:29:47 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		ft_lstsize(Node *lst)
 	return (count);
 }
 
-void	execute_built_ins(t_builtins *builts, t_list *list)
+void	fill_args_arr(t_builtins *builts, t_list *list)
 {
 	Node *currentArg = list->arg;
 	int i = 0;
@@ -41,7 +41,13 @@ void	execute_built_ins(t_builtins *builts, t_list *list)
 	}
 	builts->args_arr[i] = NULL;
 	builts->arg_len = i;
+}
 
+void	execute_built_ins(t_builtins *builts, t_list *list)
+{
+	int i = 0;
+
+	fill_args_arr(builts,list);
 	if (strcmp(builts->args_arr[0], "pwd") == 0)
 		my_pwd();
 		
