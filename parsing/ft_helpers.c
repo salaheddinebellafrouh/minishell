@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 22:56:43 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/17 19:00:00 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:55:01 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,12 @@ char	*ft_strcpy_after(char *dst, char *src)
 
 	i = 0;
 	j = 0;
-	(void)src;
-	while (src[i])
-	{
-		if (src[i] == '=' && src[i])
-		{
-			i++;
-			while (src[i])
-			{
-				dst[j] = src[i];
-				i++;
-				j++;
-			}
-		}
+	while(src[i] != '=')
 		i++;
-	}
+	if (src[i] == '=')
+		i++;
+	while (src[i])
+		dst[j++] = src[i++];
 	// printf("%s\n", src);
 	return (dst);
 }

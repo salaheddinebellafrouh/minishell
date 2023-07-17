@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 15:15:54 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/17 20:03:13 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:24:37 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ char	*expnd_data(char *data, char **before, char **after)
 	l = 0;
 	i = 0;
 	s = 0;
-		printf("**%s**\n", before[1]);
 
 	int count = ft_count_string(data, before, after) + 1;
 	string = malloc(count);
@@ -143,6 +142,7 @@ char	*expnd_data(char *data, char **before, char **after)
 
 		i++;
 	}
+	string[s] = '\0';
 	// free(data);
 	return (string);
 }
@@ -177,8 +177,8 @@ t_list	*ft_expand(t_list *list, char **env)
 	i = 0;
 	while (cp[i])
 	{
-		before[i] = calloc(1, ft_strlen(cp[i]) + 100000);
-		after[i] = calloc(1, ft_strlen(cp[i]) + 1000000);
+		before[i] = calloc(1, 10006);
+		after[i] = calloc(1, 111118);
 		before[i] = ft_strcpy_before(before[i], cp[i]);
 		after[i] = ft_strcpy_after(after[i], cp[i]);
 		i++;
