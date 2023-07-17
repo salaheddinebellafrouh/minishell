@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/15 13:29:47 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/17 12:31:02 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,18 @@ void	execute_built_ins(t_builtins *builts, t_list *list)
 	int i = 0;
 
 	fill_args_arr(builts,list);
+	
 	if (strcmp(builts->args_arr[0], "pwd") == 0)
 		my_pwd();
 		
 	else if (strcmp(builts->args_arr[0], "cd") == 0)
-		my_cd(builts->args_arr[1]);
+		my_cd(builts, builts->args_arr[1]);
 
 	else if (strcmp(builts->args_arr[0], "exit") == 0)
-		my_exit(NULL);
+		my_exit(builts->args_arr[1]);
 		
 	else if (strcmp(builts->args_arr[0], "echo") == 0)
-	{
-		my_echo(builts->args_arr[1], 1);
-	}
+		my_echo(builts);
 
 	else if (strcmp(builts->args_arr[0], "env") == 0)
 		my_env(builts);

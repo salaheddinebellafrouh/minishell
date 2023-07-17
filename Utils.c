@@ -167,3 +167,23 @@ char	**ft_split(const char *s, char c)
 	split[j] = 0;
 	return (split);
 }
+
+char	*ft_strchr(const char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == (char)c)
+		{
+			i++;
+			return ((char *)&s[i]);
+		}
+		else
+			i++;
+	}
+	if ((char)c == 0)
+		return (((char *)&s[i]));
+	return (NULL);
+}

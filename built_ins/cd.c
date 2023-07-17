@@ -6,13 +6,31 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:58:54 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/07 19:12:10 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/17 11:06:34 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
 
-void	my_cd(char *path)
+char	*ft_getenv(t_builtins *builts, char *path)
 {
-	chdir(path);
+	int j = 0;
+
+	while(builts->env[j])
+	{
+		if(!ft_strncmp(path, builts->env[j], ft_strlen(path)))
+		{
+			return(ft_strchr(builts->env[j], '='));
+		}
+		j++;	
+	}
+	return (NULL);
+}
+
+void	my_cd(t_builtins *builts, char *path)
+{
+	if(!path)
+		path = ft_getenv(builts,"HOME");
+	if (chdir(path) == -1)
+		perror("minishell");
 }
