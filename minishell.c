@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/15 13:16:01 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/17 19:26:38 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,35 +305,12 @@ Node	*syntax_error(Node *head)
 	}
 	return (head);
 }
-t_list	*ft_expand(t_list *list)
-{
-	int	i;
 
-	i = 0;
-	t_list *copy;
-	copy = list;
-	while(copy)
-	{
-		while(copy->arg)
-		{
-			i = 0;
-			while(copy->arg->data[i])
-			{
-				if(copy->arg->data[i] == '$')
-				{
-					/********/
-				}	
-			}
-			copy->arg = copy->arg->next;
-		}
-		printf("-----------\n");
-		copy = copy->next;
-	}
-	return list;
-}
 
-t_list	*ft_start(char *read)
+
+t_list	*ft_start(char *read, char **env)
 {
+	(void)env;
 	t_list		*copiedlist;
 	struct Node	*head;
 	char		*cp;
@@ -341,6 +318,7 @@ t_list	*ft_start(char *read)
 	int			start;
 	int			s;
 	int			d;
+	Node		*temp;
 
 	s = 0;
 	d = 0;
@@ -379,11 +357,10 @@ t_list	*ft_start(char *read)
 	if (!head)
 		return (NULL);
 	copiedlist = copy_list(head);
-	// print_copy(copiedlist);
-	// ft_expand(copiedlist);
+	copiedlist = ft_expand(copiedlist, env);
+	print_copy(copiedlist);
 	while (head)
 	{
-		Node	*temp;
 		temp = head->next;
 		free(head->data);
 		free(head);
@@ -407,9 +384,9 @@ int	main(int ac, char **av, char **env)
 		if (!read)
 			exit(0);
 		add_history(read);
-		list = ft_start(read);
-		if (list)
-			execute_built_ins(builts, list);
+		list = ft_start(read, env);
+		// if (list)
+			// execute_built_ins(builts, list);
 		list = ft_free_list(list);
 		free(read);
 		// system("leaks minishell");

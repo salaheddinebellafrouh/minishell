@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/17 12:17:50 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/17 18:26:36 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ void	print_export(t_builtins *builts);
 int		if_equal_exist(char *str);
 void	free_double_demen(char **split);
 // parsing-------------------------------------------------------------
-t_list    *ft_free_list(t_list *list);
+t_list	*ft_free_list(t_list *list);
+int		ft_isalnum(int c);
+char	*ft_strcpy_before(char *dst, char *src);
+char	*ft_strcpy_after(char *dst, char *src);
+t_list	*ft_expand(t_list *list, char **env);
 
 #endif
