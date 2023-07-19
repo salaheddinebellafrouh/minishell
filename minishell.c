@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/17 20:32:27 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/19 14:35:57 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	add_to_list(struct Node **head, char *data, int type)
 		current->next = newnode;
 	}
 }
+
 void	add_elements(struct Node **head, char *data)
 {
 	struct Node	*newnode;
@@ -62,24 +63,13 @@ void	add_elements(struct Node **head, char *data)
 	}
 }
 
-void	printList(struct Node *head)
-{
-	struct Node	*current;
-
-	current = head;
-	while (current != NULL)
-	{
-		printf("[%s], token : %d\n", current->data, current->token);
-		current = current->next;
-	}
-	printf("\n");
-}
 int	ft_symbols(char c)
 {
 	if (c == ' ' || c == '>' || c == '<' || c == '|' || c == '>' || c == '\t')
 		return (1);
 	return (0);
 }
+
 char	*check_syntax(char *read)
 {
 	int	i;
@@ -357,8 +347,6 @@ t_list	*ft_start(char *read, char **env)
 	if (!head)
 		return (NULL);
 	copiedlist = copy_list(head);
-	copiedlist = ft_expand(copiedlist, env);
-	print_copy(copiedlist);
 	while (head)
 	{
 		temp = head->next;
@@ -366,6 +354,8 @@ t_list	*ft_start(char *read, char **env)
 		free(head);
 		head = temp;
 	}
+	copiedlist = ft_expand(copiedlist, env);
+	print_copy(copiedlist);
 	return (copiedlist);
 }
 int	main(int ac, char **av, char **env)
@@ -384,9 +374,9 @@ int	main(int ac, char **av, char **env)
 		if (!read)
 			exit(0);
 		add_history(read);
-		list = ft_start(read, env);
-		if (list)
-			execute_built_ins(builts, list);
+		list = ft_start(read, builts->env);
+		// if (list)
+			// execute_built_ins(builts, list);
 		list = ft_free_list(list);
 		free(read);
 		// system("leaks minishell");

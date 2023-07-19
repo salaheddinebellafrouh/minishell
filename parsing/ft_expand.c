@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 15:15:54 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/17 21:24:37 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/19 13:28:33 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*get_id(char *data)
 {
 	int	i;
-
+	
 	i = 0;
 	while (data[i] && ((ft_isalnum(data[i])) || data[i] == '_'))
 		i++;
@@ -57,6 +57,7 @@ int		ft_count_string(char *data, char **before, char **after)
 				// printf("%s\n", before[l]);
 				if (strcmp(before[l], id) == 0)
 				{
+					// free(id);
 					k = 0;
 					while (after[l][k])
 					{
@@ -76,6 +77,8 @@ int		ft_count_string(char *data, char **before, char **after)
 		d += s;
 		i++;
 	}
+	// if(id)
+	// 	free(id);
 		
 	// free(data);
 
@@ -120,7 +123,7 @@ char	*expnd_data(char *data, char **before, char **after)
 			{
 				if (strcmp(before[l], id) == 0)
 				{
-
+					// free(id);
 					k = 0;
 					while (after[l][k])
 					{
@@ -143,10 +146,35 @@ char	*expnd_data(char *data, char **before, char **after)
 		i++;
 	}
 	string[s] = '\0';
-	// free(data);
+	// if(id)
+	// 	free(id);
+	free(data);
 	return (string);
 }
-
+int calloc_before(char *string)
+{
+	int	i;
+	
+	i = 0;
+	while(string[i] != '=' && string[i])
+		i++;
+	return (i);
+}
+int calloc_after(char *string)
+{
+	int	i;
+	int	j;
+	i = 0;
+	j = 0;
+	while(string[i] != '=' && string[i])
+		i++;
+	while(string[i])
+	{
+		j++;
+		i++;
+	}
+	return (j);
+}
 t_list	*ft_expand(t_list *list, char **env)
 {
 	int		i;
@@ -163,7 +191,6 @@ t_list	*ft_expand(t_list *list, char **env)
 		i++;
 	cp = calloc(i + 1 , sizeof(char *));
 	i = 0;
-	// cp = ft_strdup (env);
 	while (env[i])
 	{
 		cp[i] = ft_strdup(env[i]);
@@ -177,16 +204,22 @@ t_list	*ft_expand(t_list *list, char **env)
 	i = 0;
 	while (cp[i])
 	{
-		before[i] = calloc(1, 10006);
-		after[i] = calloc(1, 111118);
+		before[i] = calloc(sizeof(char), 	calloc_before(cp[i]) + 1);
+		after[i] = calloc(sizeof(char), calloc_after(cp[i]) + 1);
 		before[i] = ft_strcpy_before(before[i], cp[i]);
 		after[i] = ft_strcpy_after(after[i], cp[i]);
+		free(cp[i]);
 		i++;
 	}
+	free(cp);
 	i = 0;
 	// i = 0;
 	copy = list;
 	Node *arg_copy ;
+	Node *infiles ;
+	Node *outfiles ;
+	Node *heredoc ;
+
 	while (copy)
 	{
 		arg_copy = copy->arg;
@@ -195,10 +228,35 @@ t_list	*ft_expand(t_list *list, char **env)
 			arg_copy->data = expnd_data(arg_copy->data, before, after);
 			arg_copy = arg_copy->next;
 		}
-	
+		heredoc = copy->hairdoc;
+		while (heredoc)
+		{
+			heredoc->data = expnd_data(heredoc->data, before, after);
+			heredoc = heredoc->next;
+		}
+		outfiles = copy->outfiles;
+		while (outfiles)
+		{
+			outfiles->data = expnd_data(outfiles->data, before, after);
+			outfiles = outfiles->next;
+		}
+		infiles = copy->infiles;
+		while (infiles)
+		{
+			infiles->data = expnd_data(infiles->data, before, after);
+			infiles = infiles->next;
+		}
 		copy = copy->next;
 	}
-
+	i = 0;
+	while(before[i])
+	{
+		free(before[i]);
+		free(after[i]);
+		i++;
+	}
+	free(before);
+	free(after);
 	return (list);
 
 }
