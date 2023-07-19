@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/18 22:27:42 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/19 20:29:02 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	add_to_list(struct Node **head, char *data, int type)
 		current->next = newnode;
 	}
 }
+
 void	add_elements(struct Node **head, char *data)
 {
 	struct Node	*newnode;
@@ -62,24 +63,13 @@ void	add_elements(struct Node **head, char *data)
 	}
 }
 
-void	printList(struct Node *head)
-{
-	struct Node	*current;
-
-	current = head;
-	while (current != NULL)
-	{
-		printf("[%s], token : %d\n", current->data, current->token);
-		current = current->next;
-	}
-	printf("\n");
-}
 int	ft_symbols(char c)
 {
 	if (c == ' ' || c == '>' || c == '<' || c == '|' || c == '>' || c == '\t')
 		return (1);
 	return (0);
 }
+
 char	*check_syntax(char *read)
 {
 	int	i;
@@ -305,35 +295,12 @@ Node	*syntax_error(Node *head)
 	}
 	return (head);
 }
-t_list	*ft_expand(t_list *list)
-{
-	int	i;
 
-	i = 0;
-	t_list *copy;
-	copy = list;
-	while(copy)
-	{
-		while(copy->arg)
-		{
-			i = 0;
-			while(copy->arg->data[i])
-			{
-				if(copy->arg->data[i] == '$')
-				{
-					/********/
-				}	
-			}
-			copy->arg = copy->arg->next;
-		}
-		printf("-----------\n");
-		copy = copy->next;
-	}
-	return list;
-}
 
-t_list	*ft_start(char *read)
+
+t_list	*ft_start(char *read, char **env)
 {
+	(void)env;
 	t_list		*copiedlist;
 	struct Node	*head;
 	char		*cp;
@@ -341,6 +308,7 @@ t_list	*ft_start(char *read)
 	int			start;
 	int			s;
 	int			d;
+	Node		*temp;
 
 	s = 0;
 	d = 0;
@@ -379,16 +347,15 @@ t_list	*ft_start(char *read)
 	if (!head)
 		return (NULL);
 	copiedlist = copy_list(head);
-	// print_copy(copiedlist);
-	// ft_expand(copiedlist);
 	while (head)
 	{
-		Node	*temp;
 		temp = head->next;
 		free(head->data);
 		free(head);
 		head = temp;
 	}
+	copiedlist = ft_expand(copiedlist, env);
+	// print_copy(copiedlist);
 	return (copiedlist);
 }
 int	main(int ac, char **av, char **env)
@@ -408,7 +375,7 @@ int	main(int ac, char **av, char **env)
 			exit(0);
 		if(read[0])
 			add_history(read);
-		list = ft_start(read);
+		list = ft_start(read, builts->env);
 		if (list)
 			execute_built_ins(builts, list);
 		list = ft_free_list(list);

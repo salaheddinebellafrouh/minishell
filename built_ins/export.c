@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:04 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/18 22:46:20 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/19 20:20:33 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_arg(char *arg)
 	i = -1;
 	while(arg[++i] && check)
 	{
-		if(!ft_isalnum(arg[i]) && arg[i] != '_')
+		if(!ft_isalnum_v2(arg[i]) && arg[i] != '_')
 			return(0);
 	}
 	return(1);

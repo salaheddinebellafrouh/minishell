@@ -1,6 +1,10 @@
 {
+<<<<<<< HEAD
     "files.associations": {
         "string.h": "c",
         "minishell.h": "c"
     }
+=======
+    "editor.cursorSmoothCaretAnimation": "on"
+>>>>>>> f8673082fb907e24a0176a949edeb1d9508b8603
 }

@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/19 19:56:04 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/19 20:22:11 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		ft_strncmp(char *s1, char *s2, int n);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(const char *s, char c);
 char	*ft_strchr(const char *s, int c);
-int	    ft_isalnum(char n);
+int	    ft_isalnum_v2(char n);
 // built in ---------------------------------------------------
 void	execute_built_ins(t_builtins *builts, t_list *list);
 void	my_cd(t_builtins *builts, char *path);
@@ -90,6 +90,10 @@ void	free_double_demen(char **split);
 int     ft_execve(char **args, char **env);
 void	execute_externals(char **arg, char **env);
 // parsing-------------------------------------------------------------
-t_list    *ft_free_list(t_list *list);
+t_list	*ft_free_list(t_list *list);
+int		ft_isalnum(int c);
+char	*ft_strcpy_before(char *dst, char *src);
+char	*ft_strcpy_after(char *dst, char *src);
+t_list	*ft_expand(t_list *list, char **env);
 
 #endif
