@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/15 13:16:01 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:27:42 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,7 +406,8 @@ int	main(int ac, char **av, char **env)
 		read = readline("minishell> ");
 		if (!read)
 			exit(0);
-		add_history(read);
+		if(read[0])
+			add_history(read);
 		list = ft_start(read);
 		if (list)
 			execute_built_ins(builts, list);

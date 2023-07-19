@@ -6,16 +6,11 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:58:58 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/17 15:24:54 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/18 20:09:18 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
-
-
-
-
-
 
 int n_flag(char *ptr, int *index)
 {
@@ -40,7 +35,6 @@ int n_flag(char *ptr, int *index)
 		return (0);
 }
 
-
 int n_flag_ultra(char **ptr, int *index)
 {
 	int i;
@@ -57,7 +51,6 @@ int n_flag_ultra(char **ptr, int *index)
 	}
 	return (yes);
 }
-
 
 void	my_echo(t_builtins *builts)
 {

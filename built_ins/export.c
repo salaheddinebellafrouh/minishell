@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:04 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/15 13:01:35 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:46:20 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,21 @@ void	free_double_demen(char **split)
 
 int	check_arg(char *arg)
 {
+	int i;
+	int check;
+	
+	check = 0;
 	if(arg[0] == '_' ||
 		(arg[0] >= 65 && arg[0] <= 90) ||
 		(arg[0] >= 97 && arg[0] <= 122))
-			return(1);
-	else
-		return(0);		
+			check = 1;
+	i = -1;
+	while(arg[++i] && check)
+	{
+		if(!ft_isalnum(arg[i]) && arg[i] != '_')
+			return(0);
+	}
+	return(1);
 }
 
 void	print_export(t_builtins *builts)
@@ -85,8 +94,8 @@ void	my_export(t_builtins *builts, char *arg)
 		}
 	}
 
-	else if(arg && !check_arg(arg))
-		printf("export: `%s': not a valid identifier\n", arg);
+	// else if(arg && !check_arg(arg))
+	// 	printf("export: `%s': not a valid identifier\n", arg);
 	
 	else
 	{

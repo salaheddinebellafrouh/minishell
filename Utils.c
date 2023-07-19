@@ -187,3 +187,12 @@ char	*ft_strchr(const char *s, int c)
 		return (((char *)&s[i]));
 	return (NULL);
 }
+
+int	ft_isalnum(char n)
+{
+	if ((n >= 'A' && n <= 'Z') || (n >= 'a' && n <= 'z') || (n >= '0'
+			&& n <= '9'))
+		return (1);
+	else
+		return (0);
+}
