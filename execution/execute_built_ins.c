@@ -6,11 +6,11 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/19 19:56:10 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/20 11:42:10 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include"../minishell.h"
 
 int		ft_lstsize(Node *lst)
 {

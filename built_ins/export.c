@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:04 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/19 20:20:33 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/20 11:24:58 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ void	free_double_demen(char **split)
 int	check_arg(char *arg)
 {
 	int i;
-	int check;
 	
-	check = 0;
+	i = -1;
 	if(arg[0] == '_' ||
 		(arg[0] >= 65 && arg[0] <= 90) ||
 		(arg[0] >= 97 && arg[0] <= 122))
-			check = 1;
-	i = -1;
-	while(arg[++i] && check)
+			i++;
+	else
+		return (0);		
+	while(arg[++i])
 	{
-		if(!ft_isalnum_v2(arg[i]) && arg[i] != '_')
+		if(!ft_isalnum_v2(arg[i]))
 			return(0);
 	}
 	return(1);
@@ -53,7 +53,7 @@ void	print_export(t_builtins *builts)
 	{
 		split = ft_split(builts->env[j], '=');
 		variable = split[0];
-		value = split[1];
+		value = ft_strchr(builts->env[j] ,'=');
 		printf("declare -x %s", variable);
 		if(if_equal_exist(builts->env[j]))
 			printf("=");
@@ -75,27 +75,8 @@ void	my_export(t_builtins *builts, char *arg)
 	char *new_vrbl;
 	char **new_env;
 
-	if(!arg)
-	{
-		j = -1;
-		while(builts->env[++j])
-		{
-			split = ft_split(builts->env[j], '=');
-			variable = split[0];
-			value = split[1];
-
-			printf("declare -x %s", variable);
-			if(if_equal_exist(builts->env[j]))
-				printf("=");
-			if(value)
-				printf("\"%s\"", value);	
-			printf("\n");
-			free_double_demen(split);
-		}
-	}
-
-	// else if(arg && !check_arg(arg))
-	// 	printf("export: `%s': not a valid identifier\n", arg);
+	if(arg && !check_arg(arg))
+		printf("export: `%s': not a valid identifier\n", arg);
 	
 	else
 	{
@@ -140,7 +121,7 @@ void	my_export(t_builtins *builts, char *arg)
 		else if(!exist)
 		{
 			builts->env_len++;
-			new_env = malloc(sizeof(char *) * (builts->env_len + 1));
+			new_env = malloc(sizeof(char *) * (builts->env_len + 2));
 			j = -1;
 			while(builts->env[++j])
 				new_env[j] = builts->env[j];

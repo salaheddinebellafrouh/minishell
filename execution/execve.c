@@ -6,11 +6,11 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 20:52:48 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/18 22:23:28 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/20 11:42:17 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include"../minishell.h"
 
 char	*get_path(char **env)
 {
