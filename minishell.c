@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/19 20:29:02 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/23 17:06:40 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ t_list	*copy_list(Node *source)
 {
 	t_list	*returned;
 	t_list	*currentList;
-
+	int	pipe = 0;
 	returned = init_list();
 	currentList = returned;
 	while (source != NULL)
@@ -164,6 +164,7 @@ t_list	*copy_list(Node *source)
 		if (strcmp(source->data, "|") == 0)
 		{
 			currentList->next = init_list();
+			pipe++;
 			currentList = currentList->next;
 		}
 		else if (strcmp(source->data, ">") == 0 || strcmp(source->data,
@@ -196,8 +197,10 @@ t_list	*copy_list(Node *source)
 		{
 			add_elements(&(currentList->arg), source->data);
 		}
+		
 		source = source->next;
 	}
+	returned->pipe = pipe;
 	return (returned);
 }
 
@@ -377,6 +380,7 @@ int	main(int ac, char **av, char **env)
 			add_history(read);
 		list = ft_start(read, builts->env);
 		if (list)
+			// ft_pipe(builts, list);
 			execute_built_ins(builts, list);
 		list = ft_free_list(list);
 		free(read);

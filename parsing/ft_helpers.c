@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 22:56:43 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/20 11:30:12 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/20 11:48:26 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,5 @@ char	*ft_strcpy_after(char *dst, char *src)
 		i++;
 	while (src[i])
 		dst[j++] = src[i++];
-	// printf("%s\n", src);
 	return (dst);
 }

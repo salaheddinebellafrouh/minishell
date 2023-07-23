@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/19 20:31:54 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/21 16:41:20 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct t_list {
     Node *infiles;
     Node *outfiles;
     Node *hairdoc;
+    int pipe;
 } t_list;
 
 
@@ -60,6 +61,7 @@ typedef struct s_builtins
     int env_len;
     char **args_arr;
     int arg_len;
+    int pipe_nbr;
 } t_builtins;
 
 
@@ -95,5 +97,7 @@ t_list	*ft_free_list(t_list *list);
 char	*ft_strcpy_before(char *dst, char *src);
 char	*ft_strcpy_after(char *dst, char *src);
 t_list	*ft_expand(t_list *list, char **env);
+
+int ft_pipe(t_builtins *builts, t_list *list);
 
 #endif

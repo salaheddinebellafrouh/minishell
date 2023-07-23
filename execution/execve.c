@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 20:52:48 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/20 11:42:17 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/21 16:55:41 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_execve(char **args, char **env)
 		free(tmp);
 		if (access(str, X_OK) == 0)
         {
-            execve(str, args, NULL);
+            execve(str, args, env);
 		    break;
         }
 	}

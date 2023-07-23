@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:04 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/20 11:24:58 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/21 12:44:37 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,15 @@ void	my_export(t_builtins *builts, char *arg)
 	char *new_vrbl;
 	char **new_env;
 
-	if(arg && !check_arg(arg))
+	split = ft_split(arg, '=');
+	variable = split[0];
+	value = split[1];
+	
+	if(arg && !check_arg(variable))
 		printf("export: `%s': not a valid identifier\n", arg);
 	
 	else
-	{
-		split = ft_split(arg, '=');
-		variable = split[0];
-		value = split[1];
-		
+	{	
 		len = 0;
 		while(variable[len])
 			len++;
