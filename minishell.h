@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/21 16:41:20 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:30:18 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct t_list {
     Node *outfiles;
     Node *hairdoc;
     int pipe;
+    int has_pipe;
 } t_list;
 
 

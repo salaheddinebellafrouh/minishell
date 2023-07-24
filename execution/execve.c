@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 20:52:48 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/21 16:55:41 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/23 20:38:23 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,19 @@ int	ft_execve(char **args, char **env)
 
 void	execute_externals(char **arg, char **env)
 {
-	pid_t pid = fork();
+	// pid_t pid = fork();
 
-    if (pid < 0) {
-        perror("fork");
-        exit(EXIT_FAILURE);
-    }
-	else if (pid == 0)
-	{
+    // if (pid < 0) {
+    //     perror("fork");
+    //     exit(EXIT_FAILURE);
+    // }
+	// else if (pid == 0)
+	// {
 		ft_execve(arg, env);
-    }
-	else
-	{
-        int status;
-        waitpid(pid, &status, 0);
-    }
+    // }
+	// else
+	// {
+    //     int status;
+    //     waitpid(pid, &status, 0);
+    // }
 }

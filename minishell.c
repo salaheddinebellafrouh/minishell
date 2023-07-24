@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/23 17:06:40 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:30:56 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ t_list	*copy_list(Node *source)
 	{
 		if (strcmp(source->data, "|") == 0)
 		{
+			currentList->has_pipe = 1;
 			currentList->next = init_list();
 			pipe++;
 			currentList = currentList->next;
@@ -358,7 +359,7 @@ t_list	*ft_start(char *read, char **env)
 		head = temp;
 	}
 	copiedlist = ft_expand(copiedlist, env);
-	// print_copy(copiedlist);
+	print_copy(copiedlist);
 	return (copiedlist);
 }
 int	main(int ac, char **av, char **env)
@@ -380,8 +381,8 @@ int	main(int ac, char **av, char **env)
 			add_history(read);
 		list = ft_start(read, builts->env);
 		if (list)
-			// ft_pipe(builts, list);
-			execute_built_ins(builts, list);
+			ft_pipe(builts, list);
+			// execute_built_ins(builts, list);
 		list = ft_free_list(list);
 		free(read);
 		// system("leaks minishell");
