@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/24 12:44:32 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:57:01 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int ft_pipe(t_builtins *builts, t_list *list)
 	
 	while(c_list)
 	{
+		if (builts->args_arr)
+			free_double_demen(builts->args_arr);
 		fill_args_arr(builts,c_list);
 		pipe(fd);
 		int pid = fork();
