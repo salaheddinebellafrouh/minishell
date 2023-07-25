@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/24 12:57:01 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:11:24 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,16 @@ int ft_pipe(t_builtins *builts, t_list *list)
 	int i = 0;
 	int j = 0;
 	
+	if (list->next == NULL)
+	{
+		fill_args_arr(builts,c_list);
+		execute_built_ins(builts, list);
+		free_double_demen(builts->args_arr);
+		return 0;
+	}
+	
 	while(c_list)
 	{
-		if (builts->args_arr)
-			free_double_demen(builts->args_arr);
 		fill_args_arr(builts,c_list);
 		pipe(fd);
 		int pid = fork();
@@ -77,6 +83,7 @@ int ft_pipe(t_builtins *builts, t_list *list)
 				close(fd[0]);
 			}
 			execute_built_ins(builts, list);
+			exit(0);
 		}
 		else
 		{
@@ -86,6 +93,7 @@ int ft_pipe(t_builtins *builts, t_list *list)
 		}
 		i++;
 		c_list = c_list->next;
+		free_double_demen(builts->args_arr);
 	}
 	while(j < i)
 		waitpid(id[j++], NULL, 0);
@@ -95,16 +103,15 @@ int ft_pipe(t_builtins *builts, t_list *list)
 void	execute_built_ins(t_builtins *builts, t_list *list)
 {
 	int i = 0;
-	int status = 0;
+	// int status = 0;
 	(void)list;
-	// fill_args_arr(builts,list);
 	
 	if (check_command(builts->args_arr[0], "pwd", "PWD"))
-		my_pwd(1);
+		my_pwd(1);	
 		
 	else if (check_command(builts->args_arr[0], "cd", "CD"))
 		my_cd(builts, builts->args_arr[1]);
-
+		
 	else if (check_command(builts->args_arr[0], "exit", "EXIT"))
 		my_exit(builts->args_arr[1]);
 		
@@ -132,8 +139,8 @@ void	execute_built_ins(t_builtins *builts, t_list *list)
 		}
 	}
 	else
+	{
 		execute_externals(builts->args_arr, builts->env);
-
-	free_double_demen(builts->args_arr);
-	exit(status);
+	}
+	// exit(status);
 } 

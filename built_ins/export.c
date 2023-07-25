@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:04 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/21 12:44:37 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:23:36 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_double_demen(char **split)
 	j = -1;
 	while(split[++j])
 		free(split[j]);
-	free(split);	
+	free(split);
 }
 
 int	check_arg(char *arg)

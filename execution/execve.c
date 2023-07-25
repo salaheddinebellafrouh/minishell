@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 20:52:48 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/23 20:38:23 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/25 17:16:57 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int	ft_execve(char **args, char **env)
 	char	*tmp;
 	char	*path;
 	char	**paths;
+	int		found;
 
+	found =  0;
 	path = get_path(env);
-	// printf("-->%s\n", path);
-	// return 0;
 	if (!path)
 	{
 		printf("minishell: %s: No such file or directory\n", args[0]);
@@ -45,18 +45,25 @@ int	ft_execve(char **args, char **env)
 	while (paths[++i])
 	{
 		str = ft_strjoin(paths[i], "/");
-		tmp = str;
+		tmp = ft_strdup(str);
+		free(str);
 		str = ft_strjoin(tmp, args[0]);
 		free(tmp);
 		if (access(str, X_OK) == 0)
         {
-            execve(str, args, env);
+			found  = 1;
+			if (fork() == 0)
+            	execve(str, args, env);
+			else
+				wait (NULL);
+			free(str);	
 		    break;
         }
+		free(str);
 	}
-    free_double_demen(paths);
-	if (access(str, X_OK) == -1)
+	if (!found)
 		printf("minishell: %s: command not found\n", args[0]);
+    free_double_demen(paths);
 	return (1);
 }
 
