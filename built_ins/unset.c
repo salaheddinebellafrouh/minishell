@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:12 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/14 19:47:06 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/25 21:57:37 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	my_unset(t_builtins *builts, char *variable)
 	int j = 0;
 	int len;
 	int exist;
+	char **split;
 	
 	len = 0;
 	while(variable[len])
@@ -25,15 +26,22 @@ void	my_unset(t_builtins *builts, char *variable)
 	j = 0;
 	while(builts->env[j])
 	{
-		if(!ft_strncmp(variable, builts->env[j], len))
+		split = ft_split(builts->env[j], '=');
+		if (ft_strlen(split[0]) == len)
 		{
-			exist = 1;
-			break;
+			if(!ft_strncmp(variable, builts->env[j], len))
+			{
+				free_double_demen(split);
+				exist = 1;
+				break;
+			}
 		}
+		free_double_demen(split);
 		j++;
 	}
 	while(builts->env[j] && exist == 1)
 	{
+		free(builts->env[j]);
 		builts->env[j] = builts->env[j + 1];
 		j++;
 	}

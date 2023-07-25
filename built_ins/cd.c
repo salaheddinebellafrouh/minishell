@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:58:54 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/19 19:56:21 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/25 22:07:09 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*ft_getenv(t_builtins *builts, char *path)
 void	my_cd(t_builtins *builts, char *path)
 {
 	char *old_pwd;
+		char *old;
+		char *new;
 
 	old_pwd = ft_getenv(builts, "PWD");
 	if(!path)
@@ -35,8 +37,12 @@ void	my_cd(t_builtins *builts, char *path)
 	if (chdir(path) == -1)
 		perror("minishell");
 	else
-	{	
-		my_export(builts, ft_strjoin("OLDPWD=", old_pwd));
-		my_export(builts, ft_strjoin("PWD=", my_pwd(0)));
+	{
+		old = ft_strjoin("OLDPWD=", old_pwd);
+		new = ft_strjoin("PWD=", my_pwd(0));
+		my_export(builts, old);
+		my_export(builts, new);
+		free(old);
+		free(new);
 	}
 }

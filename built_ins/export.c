@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:04 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/25 16:23:36 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/25 21:56:38 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,13 @@ void	my_export(t_builtins *builts, char *arg)
 				new_vrbl = variable;
 				variable = ft_strjoin(new_vrbl, value);
 				free(new_vrbl);
+				free(builts->env[j]);
 				builts->env[j] = variable;
 			}
 			else if(if_equal_exist(arg))
 			{
 				variable = ft_strjoin(variable, "=");
+				free(builts->env[j]);
 				builts->env[j] = variable;
 			}
 		}
