@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/25 19:01:48 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/26 13:02:47 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,7 +381,8 @@ int	main(int ac, char **av, char **env)
 			add_history(read);
 		list = ft_start(read, builts->env);
 		if (list)
-			ft_pipe(builts, list);
+			// ft_pipe(builts, list);
+			ft_redirection(builts, list);
 		list = ft_free_list(list);
 		free(read);
 		// system("leaks minishell");

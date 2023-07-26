@@ -1,0 +1,14 @@
+Makefile
+Utils.c
+Utils.o
+built_ins
+execution
+leaks_prg
+leaks_prog.c
+minishell
+minishell.c
+minishell.h
+minishell.o
+parsing
+test
+test.txt

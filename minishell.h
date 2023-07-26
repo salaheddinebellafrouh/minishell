@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/25 16:05:59 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/26 12:42:11 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <fcntl.h>
 
 typedef struct Node
 {
@@ -88,6 +89,7 @@ void	print_export(t_builtins *builts);
 int		if_equal_exist(char *str);
 void	free_double_demen(char **split);
 void	fill_args_arr(t_builtins *builts, t_list *list);
+void    ft_redirection(t_builtins *builts, t_list *list);
 // execeve ----------------------------------------------------
 int     ft_execve(char **args, char **env);
 void	execute_externals(char **arg, char **env);
