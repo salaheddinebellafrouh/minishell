@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../minishell.h"
+#include "../minishell.h"
 
-void    my_exit(char *exit_arg)
+void	my_exit(char *exit_arg)
 {
-    int exit_code;
-    
-    exit_code = 0;
-    if (exit_arg != NULL)
-        exit_code = ft_atoi(exit_arg);
-    exit(exit_code);
+	int exit_code;
+
+	exit_code = 0;
+	if (exit_arg != NULL)
+		exit_code = ft_atoi(exit_arg);
+	exit(exit_code);
 }

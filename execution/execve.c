@@ -10,16 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../minishell.h"
+#include "../minishell.h"
 
 char	*get_path(char **env)
 {
-	int j;
+	int	j;
 
 	j = -1;
 	while (env[++j])
 	{
-		if(!ft_strncmp(env[j], "PATH", 4))
+		if (!ft_strncmp(env[j], "PATH", 4))
 			return (ft_strchr(env[j], '='));
 	}
 	return (NULL);
@@ -27,14 +27,15 @@ char	*get_path(char **env)
 
 int	ft_execve(char **args, char **env)
 {
-	int		i = -1;
+	int		i;
 	char	*str;
 	char	*tmp;
 	char	*path;
 	char	**paths;
 	int		found;
 
-	found =  0;
+	i = -1;
+	found = 0;
 	path = get_path(env);
 	if (!path)
 	{
@@ -50,20 +51,20 @@ int	ft_execve(char **args, char **env)
 		str = ft_strjoin(tmp, args[0]);
 		free(tmp);
 		if (access(str, X_OK) == 0)
-        {
-			found  = 1;
+		{
+			found = 1;
 			if (fork() == 0)
-            	execve(str, args, env);
+				execve(str, args, env);
 			else
-				wait (NULL);
-			free(str);	
-		    break;
-        }
+				wait(NULL);
+			free(str);
+			break ;
+		}
 		free(str);
 	}
 	if (!found)
 		printf("minishell: %s: command not found\n", args[0]);
-    free_double_demen(paths);
+	free_double_demen(paths);
 	return (1);
 }
 
@@ -71,17 +72,17 @@ void	execute_externals(char **arg, char **env)
 {
 	// pid_t pid = fork();
 
-    // if (pid < 0) {
-    //     perror("fork");
-    //     exit(EXIT_FAILURE);
-    // }
+	// if (pid < 0) {
+	//     perror("fork");
+	//     exit(EXIT_FAILURE);
+	// }
 	// else if (pid == 0)
 	// {
-		ft_execve(arg, env);
-    // }
+	ft_execve(arg, env);
+	// }
 	// else
 	// {
-    //     int status;
-    //     waitpid(pid, &status, 0);
-    // }
+	//     int status;
+	//     waitpid(pid, &status, 0);
+	// }
 }

@@ -57,7 +57,7 @@ char	*ft_strcpy_after(char *dst, char *src)
 
 	i = 0;
 	j = 0;
-	while(src[i] && src[i] != '=')
+	while (src[i] && src[i] != '=')
 		i++;
 	if (src[i] && src[i] == '=')
 		i++;

@@ -10,16 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../minishell.h"
+#include "../minishell.h"
 
-char    *my_pwd(int print)
+char	*my_pwd(int print)
 {
-    char *str;
-    char cwd[1024];
-    
-    getcwd(cwd, sizeof(cwd));
-    if(print)
-        printf("%s\n", cwd);
-    str = cwd;
-    return (str);
+	char *str;
+	char cwd[1024];
+
+	getcwd(cwd, sizeof(cwd));
+	if (print)
+		printf("%s\n", cwd);
+	str = cwd;
+	return (str);
 }

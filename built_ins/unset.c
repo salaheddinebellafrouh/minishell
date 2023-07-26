@@ -10,33 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../minishell.h"
+#include "../minishell.h"
 
 void	my_unset(t_builtins *builts, char *variable)
 {
 	int j = 0;
 	int len;
 	int exist;
-	
+
 	len = 0;
-	while(variable[len])
+	while (variable[len])
 		len++;
-	exist = 0;	
+	exist = 0;
 	j = 0;
-	while(builts->env[j])
+	while (builts->env[j])
 	{
-		if(!ft_strncmp(variable, builts->env[j], len))
+		if (!ft_strncmp(variable, builts->env[j], len))
 		{
 			exist = 1;
-			break;
+			break ;
 		}
 		j++;
 	}
-	while(builts->env[j] && exist == 1)
+	while (builts->env[j] && exist == 1)
 	{
 		builts->env[j] = builts->env[j + 1];
 		j++;
 	}
-	if(exist == 1)
+	if (exist == 1)
 		builts->env_len--;
 }

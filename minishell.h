@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/25 16:05:59 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/26 15:56:09 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct Node
 #define REDIRECTION_SYMBOL 5
 #define OUTFILE 15
 #define APPEND 16
-#define infile 17
+#define INFILE 17
 #define HAIRDOC 18
 
 /**********************/
@@ -48,6 +48,7 @@ typedef struct t_list {
     Node *infiles;
     Node *outfiles;
     Node *hairdoc;
+    int  in_type;
     int pipe;
     int has_pipe;
 } t_list;
@@ -56,7 +57,7 @@ typedef struct t_list {
 typedef struct s_builtins
 {
     char **env;
-    int env_len;
+    int     env_len;
     char **args_arr;
     int arg_len;
     int pipe_nbr;
@@ -96,7 +97,19 @@ t_list	*ft_free_list(t_list *list);
 char	*ft_strcpy_before(char *dst, char *src);
 char	*ft_strcpy_after(char *dst, char *src);
 t_list	*ft_expand(t_list *list, char **env);
+int	    ft_isdigit(int c);
 
 int ft_pipe(t_builtins *builts, t_list *list);
+typedef struct s_vars
+{
+    int		i;
+	int		j;
+	int		k;
+	int		s;
+	int		d;
+	int		l;
+	int		kk;
+	char	*id;
+}   t_vars;
 
-#endif
+#endif  

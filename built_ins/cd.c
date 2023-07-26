@@ -10,17 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../minishell.h"
+#include "../minishell.h"
 
 char	*ft_getenv(t_builtins *builts, char *path)
 {
-	int j = 0;
+	int	j;
 
-	while(builts->env[j])
+	j = 0;
+	while (builts->env[j])
 	{
-		if(!ft_strncmp(path, builts->env[j], ft_strlen(path)))
-			return(ft_strchr(builts->env[j], '='));
-		j++;	
+		if (!ft_strncmp(path, builts->env[j], ft_strlen(path)))
+			return (ft_strchr(builts->env[j], '='));
+		j++;
 	}
 	return (NULL);
 }
@@ -30,12 +31,12 @@ void	my_cd(t_builtins *builts, char *path)
 	char *old_pwd;
 
 	old_pwd = ft_getenv(builts, "PWD");
-	if(!path)
-		path = ft_getenv(builts,"HOME");
+	if (!path)
+		path = ft_getenv(builts, "HOME");
 	if (chdir(path) == -1)
 		perror("minishell");
 	else
-	{	
+	{
 		my_export(builts, ft_strjoin("OLDPWD=", old_pwd));
 		my_export(builts, ft_strjoin("PWD=", my_pwd(0)));
 	}

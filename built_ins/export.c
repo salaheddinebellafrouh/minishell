@@ -10,55 +10,55 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../minishell.h"
+#include "../minishell.h"
 
 void	free_double_demen(char **split)
 {
-	int j;
-	
+	int	j;
+
 	j = -1;
-	while(split[++j])
+	while (split[++j])
 		free(split[j]);
 	free(split);
 }
 
 int	check_arg(char *arg)
 {
-	int i;
-	
+	int	i;
+
 	i = -1;
-	if(arg[0] == '_' ||
+	if (arg[0] == '_' ||
 		(arg[0] >= 65 && arg[0] <= 90) ||
 		(arg[0] >= 97 && arg[0] <= 122))
-			i++;
+		i++;
 	else
-		return (0);		
-	while(arg[++i])
+		return (0);
+	while (arg[++i])
 	{
-		if(!ft_isalnum_v2(arg[i]))
-			return(0);
+		if (!ft_isalnum_v2(arg[i]))
+			return (0);
 	}
-	return(1);
+	return (1);
 }
 
 void	print_export(t_builtins *builts)
 {
-	char **split;
-	char *variable;
-	char *value;
-	int j;
+	char	**split;
+	char	*variable;
+	char	*value;
+	int		j;
 
 	j = -1;
-	while(builts->env[++j])
+	while (builts->env[++j])
 	{
 		split = ft_split(builts->env[j], '=');
 		variable = split[0];
-		value = ft_strchr(builts->env[j] ,'=');
+		value = ft_strchr(builts->env[j], '=');
 		printf("declare -x %s", variable);
-		if(if_equal_exist(builts->env[j]))
+		if (if_equal_exist(builts->env[j]))
 			printf("=");
-		if(value)
-			printf("\"%s\"", value);	
+		if (value)
+			printf("\"%s\"", value);
 		printf("\n");
 		free_double_demen(split);
 	}
@@ -78,31 +78,30 @@ void	my_export(t_builtins *builts, char *arg)
 	split = ft_split(arg, '=');
 	variable = split[0];
 	value = split[1];
-	
-	if(arg && !check_arg(variable))
+
+	if (arg && !check_arg(variable))
 		printf("export: `%s': not a valid identifier\n", arg);
-	
+
 	else
-	{	
+	{
 		len = 0;
-		while(variable[len])
+		while (variable[len])
 			len++;
 
 		exist = 0;
 		j = -1;
-		while(builts->env[++j])
+		while (builts->env[++j])
 		{
-			if(!ft_strncmp(variable, builts->env[j], len))
+			if (!ft_strncmp(variable, builts->env[j], len))
 			{
 				exist = 1;
-				break;
+				break ;
 			}
 		}
-	
-		
-		if(exist)
+
+		if (exist)
 		{
-			if(if_equal_exist(arg) && value)
+			if (if_equal_exist(arg) && value)
 			{
 				variable = ft_strjoin(variable, "=");
 				new_vrbl = variable;
@@ -110,20 +109,19 @@ void	my_export(t_builtins *builts, char *arg)
 				free(new_vrbl);
 				builts->env[j] = variable;
 			}
-			else if(if_equal_exist(arg))
+			else if (if_equal_exist(arg))
 			{
 				variable = ft_strjoin(variable, "=");
 				builts->env[j] = variable;
 			}
 		}
-	
-		
-		else if(!exist)
+
+		else if (!exist)
 		{
 			builts->env_len++;
 			new_env = malloc(sizeof(char *) * (builts->env_len + 2));
 			j = -1;
-			while(builts->env[++j])
+			while (builts->env[++j])
 				new_env[j] = builts->env[j];
 			new_env[j] = ft_strdup(arg);
 			new_env[++j] = NULL;
@@ -131,5 +129,5 @@ void	my_export(t_builtins *builts, char *arg)
 			builts->env = new_env;
 		}
 		free_double_demen(split);
-	}	
+	}
 }
