@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/26 15:57:27 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/26 15:59:25 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,10 +381,8 @@ int	main(int ac, char **av, char **env)
 		if (read[0])
 			add_history(read);
 		list = ft_start(read, builts->env);
-		// printf ("bara %s\n", builts->args_arr[0]);
-		// if (list)
-			// ft_pipe(builts, list);
-		// execute_built_ins(builts, list);
+		if (list)
+			ft_pipe(builts, list);
 		list = ft_free_list(list);
 		free(read);
 		// system("leaks minishell");
