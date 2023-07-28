@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/26 15:56:09 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/28 22:01:23 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,25 @@ void	fill_args_arr(t_builtins *builts, t_list *list);
 // execeve ----------------------------------------------------
 int     ft_execve(char **args, char **env);
 void	execute_externals(char **arg, char **env);
+int ft_pipe(t_builtins *builts, t_list *list);
 // parsing-------------------------------------------------------------
 t_list	*ft_free_list(t_list *list);
 char	*ft_strcpy_before(char *dst, char *src);
 char	*ft_strcpy_after(char *dst, char *src);
 t_list	*ft_expand(t_list *list, char **env);
 int	    ft_isdigit(int c);
+t_list	*ft_remove_quotes(t_list *list);
+void	add_to_list(struct Node **head, char *data, int type);
+void	add_elements(struct Node **head, char *data);
+int	    ft_symbols(char c);
+int	    string_list(char *read, int i, struct Node **head);
+t_list	*init_list(void);
+t_list	*copy_list(Node *source);
+void	print_copy(t_list *list);
+Node	*syntax_error(Node *head);
+int		ft_syntax_quotes(Node *head);
+t_list	*ft_start(char *read, char **env);
 
-int ft_pipe(t_builtins *builts, t_list *list);
 typedef struct s_vars
 {
     int		i;

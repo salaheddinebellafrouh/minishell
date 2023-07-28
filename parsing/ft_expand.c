@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 15:15:54 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/25 23:34:20 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/28 20:16:07 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,25 +146,31 @@ char	*expnd_data(char *data, char **before, char **after)
 	char	*id;
 	int		count;
 	int		kk;
-
+	int d = 0;
 	j = 0;
 	k = 0;
 	l = 0;
 	i = 0;
 	s = 0;
 	count = ft_count_string(data, before, after) + 1;
-	string = malloc(count);
+	string = malloc(100000);
 	i = 0;
+	
 	while (data[i])
 	{
-		if (data[i] == '\'')
+		if (data[i] == '\'' && d == 0)
 		{
-			while (data[i] != '\'')
+			string[s] = data[i];
+			s++;
+			i++;
+			while (data[i] != '\'' && data[i] && d== 0)
 			{
 				string[s] = data[i];
 				s++;
 				i++;
 			}
+
+			string[s] = '\0';
 		}
 		if (data[i] == '$' && data[i] && ft_isdigit(data[i + 1]))
 		{
@@ -186,14 +192,19 @@ char	*expnd_data(char *data, char **before, char **after)
 		}
 		else if (data[i] != '$')
 		{
+			d = 1;
 			if (data[i] != '$')
-				string[s] = data[i];
+			{
+			string[s] = data[i];
+
+			}
 			else
 				s++;
 			s++;
 		}
 		if (data[i] == '$' && ++i && data[i] && !ft_isdigit(data[i + 1]))
 		{
+			d = 1;
 			if (!data[i])
 				return (NULL);
 			kk = count_dollar(&(data[i]));
