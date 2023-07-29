@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/28 22:01:23 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/28 23:24:57 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int     ft_execve(char **args, char **env);
 void	execute_externals(char **arg, char **env);
 int ft_pipe(t_builtins *builts, t_list *list);
 // parsing-------------------------------------------------------------
-t_list	*ft_free_list(t_list *list);
+void    ft_free_list(t_list *list);
 char	*ft_strcpy_before(char *dst, char *src);
 char	*ft_strcpy_after(char *dst, char *src);
 t_list	*ft_expand(t_list *list, char **env);
@@ -122,5 +122,15 @@ typedef struct s_vars
 	int		kk;
 	char	*id;
 }   t_vars;
+
+typedef struct s_subnodes
+{
+    t_list	*tmp_list;
+	Node	*arg;
+	Node	*redirect;
+	Node	*infiles;
+	Node	*outfiles;
+	Node	*hairdoc;
+}   t_subnodes;
 
 #endif  

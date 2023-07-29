@@ -29,8 +29,8 @@ char	*ft_getenv(t_builtins *builts, char *path)
 void	my_cd(t_builtins *builts, char *path)
 {
 	char *old_pwd;
-		char *old;
-		char *new;
+	char *old;
+	char *new;
 
 	old_pwd = ft_getenv(builts, "PWD");
 	if (!path)

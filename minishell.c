@@ -6,18 +6,29 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/28 21:58:44 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/29 15:45:35 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	signal_c(int SIGC)
+{
+	if (SIGC == 2)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		printf("\n");
+		rl_redisplay();
+	}
+}
 int	main(int ac, char **av, char **env)
 {
 	char *read;
 	t_list *list;
 	t_builtins *builts;
-
+	signal(SIGINT, signal_c);
+	signal(SIGQUIT, SIG_IGN);
 	(void)ac;
 	(void)av;
 	builts = malloc(sizeof(t_builtins));
@@ -32,7 +43,7 @@ int	main(int ac, char **av, char **env)
 		list = ft_start(read, builts->env);
 		if (list)
 			ft_pipe(builts, list);
-		list = ft_free_list(list);
+		ft_free_list(list);
 		free(read);
 		// system("leaks minishell");
 	}

@@ -70,7 +70,6 @@ int	ft_symbols(char c)
 	return (0);
 }
 
-
 int	string_list(char *read, int i, struct Node **head)
 {
 	if (read[i] == '|')
@@ -132,23 +131,27 @@ t_list	*copy_list(Node *source)
 			add_to_list(&(currentList->redirect), source->data, 5);
 			if (strcmp(source->data, ">") == 0)
 			{
-				add_to_list(&(currentList->outfiles), source->next->data, OUTFILE);
+				add_to_list(&(currentList->outfiles), source->next->data,
+						OUTFILE);
 				source = source->next;
 			}
 			else if (strcmp(source->data, ">>") == 0)
 			{
-				add_to_list(&(currentList->outfiles), source->next->data, APPEND);
+				add_to_list(&(currentList->outfiles), source->next->data,
+						APPEND);
 				source = source->next;
 			}
 			else if (strcmp(source->data, "<") == 0)
 			{
-				add_to_list(&(currentList->infiles), source->next->data, INFILE);
+				add_to_list(&(currentList->infiles), source->next->data,
+						INFILE);
 				currentList->in_type = INFILE;
 				source = source->next;
 			}
 			else if (strcmp(source->data, "<<") == 0)
 			{
-				add_to_list(&(currentList->hairdoc), source->next->data, HAIRDOC);
+				add_to_list(&(currentList->hairdoc), source->next->data,
+						HAIRDOC);
 				currentList->in_type = HAIRDOC;
 				source = source->next;
 			}
@@ -257,44 +260,45 @@ Node	*syntax_error(Node *head)
 	}
 	return (head);
 }
-int		ft_syntax_quotes(Node *head)
+int	ft_syntax_quotes(Node *head)
 {
-	Node *copy = head;
-	int	i;
-	int	valid;
+	Node	*copy;
+	int		i;
+	int		valid;
 
+	copy = head;
 	valid = 1;
 	i = 0;
-	while(copy)
+	while (copy)
 	{
 		i = 0;
-		while(copy->data[i])
+		while (copy->data[i])
 		{
-			if(copy->data[i] && copy->data[i] == '"')
+			if (copy->data[i] && copy->data[i] == '"')
 			{
 				valid = 0;
 				i++;
-				while(copy->data[i] && copy->data[i] != '"')
+				while (copy->data[i] && copy->data[i] != '"')
 					i++;
-				if(copy->data[i] && copy->data[i] == '"')
+				if (copy->data[i] && copy->data[i] == '"')
 					valid = 1;
 			}
-			if(copy->data[i] && copy->data[i] == '\'')
+			if (copy->data[i] && copy->data[i] == '\'')
 			{
 				valid = 0;
 				i++;
-				while(copy->data[i] && copy->data[i] != '\'')
+				while (copy->data[i] && copy->data[i] != '\'')
 					i++;
-				if(copy->data[i] && copy->data[i] == '\'')
+				if (copy->data[i] && copy->data[i] == '\'')
 					valid = 1;
 			}
 			if (copy->data[i])
 				i++;
 		}
-		if(valid == 0)
+		if (valid == 0)
 		{
 			printf("Syntax Error\n");
-			return 0;
+			return (0);
 		}
 		copy = copy->next;
 	}
@@ -302,14 +306,14 @@ int		ft_syntax_quotes(Node *head)
 }
 t_list	*ft_start(char *read, char **env)
 {
-	t_list		*copiedlist;
-	struct Node	*head;
-	char		*cp;
-	int			i;
-	int			start;
-	int			s;
-	int			d;
-	Node		*temp;
+	t_list *copiedlist;
+	struct Node *head;
+	char *cp;
+	int i;
+	int start;
+	int s;
+	int d;
+	Node *temp;
 
 	(void)env;
 	s = 0;
@@ -341,7 +345,7 @@ t_list	*ft_start(char *read, char **env)
 	if (cp != '\0' && ft_strlen(cp) != 0)
 		add_elements(&head, cp);
 	free(cp);
-	if(!ft_syntax_quotes(head))
+	if (!ft_syntax_quotes(head))
 	{
 		while (head)
 		{

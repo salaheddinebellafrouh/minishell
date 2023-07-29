@@ -18,7 +18,7 @@ void	my_unset(t_builtins *builts, char *variable)
 	int len;
 	int exist;
 	char **split;
-	
+
 	len = 0;
 	while (variable[len])
 		len++;
@@ -29,11 +29,11 @@ void	my_unset(t_builtins *builts, char *variable)
 		split = ft_split(builts->env[j], '=');
 		if (ft_strlen(split[0]) == len)
 		{
-			if(!ft_strncmp(variable, builts->env[j], len))
+			if (!ft_strncmp(variable, builts->env[j], len))
 			{
 				free_double_demen(split);
 				exist = 1;
-				break;
+				break ;
 			}
 		}
 		free_double_demen(split);
