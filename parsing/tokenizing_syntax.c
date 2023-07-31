@@ -6,18 +6,18 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 21:59:08 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/28 22:00:16 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/29 20:23:03 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_to_list(struct Node **head, char *data, int type)
+void	add_to_list(Node **head, char *data, int type)
 {
-	struct Node	*newnode;
-	struct Node	*current;
+	Node	*newnode;
+	Node	*current;
 
-	newnode = (struct Node *)malloc(sizeof(struct Node));
+	newnode = (Node *)malloc(sizeof(Node));
 	newnode->data = strdup(data);
 	newnode->type = type;
 	newnode->next = NULL;
@@ -38,12 +38,12 @@ void	add_to_list(struct Node **head, char *data, int type)
 	}
 }
 
-void	add_elements(struct Node **head, char *data)
+void	add_elements(Node **head, char *data)
 {
-	struct Node	*newnode;
-	struct Node	*current;
+	Node	*newnode;
+	Node	*current;
 
-	newnode = (struct Node *)malloc(sizeof(struct Node));
+	newnode = (Node *)malloc(sizeof(Node));
 	newnode->data = strdup(data);
 	newnode->next = NULL;
 	newnode->prev = NULL;
@@ -70,7 +70,7 @@ int	ft_symbols(char c)
 	return (0);
 }
 
-int	string_list(char *read, int i, struct Node **head)
+int	string_list(char *read, int i, Node **head)
 {
 	if (read[i] == '|')
 		add_elements(&(*head), "|");
@@ -157,9 +157,7 @@ t_list	*copy_list(Node *source)
 			}
 		}
 		else
-		{
 			add_elements(&(currentList->arg), source->data);
-		}
 		source = source->next;
 	}
 	returned->pipe = pipe;
@@ -212,6 +210,42 @@ void	print_copy(t_list *list)
 		printf("---------\n");
 	}
 }
+int	syntax_redirections(Node *newnode)
+{
+	if (!newnode->next)
+	{
+		free(newnode->data);
+		free(newnode);
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		return (0);
+	}
+	if (strcmp(newnode->next->data, "|") == 0)
+	{
+		free(newnode->data);
+		free(newnode);
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		return (0);
+	}
+	return (1);
+}
+int	syntax_pipes(Node *newnode)
+{
+	if (!newnode->next || !newnode->prev)
+	{
+		free(newnode->data);
+		free(newnode);
+		printf("minishell: syntax error near unexpected token `|'\n");
+		return (0);
+	}
+	if (strcmp(newnode->next->data, "|") == 0)
+	{
+		free(newnode->data);
+		free(newnode);
+		printf("minishell: syntax error near unexpected token `|''\n");
+		return (0);
+	}
+	return (1);
+}
 Node	*syntax_error(Node *head)
 {
 	Node	*newnode;
@@ -224,41 +258,39 @@ Node	*syntax_error(Node *head)
 			|| strcmp(newnode->data, "<<") == 0 || strcmp(newnode->data,
 				"<") == 0)
 		{
-			if (!newnode->next)
-			{
-				free(newnode->data);
-				free(newnode);
-				printf("minishell: syntax error near unexpected token `newline'\n");
+			if (!(syntax_redirections(newnode)))
 				return (NULL);
-			}
-			if (strcmp(newnode->next->data, "|") == 0)
-			{
-				free(newnode->data);
-				free(newnode);
-				printf("minishell: syntax error near unexpected token `newline'\n");
-				return (NULL);
-			}
 		}
 		else if (strcmp(newnode->data, "|") == 0)
 		{
-			if (!newnode->next || !newnode->prev)
-			{
-				free(newnode->data);
-				free(newnode);
-				printf("minishell: syntax error near unexpected token `|'\n");
+			if (!(syntax_pipes(newnode)))
 				return (NULL);
-			}
-			if (strcmp(newnode->next->data, "|") == 0)
-			{
-				free(newnode->data);
-				free(newnode);
-				printf("minishell: syntax error near unexpected token `|''\n");
-				return (NULL);
-			}
 		}
 		newnode = newnode->next;
 	}
 	return (head);
+}
+int	check_syntax_q(int *valid, Node *copy, int i)
+{
+	if (copy->data[i] && copy->data[i] == '"')
+	{
+		*(valid) = 0;
+		i++;
+		while (copy->data[i] && copy->data[i] != '"')
+			i++;
+		if (copy->data[i] && copy->data[i] == '"')
+			*(valid) = 1;
+	}
+	if (copy->data[i] && copy->data[i] == '\'')
+	{
+		*(valid) = 0;
+		i++;
+		while (copy->data[i] && copy->data[i] != '\'')
+			i++;
+		if (copy->data[i] && copy->data[i] == '\'')
+			*(valid) = 1;
+	}
+	return (i);
 }
 int	ft_syntax_quotes(Node *head)
 {
@@ -274,24 +306,7 @@ int	ft_syntax_quotes(Node *head)
 		i = 0;
 		while (copy->data[i])
 		{
-			if (copy->data[i] && copy->data[i] == '"')
-			{
-				valid = 0;
-				i++;
-				while (copy->data[i] && copy->data[i] != '"')
-					i++;
-				if (copy->data[i] && copy->data[i] == '"')
-					valid = 1;
-			}
-			if (copy->data[i] && copy->data[i] == '\'')
-			{
-				valid = 0;
-				i++;
-				while (copy->data[i] && copy->data[i] != '\'')
-					i++;
-				if (copy->data[i] && copy->data[i] == '\'')
-					valid = 1;
-			}
+			i = check_syntax_q(&valid, copy, i);
 			if (copy->data[i])
 				i++;
 		}
@@ -306,14 +321,14 @@ int	ft_syntax_quotes(Node *head)
 }
 t_list	*ft_start(char *read, char **env)
 {
-	t_list *copiedlist;
-	struct Node *head;
-	char *cp;
-	int i;
-	int start;
-	int s;
-	int d;
-	Node *temp;
+	t_list	*copiedlist;
+	Node	*head;
+	char	*cp;
+	int		i;
+	int		start;
+	int		s;
+	int		d;
+	Node	*temp;
 
 	(void)env;
 	s = 0;
@@ -368,7 +383,7 @@ t_list	*ft_start(char *read, char **env)
 		head = temp;
 	}
 	copiedlist = ft_expand(copiedlist, env);
-	copiedlist = ft_remove_quotes(copiedlist);
+	// copiedlist = ft_remove_quotes(copiedlist);
 	print_copy(copiedlist);
 	return (copiedlist);
 }

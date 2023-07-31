@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 15:15:54 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/29 16:38:17 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/30 00:53:46 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,21 +159,18 @@ char	*expnd_data(char *data, char **before, char **after)
 	i = 0;
 	while (data[i])
 	{
-		if (data[i] == '\'' && d == 0)
+		if (data[i] != '$' && data[i] != '\'')
+			string[s++] = data[i];
+		else if (data[i] == '\'')
 		{
-			string[s] = data[i];
-			s++;
-			i++;
-			while (data[i] != '\'' && data[i] && d == 0)
-			{
-				string[s] = data[i];
-				s++;
-				i++;
-			}
-			string[s] = '\0';
+			string[s++] = data[i++];
+			while (data[i] && data[i] != '\'')
+				string[s++] = data[i++];
+			string[s++] = data[i];
 		}
-		if (data[i] == '$' && data[i] && ft_isdigit(data[i + 1]))
+		else if (data[i] == '$' && data[i] && ft_isdigit(data[i + 1]))
 		{
+			
 			if (!data[i + 1])
 				return (data);
 			i++;
@@ -190,18 +187,7 @@ char	*expnd_data(char *data, char **before, char **after)
 				}
 			}
 		}
-		else if (data[i] != '$')
-		{
-			d = 1;
-			if (data[i] != '$')
-			{
-				string[s] = data[i];
-			}
-			else
-				s++;
-			s++;
-		}
-		if (data[i] == '$' && ++i && data[i] && !ft_isdigit(data[i + 1]))
+		else if (data[i] == '$' && ++i && data[i] && !ft_isdigit(data[i + 1]))
 		{
 			d = 1;
 			if (!data[i])
