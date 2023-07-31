@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 20:52:48 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/31 15:03:20 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/31 20:08:52 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_execve(char **args, char **env)
 			str = ft_strdup(args[i]);
 			if (access(str, X_OK) == -1)
 			{
-				printf("minishell: %s: command not found\n", args[0]);
+				write(2, "minishell: command not found\n", 33);
 				found = 1;
 				break ;
 			}
@@ -75,10 +75,8 @@ int	ft_execve(char **args, char **env)
 		}
 		free(str);
 	}
-	if (!found)
-	{
-		printf("minishell: %s: command not found\n", args[0]);
-	}
+	if(!found)
+		write(2, "minishell: command not found\n", 33);
 	free_double_demen(paths);
 	return (1);
 }
