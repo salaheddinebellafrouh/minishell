@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 15:15:54 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/25 23:34:20 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/29 16:38:17 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,9 @@ char	*expnd_data(char *data, char **before, char **after)
 	char	*id;
 	int		count;
 	int		kk;
+	int		d;
 
+	d = 0;
 	j = 0;
 	k = 0;
 	l = 0;
@@ -157,14 +159,18 @@ char	*expnd_data(char *data, char **before, char **after)
 	i = 0;
 	while (data[i])
 	{
-		if (data[i] == '\'')
+		if (data[i] == '\'' && d == 0)
 		{
-			while (data[i] != '\'')
+			string[s] = data[i];
+			s++;
+			i++;
+			while (data[i] != '\'' && data[i] && d == 0)
 			{
 				string[s] = data[i];
 				s++;
 				i++;
 			}
+			string[s] = '\0';
 		}
 		if (data[i] == '$' && data[i] && ft_isdigit(data[i + 1]))
 		{
@@ -186,14 +192,18 @@ char	*expnd_data(char *data, char **before, char **after)
 		}
 		else if (data[i] != '$')
 		{
+			d = 1;
 			if (data[i] != '$')
+			{
 				string[s] = data[i];
+			}
 			else
 				s++;
 			s++;
 		}
 		if (data[i] == '$' && ++i && data[i] && !ft_isdigit(data[i + 1]))
 		{
+			d = 1;
 			if (!data[i])
 				return (NULL);
 			kk = count_dollar(&(data[i]));
@@ -382,11 +392,8 @@ char	*ft_rquotes(char *data)
 	int		j;
 	char	*returned;
 
-	// int		count_q;
 	j = 0;
 	i = 0;
-	// count_q = count_quotes(data);
-	// printf(">>>%d\n", count_q);
 	returned = malloc(ft_strlen(data) + 3000);
 	while (data[i])
 	{
@@ -431,8 +438,8 @@ char	*ft_rquotes(char *data)
 }
 t_list	*ft_remove_quotes(t_list *list)
 {
-	t_list *copied;
-	Node *arg;
+	t_list	*copied;
+	Node	*arg;
 
 	arg = list->arg;
 	copied = list;

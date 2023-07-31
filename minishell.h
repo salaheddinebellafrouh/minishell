@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/30 22:55:33 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/31 15:29:35 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,24 @@ void    ft_redirection(t_list *list);
 int		ft_pipe(t_builtins *builts, t_list *list);
 int     ft_execve(char **args, char **env);
 void	execute_externals(char **arg, char **env);
-// parsing -----------------------------------------------------
-t_list	*ft_free_list(t_list *list);
+int     ft_pipe(t_builtins *builts, t_list *list);
+// parsing-------------------------------------------------------------
+void    ft_free_list(t_list *list);
 char	*ft_strcpy_before(char *dst, char *src);
 char	*ft_strcpy_after(char *dst, char *src);
 t_list	*ft_expand(t_list *list, char **env);
 int	    ft_isdigit(int c);
+t_list	*ft_remove_quotes(t_list *list);
+void	add_to_list(struct Node **head, char *data, int type);
+void	add_elements(struct Node **head, char *data);
+int	    ft_symbols(char c);
+int	    string_list(char *read, int i, struct Node **head);
+t_list	*init_list(void);
+t_list	*copy_list(Node *source);
+void	print_copy(t_list *list);
+Node	*syntax_error(Node *head);
+int		ft_syntax_quotes(Node *head);
+t_list	*ft_start(char *read, char **env);
 
 typedef struct s_vars
 {
@@ -112,5 +124,15 @@ typedef struct s_vars
 	int		kk;
 	char	*id;
 }   t_vars;
+
+typedef struct s_subnodes
+{
+    t_list	*tmp_list;
+	Node	*arg;
+	Node	*redirect;
+	Node	*infiles;
+	Node	*outfiles;
+	Node	*hairdoc;
+}   t_subnodes;
 
 #endif  

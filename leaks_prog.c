@@ -1,11 +1,11 @@
-#include "unistd.h"
 #include "stdlib.h"
+#include "unistd.h"
 
-int main()
+int	main(void)
 {
-    while (1)
-    {
-        system("leaks minishell");
-        sleep(1);
-    }
+	while (1)
+	{
+		system("leaks minishell");
+		sleep(1);
+	}
 }
