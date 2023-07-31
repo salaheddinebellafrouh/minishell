@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/26 13:02:47 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:49:57 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,9 @@ t_list	*copy_list(Node *source)
 {
 	t_list	*returned;
 	t_list	*currentList;
-	int	pipe = 0;
+	int		pipe;
+
+	pipe = 0;
 	returned = init_list();
 	currentList = returned;
 	while (source != NULL)
@@ -175,22 +177,24 @@ t_list	*copy_list(Node *source)
 			add_to_list(&(currentList->redirect), source->data, 5);
 			if (strcmp(source->data, ">") == 0)
 			{
-				add_to_list(&(currentList->outfiles), source->next->data, 15);
+				add_to_list(&(currentList->outfiles), source->next->data, OUTFILE);
 				source = source->next;
 			}
 			else if (strcmp(source->data, ">>") == 0)
 			{
-				add_to_list(&(currentList->outfiles), source->next->data, 16);
+				add_to_list(&(currentList->outfiles), source->next->data, APPEND);
 				source = source->next;
 			}
 			else if (strcmp(source->data, "<") == 0)
 			{
-				add_to_list(&(currentList->infiles), source->next->data, 17);
+				add_to_list(&(currentList->infiles), source->next->data, INFILE);
+				currentList->in_type = INFILE;
 				source = source->next;
 			}
 			else if (strcmp(source->data, "<<") == 0)
 			{
-				add_to_list(&(currentList->hairdoc), source->next->data, 18);
+				add_to_list(&(currentList->hairdoc), source->next->data, HAIRDOC);
+				currentList->in_type = HAIRDOC;
 				source = source->next;
 			}
 		}
@@ -198,7 +202,6 @@ t_list	*copy_list(Node *source)
 		{
 			add_elements(&(currentList->arg), source->data);
 		}
-		
 		source = source->next;
 	}
 	returned->pipe = pipe;
@@ -300,11 +303,8 @@ Node	*syntax_error(Node *head)
 	return (head);
 }
 
-
-
 t_list	*ft_start(char *read, char **env)
 {
-	(void)env;
 	t_list		*copiedlist;
 	struct Node	*head;
 	char		*cp;
@@ -314,6 +314,7 @@ t_list	*ft_start(char *read, char **env)
 	int			d;
 	Node		*temp;
 
+	(void)env;
 	s = 0;
 	d = 0;
 	head = NULL;
@@ -362,11 +363,12 @@ t_list	*ft_start(char *read, char **env)
 	// print_copy(copiedlist);
 	return (copiedlist);
 }
+
 int	main(int ac, char **av, char **env)
 {
-	char		*read;
-	t_list		*list;
-	t_builtins	*builts;
+	char *read;
+	t_list *list;
+	t_builtins *builts;
 
 	(void)ac;
 	(void)av;
@@ -377,12 +379,12 @@ int	main(int ac, char **av, char **env)
 		read = readline("minishell> ");
 		if (!read)
 			exit(0);
-		if(read[0])
+		if (read[0])
 			add_history(read);
 		list = ft_start(read, builts->env);
 		if (list)
-			// ft_pipe(builts, list);
-			ft_redirection(builts, list);
+			ft_pipe(builts, list);
+			// ft_redirection(builts, list);
 		list = ft_free_list(list);
 		free(read);
 		// system("leaks minishell");
