@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:12 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/26 15:59:10 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/31 15:37:24 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	my_unset(t_builtins *builts, char *variable)
 {
-	int j = 0;
-	int len;
-	int exist;
-	char **split;
+	int		j;
+	int		len;
+	int		exist;
+	char	**split;
 
 	len = 0;
 	while (variable[len])

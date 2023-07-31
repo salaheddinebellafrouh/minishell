@@ -170,7 +170,6 @@ char	*expnd_data(char *data, char **before, char **after)
 		}
 		else if (data[i] == '$' && data[i] && ft_isdigit(data[i + 1]))
 		{
-			
 			if (!data[i + 1])
 				return (data);
 			i++;

@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/28 23:24:57 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/31 19:58:51 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <fcntl.h>
 
 typedef struct Node
 {
@@ -56,11 +57,11 @@ typedef struct t_list {
 
 typedef struct s_builtins
 {
-    char **env;
-    int     env_len;
-    char **args_arr;
-    int arg_len;
-    int pipe_nbr;
+    char	**env;
+    int		env_len;
+    char	**args_arr;
+    int 	arg_len;
+    int 	pipe_nbr;
 } t_builtins;
 
 
@@ -75,8 +76,8 @@ char	**ft_split(const char *s, char c);
 char	*ft_strchr(const char *s, int c);
 int		ft_isalnum(int c);
 int	    ft_isalnum_v2(char n);
-// built in ---------------------------------------------------
-void	execute_built_ins(t_builtins *builts, t_list *list);
+// execution ---------------------------------------------------
+void	ft_execution(t_builtins *builts);
 void	my_cd(t_builtins *builts, char *path);
 char    *my_pwd(int print);
 void	my_exit(char *exit_arg);
@@ -89,10 +90,11 @@ void	print_export(t_builtins *builts);
 int		if_equal_exist(char *str);
 void	free_double_demen(char **split);
 void	fill_args_arr(t_builtins *builts, t_list *list);
-// execeve ----------------------------------------------------
+void    ft_redirection(t_list *list);
+int		ft_pipe(t_builtins *builts, t_list *list);
 int     ft_execve(char **args, char **env);
 void	execute_externals(char **arg, char **env);
-int ft_pipe(t_builtins *builts, t_list *list);
+int     ft_pipe(t_builtins *builts, t_list *list);
 // parsing-------------------------------------------------------------
 void    ft_free_list(t_list *list);
 char	*ft_strcpy_before(char *dst, char *src);
@@ -110,6 +112,12 @@ void	print_copy(t_list *list);
 Node	*syntax_error(Node *head);
 int		ft_syntax_quotes(Node *head);
 t_list	*ft_start(char *read, char **env);
+Node	*quotes_management(char *read, Node *head);
+void	free_infiles_nodes(t_list *list);
+void	free_redirect_nodes(t_list *list);
+void	free_arg_nodes(t_list *list);
+void	free_t_list(t_list *list);
+void	free_node(Node *node);
 
 typedef struct s_vars
 {
@@ -123,6 +131,15 @@ typedef struct s_vars
 	char	*id;
 }   t_vars;
 
+typedef struct s_headvar
+{
+    	int		i;
+	int		start;
+	int		s;
+	int		d;
+	char	*cp;
+
+}t_headvar;
 typedef struct s_subnodes
 {
     t_list	*tmp_list;

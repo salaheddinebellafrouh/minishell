@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 20:52:48 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/25 21:32:59 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/31 15:03:20 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,24 @@ int	ft_execve(char **args, char **env)
 	paths = ft_split(path, ':');
 	while (paths[++i])
 	{
-		str = ft_strjoin(paths[i], "/");
-		tmp = ft_strdup(str);
-		free(str);
-		str = ft_strjoin(tmp, args[0]);
-		free(tmp);
+		if (args[0][0] == '/')
+		{
+			str = ft_strdup(args[i]);
+			if (access(str, X_OK) == -1)
+			{
+				printf("minishell: %s: command not found\n", args[0]);
+				found = 1;
+				break ;
+			}
+		}
+		else
+		{
+			str = ft_strjoin(paths[i], "/");
+			tmp = ft_strdup(str);
+			free(str);
+			str = ft_strjoin(tmp, args[0]);
+			free(tmp);
+		}
 		if (access(str, X_OK) == 0)
 		{
 			found = 1;
@@ -63,7 +76,9 @@ int	ft_execve(char **args, char **env)
 		free(str);
 	}
 	if (!found)
+	{
 		printf("minishell: %s: command not found\n", args[0]);
+	}
 	free_double_demen(paths);
 	return (1);
 }

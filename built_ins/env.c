@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:01 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/14 19:25:02 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:41:24 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	if_equal_exist(char *str)
 
 void	my_env(t_builtins *builts)
 {
-	int j;
+	int	j;
 
 	j = -1;
 	while (builts->env[++j] != NULL)

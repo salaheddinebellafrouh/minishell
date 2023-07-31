@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:04 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/25 21:56:38 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:45:10 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ int	check_arg(char *arg)
 	int	i;
 
 	i = -1;
-	if (arg[0] == '_' ||
-		(arg[0] >= 65 && arg[0] <= 90) ||
-		(arg[0] >= 97 && arg[0] <= 122))
+	if (arg[0] == '_' || (arg[0] >= 65 && arg[0] <= 90) || (arg[0] >= 97
+			&& arg[0] <= 122))
 		i++;
 	else
 		return (0);
@@ -66,28 +65,25 @@ void	print_export(t_builtins *builts)
 
 void	my_export(t_builtins *builts, char *arg)
 {
-	int j;
-	int len;
-	int exist;
-	char **split;
-	char *variable;
-	char *value;
-	char *new_vrbl;
-	char **new_env;
+	int		j;
+	int		len;
+	int		exist;
+	char	**split;
+	char	*variable;
+	char	*value;
+	char	*new_vrbl;
+	char	**new_env;
 
 	split = ft_split(arg, '=');
 	variable = split[0];
 	value = split[1];
-
 	if (arg && !check_arg(variable))
 		printf("export: `%s': not a valid identifier\n", arg);
-
 	else
 	{
 		len = 0;
 		while (variable[len])
 			len++;
-
 		exist = 0;
 		j = -1;
 		while (builts->env[++j])
@@ -98,7 +94,6 @@ void	my_export(t_builtins *builts, char *arg)
 				break ;
 			}
 		}
-
 		if (exist)
 		{
 			if (if_equal_exist(arg) && value)
@@ -117,7 +112,6 @@ void	my_export(t_builtins *builts, char *arg)
 				builts->env[j] = variable;
 			}
 		}
-
 		else if (!exist)
 		{
 			builts->env_len++;

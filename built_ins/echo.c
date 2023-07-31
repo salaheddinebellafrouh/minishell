@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:58:58 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/18 20:09:18 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:40:45 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ int	n_flag_ultra(char **ptr, int *index)
 
 void	my_echo(t_builtins *builts)
 {
-	int i;
-	int n;
-	int flag_in;
+	int	i;
+	int	n;
+	int	flag_in;
 
 	i = 0;
 	flag_in = 0;

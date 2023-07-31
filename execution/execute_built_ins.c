@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/25 16:11:24 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/31 15:04:47 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	fill_args_arr(t_builtins *builts, t_list *list)
 
 int	check_command(char *arg, char *str1, char *str2)
 {
-	if (!ft_strncmp(arg, str1, ft_strlen(str1)) ||
-		!ft_strncmp(arg, str2, ft_strlen(str2)))
+	if (arg && (!ft_strncmp(arg, str1, ft_strlen(str1)) || !ft_strncmp(arg,
+				str2, ft_strlen(str2))))
 		return (1);
 	return (0);
 }
@@ -67,13 +67,18 @@ int	ft_pipe(t_builtins *builts, t_list *list)
 	input = 0;
 	i = 0;
 	j = 0;
-	if (list->next == NULL)
-	{
-		fill_args_arr(builts, c_list);
-		execute_built_ins(builts, list);
-		free_double_demen(builts->args_arr);
-		return (0);
-	}
+	// if (list->next == NULL)
+	// {
+	// 	fill_args_arr(builts, c_list);
+	// 	_in = dup(0);
+	//  _out = dup(1);
+	// 	ft_redirection(builts, c_list);
+	// 	ft_execution(builts);
+	// 	dup2(0, _in);
+	// 	dup2(1, _out);
+	// 	free_double_demen(builts->args_arr);
+	// 	return (0);
+	// }
 	while (c_list)
 	{
 		fill_args_arr(builts, c_list);
@@ -88,7 +93,8 @@ int	ft_pipe(t_builtins *builts, t_list *list)
 				close(fd[1]);
 				close(fd[0]);
 			}
-			execute_built_ins(builts, list);
+			ft_redirection(c_list);
+			ft_execution(builts);
 			exit(0);
 		}
 		else
@@ -96,6 +102,8 @@ int	ft_pipe(t_builtins *builts, t_list *list)
 			input = fd[0];
 			id[i] = pid;
 			close(fd[1]);
+			if (!input)
+				close(input);
 		}
 		i++;
 		c_list = c_list->next;
@@ -106,11 +114,10 @@ int	ft_pipe(t_builtins *builts, t_list *list)
 	return (0);
 }
 
-void	execute_built_ins(t_builtins *builts, t_list *list)
+void	ft_execution(t_builtins *builts)
 {
 	int i = 0;
 	// int status = 0;
-	(void)list;
 
 	if (check_command(builts->args_arr[0], "pwd", "PWD"))
 		my_pwd(1);
@@ -138,15 +145,11 @@ void	execute_built_ins(t_builtins *builts, t_list *list)
 		{
 			i = -1;
 			while (builts->args_arr[++i])
-			{
 				if (builts->args_arr[i + 1])
 					my_export(builts, builts->args_arr[i + 1]);
-			}
 		}
 	}
-	else
-	{
+	else if (builts->args_arr[0])
 		execute_externals(builts->args_arr, builts->env);
-	}
 	// exit(status);
 }

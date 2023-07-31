@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:58:54 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/26 15:58:53 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/31 15:31:01 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ char	*ft_getenv(t_builtins *builts, char *path)
 
 void	my_cd(t_builtins *builts, char *path)
 {
-	char *old_pwd;
-	char *old;
-	char *new;
+	char	*old_pwd;
+	char	*old;
+	char	*new;
 
 	old_pwd = ft_getenv(builts, "PWD");
 	if (!path)

@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/29 17:56:11 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/31 16:49:28 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ void	signal_c(int SIGC)
 		rl_redisplay();
 	}
 }
+
 int	main(int ac, char **av, char **env)
 {
-	char *read;
-	t_list *list;
-	t_builtins *builts;
+	char		*read;
+	t_list		*list;
+	t_builtins	*builts;
+
 	signal(SIGINT, signal_c);
 	signal(SIGQUIT, SIG_IGN);
 	(void)ac;
@@ -41,11 +43,10 @@ int	main(int ac, char **av, char **env)
 		if (read[0])
 			add_history(read);
 		list = ft_start(read, builts->env);
-		// if (list)
-		// ft_pipe(builts, list);
+		if (list)
+			ft_pipe(builts, list);
 		ft_free_list(list);
 		free(read);
-		// system("leaks minishell");
 	}
 	return (0);
 }
