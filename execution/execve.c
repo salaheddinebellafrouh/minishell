@@ -75,7 +75,7 @@ int	ft_execve(char **args, char **env)
 		}
 		free(str);
 	}
-	if(!found)
+	if (!found)
 		write(2, "minishell: command not found\n", 33);
 	free_double_demen(paths);
 	return (1);

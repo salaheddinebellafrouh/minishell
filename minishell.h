@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/31 19:58:51 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/01 16:02:02 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,28 @@ typedef struct s_builtins
     int 	arg_len;
     int 	pipe_nbr;
 } t_builtins;
+typedef struct s_vars
+{
+    int		i;
+	int		j;
+	int		k;
+	int		s;
+	int		d;
+	int		l;
+	int		count;
+	int		kk;
+	char	*id;
+}   t_vars;
+
+typedef struct s_headvar
+{
+    	int		i;
+	int		start;
+	int		s;
+	int		d;
+	char	*cp;
+
+}t_headvar;
 
 
 // libft ------------------------------------------------------
@@ -118,28 +140,18 @@ void	free_redirect_nodes(t_list *list);
 void	free_arg_nodes(t_list *list);
 void	free_t_list(t_list *list);
 void	free_node(Node *node);
-
-typedef struct s_vars
-{
-    int		i;
-	int		j;
-	int		k;
-	int		s;
-	int		d;
-	int		l;
-	int		kk;
-	char	*id;
-}   t_vars;
-
-typedef struct s_headvar
-{
-    	int		i;
-	int		start;
-	int		s;
-	int		d;
-	char	*cp;
-
-}t_headvar;
+t_list	*ft_remove_quotes(t_list *list);
+void	init_vars(t_vars *vars);
+int		calloc_after(char *string);
+int		calloc_before(char *string);
+char	*expnd_data(char *data, char **before, char **after);
+int		ft_count_string(char *data, char **before, char **after);
+void	ft_count_dollar(char *data, char **before, char **after, t_vars *d);
+int		count_dollar(char *data);
+char	*get_id2(char *data);
+void	digit_dollar(t_vars *vars, char *data, char *string);
+char	*before_after(char **before, char **after, char *id, t_vars *vars,
+		char *string);
 typedef struct s_subnodes
 {
     t_list	*tmp_list;

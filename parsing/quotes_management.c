@@ -6,25 +6,11 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:45:10 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/31 20:00:05 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/07/31 23:14:56 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	check_single(char read, int d, int s)
-{
-	if (read == '\"' && s == 0)
-		d = !d;
-	return (d);
-}
-
-int	check_double(char read, int d, int s)
-{
-	if (read == '\'' && d == 0)
-		s = !s;
-	return (s);
-}
 
 void	init_var(t_headvar *var)
 {
@@ -42,8 +28,10 @@ Node	*quotes_management(char *read, Node *head)
 	init_var(&var);
 	while (read[var.i])
 	{
-		var.s = check_single(read[var.i], var.d, var.s);
-		var.d = check_double(read[var.i], var.d, var.s);
+		if (read[var.i] == '\'' && var.d == 0)
+			var.s = !var.s;
+		if (read[var.i] == '\"' && var.s == 0)
+			var.d = !var.d;
 		if ((var.d == 0) && (var.s == 0))
 		{
 			if (ft_symbols(read[var.i]))
