@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_helpers.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 22:56:43 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/20 11:48:26 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/07/31 19:55:58 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ft_isdigit(int c)
 	}
 	return (0);
 }
+
 int	ft_isalpha(int c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
@@ -50,10 +51,11 @@ char	*ft_strcpy_before(char *dst, char *src)
 	}
 	return (dst);
 }
+
 char	*ft_strcpy_after(char *dst, char *src)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;

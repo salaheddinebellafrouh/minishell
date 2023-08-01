@@ -6,29 +6,30 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/01 18:47:57 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/01 18:50:54 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	signal_c(int SIGC)
-// {
-// 	if (SIGC == 2)
-// 	{
-// 		rl_on_new_line();
-// 		rl_replace_line("", 0);
-// 		printf("\n");
-// 		rl_redisplay();
-// 	}
-// }
+void	signal_c(int SIGC)
+{
+	if (SIGC == 2)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		printf("\n");
+		rl_redisplay();
+	}
+}
 
 int	main(int ac, char **av, char **env)
 {
-	char *read;
-	t_list *list;
-	t_builtins *builts;
-	// signal(SIGINT, signal_c);
+	char		*read;
+	t_list		*list;
+	t_builtins	*builts;
+
+	signal(SIGINT, signal_c);
 	signal(SIGQUIT, SIG_IGN);
 	(void)ac;
 	(void)av;

@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 20:52:48 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/01 16:17:25 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/01 18:51:25 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ int	ft_execve(char **args, char **env)
 	paths = ft_split(path, ':');
 	while (paths[++i])
 	{
-		if(args[0][0] == '/')
+		if (args[0][0] == '/')
 		{
 			str = ft_strdup(args[i]);
 			if (access(str, X_OK) == -1)
 			{
 				write(2, "minishell: command not found\n", 33);
 				found = 1;
-				break;
+				break ;
 			}
 		}
 		else
@@ -71,7 +71,7 @@ int	ft_execve(char **args, char **env)
 			else
 				wait(NULL);
 			free(str);
-			break;
+			break ;
 		}
 		free(str);
 	}
@@ -91,7 +91,7 @@ void	execute_externals(char **arg, char **env)
 	// }
 	// else if (pid == 0)
 	// {
-		ft_execve(arg, env);
+	ft_execve(arg, env);
 	// }
 	// else
 	// {

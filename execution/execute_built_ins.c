@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/01 17:49:47 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/01 18:51:10 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	fill_args_arr(t_builtins *builts, t_list *list)
 
 int	check_command(char *arg, char *str1, char *str2)
 {
-	if (arg && (!ft_strncmp(arg, str1, ft_strlen(str1)) ||
-		!ft_strncmp(arg, str2, ft_strlen(str2))))
-			return (1);
+	if (arg && (!ft_strncmp(arg, str1, ft_strlen(str1)) || !ft_strncmp(arg,
+				str2, ft_strlen(str2))))
+		return (1);
 	return (0);
 }
 

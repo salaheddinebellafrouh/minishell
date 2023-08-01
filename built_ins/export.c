@@ -27,8 +27,7 @@ int	check_arg(char *arg)
 	int	i;
 
 	i = -1;
-	if (arg[0] == '_' || (arg[0] >= 65
-			&& arg[0] <= 90) || (arg[0] >= 97
+	if (arg[0] == '_' || (arg[0] >= 65 && arg[0] <= 90) || (arg[0] >= 97
 			&& arg[0] <= 122))
 		i++;
 	else
