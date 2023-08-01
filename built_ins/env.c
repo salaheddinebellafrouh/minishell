@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:01 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/31 14:41:24 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/01 18:34:10 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	fill_env(char **environ, t_builtins *builts)
 	builts->env = malloc(sizeof(char *) * (len + 1));
 	j = -1;
 	while (environ[++j])
-		builts->env[j] = strdup(environ[j]);
+		builts->env[j] = ft_strdup(environ[j]);
 	builts->env[j] = NULL;
 }
 

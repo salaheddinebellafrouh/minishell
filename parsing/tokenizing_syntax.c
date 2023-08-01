@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing_syntax.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 21:59:08 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/28 22:00:16 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:02:02 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,6 +369,6 @@ t_list	*ft_start(char *read, char **env)
 	}
 	copiedlist = ft_expand(copiedlist, env);
 	copiedlist = ft_remove_quotes(copiedlist);
-	print_copy(copiedlist);
+	// print_copy(copiedlist);
 	return (copiedlist);
 }

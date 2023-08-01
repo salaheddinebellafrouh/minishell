@@ -1,6 +1,6 @@
 NAME = minishell
 
-CFLAGS = -Wall -Werror -Wextra #-I #/Users/sbellafr/.brew/opt/readline/include/ #-fsanitize=address -g
+CFLAGS = -Wall -Werror -Wextra #-fsanitize=address -g #-I #/Users/sbellafr/.brew/opt/readline/include/
 
 EXECUTION = ./execution/execute_built_ins.c ./execution/execve.c ./execution/redirection.c
 PARSING = ./parsing/ft_free.c ./parsing/ft_expand.c ./parsing/ft_helpers.c  ./parsing/tokenizing_syntax.c

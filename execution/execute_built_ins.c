@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/31 15:04:47 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:49:47 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,19 @@ int	ft_pipe(t_builtins *builts, t_list *list)
 	i = 0;
 	j = 0;
 	
-	// if (list->next == NULL)
-	// {
-	// 	fill_args_arr(builts, c_list);
-	// 	_in = dup(0);
-    //  _out = dup(1);
-	// 	ft_redirection(builts, c_list);
-	// 	ft_execution(builts);
-	// 	dup2(0, _in);
-	// 	dup2(1, _out);
-	// 	free_double_demen(builts->args_arr);
-	// 	return (0);
-	// }
+	if (list->next == NULL)
+	{
+		fill_args_arr(builts, c_list);
+		int _old = dup(0);
+		int _new = dup(1);
+		ft_redirection(c_list);
+		ft_execution(builts);
+		dup2(_old, 0);
+		dup2(_new, 1);
+		free_double_demen(builts->args_arr);
+		return (0);
+	}
+
 	while (c_list)
 	{
 		fill_args_arr(builts, c_list);
@@ -135,9 +136,10 @@ void	ft_execution(t_builtins *builts)
 	else if (check_command(builts->args_arr[0], "env", "ENV"))
 		my_env(builts);
 
-	else if (check_command(builts->args_arr[0], "unset", "UNSET"))
-		my_unset(builts, builts->args_arr[1]);
-
+	else if (check_command(builts->args_arr[0], "unset", "UNSET")) {
+		if (builts->args_arr[1])
+			my_unset(builts, builts->args_arr[1]);
+	}
 	else if (check_command(builts->args_arr[0], "export", "EXPORT"))
 	{
 		if (!builts->args_arr[1])

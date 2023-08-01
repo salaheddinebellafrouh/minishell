@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 20:52:48 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/31 16:40:58 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/01 16:17:25 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_execve(char **args, char **env)
 		free(str);
 	}
 	if(!found)
-		write(2, "minishell: command not found\n", 33);
+		write(2, "minishell: command not found\n", 29);
 	free_double_demen(paths);
 	return (1);
 }

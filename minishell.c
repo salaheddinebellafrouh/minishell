@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/31 15:30:37 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/01 18:47:57 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int ac, char **av, char **env)
 			ft_pipe(builts, list);
 		ft_free_list(list);
 		free(read);
-		// system("leaks minishell");
+		// system("leaks minishell | grep 'leaks for'");
 	}
 	return (0);
 }
