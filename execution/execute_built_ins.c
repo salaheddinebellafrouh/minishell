@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/01 18:51:10 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/02 15:42:15 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ int	ft_pipe(t_builtins *builts, t_list *list)
 		int _new = dup(1);
 		ft_redirection(c_list);
 		ft_execution(builts);
+		free_double_demen(builts->args_arr);
 		dup2(_old, 0);
 		dup2(_new, 1);
-		free_double_demen(builts->args_arr);
 		return (0);
 	}
 

@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:31:35 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/31 14:56:17 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/02 15:31:11 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,40 @@ void	ft_redirection(t_list *list)
 	int fd_in;
 	char *file_out;
 	char *file_in;
-
-	// while(list->hairdoc)
-	// {
-	//     fd = open("kk", O_CREAT | O_RDWR | O_TRUNC , 0664);
-	//     while(1)
-	//     {
-	//         str = readline(">");
-	//         if(!strcmp(str,list->hairdoc->data))
-	//         {
-	//             free(str);
-	//             break ;
-	//         }
-	//         write(fd,str, ft_strlen(str));
-	//         write(fd,"\n",1);
-	//         free(str);
-	//     }
-	//     fd_in = open("kk",O_RDWR);
-	//     list->hairdoc = list->hairdoc->next;
-	// }
+	char *str;
+	int fd[2];
+	
+	while(list->hairdoc)
+	{
+		pipe(fd);
+	    while(1)
+	    {
+	        str = readline(">");
+	        if(!str || !strcmp(str,list->hairdoc->data))
+	        {
+				if(str)
+	            	free(str);
+				else
+					printf("\n");
+	            break ;
+	        }
+	        write(fd[1] ,str, ft_strlen(str));
+	        write(fd[1],"\n",1);
+	        free(str);
+	    }
+		if(!list->hairdoc->next)
+		{
+			dup2 (fd[0], 0);
+			close(fd[0]);
+			close(fd[1]);
+		}
+		else
+		{
+			close(fd[0]);
+			close(fd[1]);
+		}
+	    list->hairdoc = list->hairdoc->next;
+	}
 
 	while (list->outfiles)
 	{

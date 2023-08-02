@@ -17,7 +17,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) -lreadline $(CFLAGS)  -L /Users/sbellafr/.brew/opt/readline/lib/  $(OBJS) -o $(NAME)
+	$(CC) -lreadline $(CFLAGS) $(OBJS) -o $(NAME)
 
 clean:
 	rm -f $(OBJS)
