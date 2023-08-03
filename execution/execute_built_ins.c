@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/02 15:42:15 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/03 15:34:16 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ void	fill_args_arr(t_builtins *builts, t_list *list)
 	builts->arg_len = i;
 }
 
-int	check_command(char *arg, char *str1, char *str2)
+int	check_command(char *arg, char *str1)
 {
-	if (arg && (!ft_strncmp(arg, str1, ft_strlen(str1)) || !ft_strncmp(arg,
-				str2, ft_strlen(str2))))
+	if (arg && !ft_strncmp(arg, str1, ft_strlen(str1))
+		&& ft_strlen(arg) == ft_strlen(str1))
 		return (1);
 	return (0);
 }
@@ -71,13 +71,9 @@ int	ft_pipe(t_builtins *builts, t_list *list)
 	if (list->next == NULL)
 	{
 		fill_args_arr(builts, c_list);
-		int _old = dup(0);
-		int _new = dup(1);
 		ft_redirection(c_list);
 		ft_execution(builts);
 		free_double_demen(builts->args_arr);
-		dup2(_old, 0);
-		dup2(_new, 1);
 		return (0);
 	}
 
@@ -121,26 +117,23 @@ void	ft_execution(t_builtins *builts)
 	int i = 0;
 	// int status = 0;
 
-	if (check_command(builts->args_arr[0], "pwd", "PWD"))
+	if (check_command(builts->args_arr[0], "pwd"))
 		my_pwd(1);
-
-	else if (check_command(builts->args_arr[0], "cd", "CD"))
+	else if (check_command(builts->args_arr[0], "cd"))
 		my_cd(builts, builts->args_arr[1]);
-
-	else if (check_command(builts->args_arr[0], "exit", "EXIT"))
+	else if (check_command(builts->args_arr[0], "exit"))
 		my_exit(builts->args_arr[1]);
-
-	else if (check_command(builts->args_arr[0], "echo", "ECHO"))
+	else if (check_command(builts->args_arr[0], "echo"))
 		my_echo(builts);
-
-	else if (check_command(builts->args_arr[0], "env", "ENV"))
+	else if (check_command(builts->args_arr[0], "env"))
 		my_env(builts);
-
-	else if (check_command(builts->args_arr[0], "unset", "UNSET")) {
-		if (builts->args_arr[1])
-			my_unset(builts, builts->args_arr[1]);
+	else if (check_command(builts->args_arr[0], "unset")) {
+		i = -1;
+		while (builts->args_arr[++i])
+			if(builts->args_arr[i + 1])
+				my_unset(builts, builts->args_arr[i + 1]);
 	}
-	else if (check_command(builts->args_arr[0], "export", "EXPORT"))
+	else if (check_command(builts->args_arr[0], "export"))
 	{
 		if (!builts->args_arr[1])
 			print_export(builts);

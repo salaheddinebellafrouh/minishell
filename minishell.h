@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/01 16:02:02 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/03 16:24:05 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <readline/history.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
 #include <string.h>
 #include <fcntl.h>
 
@@ -110,11 +111,12 @@ void	my_unset(t_builtins *builts, char *variable);
 void	my_export(t_builtins *builts, char *arg);
 void	print_export(t_builtins *builts);
 int		if_equal_exist(char *str);
+int		check_arg(char *arg);
 void	free_double_demen(char **split);
 void	fill_args_arr(t_builtins *builts, t_list *list);
 void    ft_redirection(t_list *list);
 int		ft_pipe(t_builtins *builts, t_list *list);
-int     ft_execve(char **args, char **env);
+void     ft_execve(char **args, char **env);
 void	execute_externals(char **arg, char **env);
 int     ft_pipe(t_builtins *builts, t_list *list);
 // parsing-------------------------------------------------------------
