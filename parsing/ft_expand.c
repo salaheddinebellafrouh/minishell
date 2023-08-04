@@ -6,18 +6,17 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 15:15:54 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/01 16:01:52 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/04 15:19:04 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*before_after(char **before, char **after, char *id, t_vars *vars,
-		char *string)
+char	*before_after(char **before, char **after, t_vars *vars, char *string)
 {
 	while (before[vars->l])
 	{
-		if (strcmp(before[vars->l], id) == 0)
+		if (strcmp(before[vars->l], vars->id) == 0)
 		{
 			vars->k = 0;
 			while (after[vars->l][vars->k])
@@ -34,61 +33,6 @@ char	*before_after(char **before, char **after, char *id, t_vars *vars,
 		vars->l++;
 	}
 	return (string);
-}
-void	ft_count_dn(t_vars *d, char *data)
-{
-	d->i++;
-	if (ft_isdigit(data[d->i]))
-	{
-		while (data[d->i + 1] && data[d->i] != '$')
-		{
-			if (data[d->i + 1] != '$')
-				d->s++;
-			d->i++;
-		}
-		d->s++;
-	}
-}
-
-int	ft_count_string(char *data, char **before, char **after)
-{
-	t_vars	d;
-
-	d.s = 0;
-	d.i = 0;
-	while (data[d.i])
-	{
-		if (data[d.i] == '\'')
-		{
-			while (data[d.i] != '\'')
-			{
-				d.s++;
-				d.i++;
-			}
-		}
-		if (data[d.i] == '$' && data[d.i] && ft_isdigit(data[d.i + 1]))
-		{
-			if (!data[d.i + 1])
-				return (strlen(data));
-			ft_count_dn(&d, data);
-		}
-		else if (data[d.i] != '$')
-		{
-			if (data[d.i] == '$')
-				d.s++;
-			d.s++;
-		}
-		if (data[d.i] == '$' && ++d.i && data[d.i]
-			&& !ft_isdigit(data[d.i + 1]))
-		{
-			if (!data[d.i])
-				return (0);
-			ft_count_dollar(data, before, after, &d);
-		}
-		if (data[d.i])
-			d.i++;
-	}
-	return (d.s);
 }
 
 void	init_vars(t_vars *vars)

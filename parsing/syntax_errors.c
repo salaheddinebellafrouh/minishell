@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:50:49 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/07/31 20:00:29 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:32:43 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,20 @@
 
 int	syntax_redirections(Node *newnode)
 {
+	Node	*temp;
+
+	temp = NULL;
 	if (!newnode->next)
 	{
-		free(newnode->data);
-		free(newnode);
+		free_nodes_prev(newnode, temp);
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		return (0);
 	}
-	if (strcmp(newnode->next->data, "|") == 0)
+	else if (strcmp(newnode->next->data, "|") == 0)
 	{
-		free(newnode->data);
-		free(newnode);
+		free(newnode->next->data);
+		free(newnode->next);
+		free_nodes_prev(newnode, temp);
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		return (0);
 	}
@@ -33,17 +36,25 @@ int	syntax_redirections(Node *newnode)
 
 int	syntax_pipes(Node *newnode)
 {
+	Node	*temp;
+
+	temp = NULL;
 	if (!newnode->next || !newnode->prev)
 	{
-		free(newnode->data);
-		free(newnode);
+		if (!newnode->next && !newnode->prev)
+			free_newnode(newnode);
+		else if (!newnode->prev)
+			free_nodes_next(newnode, temp);
+		else if (!newnode->next)
+			free_nodes_prev(newnode, temp);
 		printf("minishell: syntax error near unexpected token `|'\n");
 		return (0);
 	}
-	if (strcmp(newnode->next->data, "|") == 0)
+	else if (strcmp(newnode->next->data, "|") == 0)
 	{
-		free(newnode->data);
-		free(newnode);
+		free(newnode->next->data);
+		free(newnode->next);
+		free_nodes_prev(newnode, temp);
 		printf("minishell: syntax error near unexpected token `|''\n");
 		return (0);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing_syntax.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 21:59:08 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/03 12:54:32 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/03 18:40:40 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,33 @@ int	syntaxq_return(Node *head, Node *temp)
 	}
 	return (1);
 }
+Node	*fill_space(Node *head)
+{
+	Node	*copy;
 
+	copy = head;
+	while (copy)
+	{
+		if (copy->data[0] == '"' && !copy->data[3])
+		{
+			if (copy->data[1] == '"')
+			{
+				copy->data[1] = ' ';
+				copy->data[0] = ' ';
+			}
+		}
+		else if (copy->data[0] == '\'' && !copy->data[3])
+		{
+			if (copy->data[1] == '\'')
+			{
+				copy->data[1] = ' ';
+				copy->data[0] = ' ';
+			}
+		}
+		copy = copy->next;
+	}
+	return (head);
+}
 t_list	*ft_start(char *read, char **env)
 {
 	t_list	*copiedlist;
@@ -112,6 +138,7 @@ t_list	*ft_start(char *read, char **env)
 	temp = NULL;
 	head = NULL;
 	head = quotes_management(read, head);
+	head = fill_space(head);
 	if (!syntaxq_return(head, temp))
 		return (NULL);
 	head = syntax_error(head);
@@ -127,6 +154,6 @@ t_list	*ft_start(char *read, char **env)
 	}
 	copiedlist = ft_expand(copiedlist, env);
 	copiedlist = ft_remove_quotes(copiedlist);
-	// print_copy(copiedlist);
+	print_copy(copiedlist);
 	return (copiedlist);
 }

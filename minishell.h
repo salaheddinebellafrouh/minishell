@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/03 16:24:05 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:38:03 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include <readline/history.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <signal.h>
 #include <string.h>
 #include <fcntl.h>
 
@@ -79,7 +78,7 @@ typedef struct s_vars
 
 typedef struct s_headvar
 {
-    	int		i;
+    int		i;
 	int		start;
 	int		s;
 	int		d;
@@ -87,7 +86,7 @@ typedef struct s_headvar
 
 }t_headvar;
 
-
+int	g_global;
 // libft ------------------------------------------------------
 char	*ft_substr(char const *s, unsigned int start, int len);
 int		ft_strlen(const char *str);
@@ -111,7 +110,6 @@ void	my_unset(t_builtins *builts, char *variable);
 void	my_export(t_builtins *builts, char *arg);
 void	print_export(t_builtins *builts);
 int		if_equal_exist(char *str);
-int		check_arg(char *arg);
 void	free_double_demen(char **split);
 void	fill_args_arr(t_builtins *builts, t_list *list);
 void    ft_redirection(t_list *list);
@@ -119,6 +117,7 @@ int		ft_pipe(t_builtins *builts, t_list *list);
 void     ft_execve(char **args, char **env);
 void	execute_externals(char **arg, char **env);
 int     ft_pipe(t_builtins *builts, t_list *list);
+int	check_arg(char *arg);
 // parsing-------------------------------------------------------------
 void    ft_free_list(t_list *list);
 char	*ft_strcpy_before(char *dst, char *src);
@@ -152,8 +151,12 @@ void	ft_count_dollar(char *data, char **before, char **after, t_vars *d);
 int		count_dollar(char *data);
 char	*get_id2(char *data);
 void	digit_dollar(t_vars *vars, char *data, char *string);
-char	*before_after(char **before, char **after, char *id, t_vars *vars,
-		char *string);
+char	*before_after(char **before, char **after, t_vars *vars, char *string);
+void	free_nodes_prev(Node *newnode, Node *temp);
+void	free_nodes_next(Node *newnode, Node *temp);
+void	free_newnode(Node *newnode);
+char	*ft_itoa(int n);
+
 typedef struct s_subnodes
 {
     t_list	*tmp_list;
