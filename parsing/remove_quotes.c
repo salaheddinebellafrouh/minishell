@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 14:46:25 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/03 17:34:39 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:02:16 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,12 @@ t_list	*ft_remove_quotes(t_list *list)
 {
 	t_list	*copied;
 	Node	*arg;
+	Node	*in;
+	Node	*out;
 
 	arg = list->arg;
+	in = list->infiles;
+	out = list->outfiles;
 	copied = list;
 	while (copied)
 	{
@@ -97,6 +101,16 @@ t_list	*ft_remove_quotes(t_list *list)
 		{
 			arg->data = ft_rquotes(arg->data);
 			arg = arg->next;
+		}
+		while (in)
+		{
+			in->data = ft_rquotes(in->data);
+			in = in->next;
+		}
+		while (out)
+		{
+			out->data = ft_rquotes(out->data);
+			out = out->next;
 		}
 		copied = copied->next;
 	}

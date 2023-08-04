@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:58:54 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/01 17:23:36 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:30:49 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,21 @@ char	*ft_getenv(t_builtins *builts, char *path)
 
 void	my_cd(t_builtins *builts, char *path)
 {
-	// char	*old_pwd;
-	// char	*old;
-	// char	*new;
-
-	// old_pwd = ft_getenv(builts, "PWD");
+	char	*old_pwd;
+	char	*old;
+	char	*new;
+	old_pwd = ft_getenv(builts, "PWD");
 	if (!path)
 		path = ft_getenv(builts, "HOME");
 	if (chdir(path) == -1)
 		perror("minishell");
 	else
 	{
-		// old = ft_strjoin("OLDPWD=", old_pwd);
-		// new = ft_strjoin("PWD=", my_pwd(0));
-		// my_export(builts, old);
-		// my_export(builts, new);
-		// free(old);
-		// free(new);
+		old = ft_strjoin("OLDPWD=", old_pwd);
+		new = ft_strjoin("PWD=", my_pwd(0));
+		my_export(builts, old);
+		my_export(builts, new);
+		free(old);
+		free(new);
 	}
 }

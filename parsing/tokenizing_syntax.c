@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 21:59:08 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/03 18:40:40 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:22:56 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,11 +134,40 @@ t_list	*ft_start(char *read, char **env)
 	t_list	*copiedlist;
 	Node	*head;
 	Node	*temp;
-
+	(void)env;
 	temp = NULL;
 	head = NULL;
-	head = quotes_management(read, head);
-	head = fill_space(head);
+	int 	i = 0;
+		int			s;
+	int			d;
+	char *cp;
+	s = 0;
+	d = 0;
+	int			start = 0;
+	while (read[i])
+	{
+		if (read[i] == '\'' && d == 0)
+			s = !s;
+		if (read[i] == '\"' && s == 0)
+			d = !d;
+		if ((d == 0) && (s == 0))
+		{
+			if (ft_symbols(read[i]))
+			{
+				cp = ft_substr(read, start, i - start);
+				if (cp != '\0' && ft_strlen(cp) != 0)
+					add_elements(&head, cp);
+				free(cp);
+				i = string_list(read, i, &head);
+				start += (i - start) + 1;
+			}
+		}
+		i++;
+	}
+	cp = ft_substr(read, start, i - start);
+	if (cp != '\0' && ft_strlen(cp) != 0)
+		add_elements(&head, cp);
+	free(cp);
 	if (!syntaxq_return(head, temp))
 		return (NULL);
 	head = syntax_error(head);

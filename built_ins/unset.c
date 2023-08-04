@@ -22,7 +22,7 @@ void	my_unset(t_builtins *builts, char *variable)
 	if (variable && !check_arg(variable))
 	{
 		printf("export: `%s': not a valid identifier\n", variable);
-		return;
+		return ;
 	}
 	len = 0;
 	while (variable[len])

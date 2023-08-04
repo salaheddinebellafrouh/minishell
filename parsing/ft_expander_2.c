@@ -74,8 +74,8 @@ char	*expnd_data(char *data, char **before, char **after)
 			string[vars.s++] = data[vars.i];
 		else if (data[vars.i] == '\'')
 			string = ft_fill_single(&vars, data, string);
-		else if (data[vars.i] == '$' && data[vars.i]
-			&& ft_isdigit(data[vars.i + 1]))
+		else if (data[vars.i] == '$' && data[vars.i] && ft_isdigit(data[vars.i
+					+ 1]))
 			digit_dollar(&vars, data, string);
 		else if (data[vars.i] == '$' && ++vars.i && data[vars.i]
 				&& !ft_isdigit(data[vars.i + 1]))

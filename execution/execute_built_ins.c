@@ -67,7 +67,6 @@ int	ft_pipe(t_builtins *builts, t_list *list)
 	input = 0;
 	i = 0;
 	j = 0;
-	
 	if (list->next == NULL)
 	{
 		fill_args_arr(builts, c_list);
@@ -76,7 +75,6 @@ int	ft_pipe(t_builtins *builts, t_list *list)
 		free_double_demen(builts->args_arr);
 		return (0);
 	}
-
 	while (c_list)
 	{
 		fill_args_arr(builts, c_list);
@@ -127,10 +125,11 @@ void	ft_execution(t_builtins *builts)
 		my_echo(builts);
 	else if (check_command(builts->args_arr[0], "env"))
 		my_env(builts);
-	else if (check_command(builts->args_arr[0], "unset")) {
+	else if (check_command(builts->args_arr[0], "unset"))
+	{
 		i = -1;
 		while (builts->args_arr[++i])
-			if(builts->args_arr[i + 1])
+			if (builts->args_arr[i + 1])
 				my_unset(builts, builts->args_arr[i + 1]);
 	}
 	else if (check_command(builts->args_arr[0], "export"))

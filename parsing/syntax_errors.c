@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:50:49 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/02 18:32:43 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:08:07 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	ft_syntax_quotes(Node *head)
 		}
 		if (valid == 0)
 		{
-			printf("Syntax Error\n");
+			printf("minishell : Syntax Error\n");
 			return (0);
 		}
 		copy = copy->next;

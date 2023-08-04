@@ -25,57 +25,57 @@ char	*get_path(char **env)
 	return (NULL);
 }
 
-void ft_execve(char **args, char **env)
+void	ft_execve(char **args, char **env)
 {
-	char *path;
-	char **paths;
-	int found;
-	int i;
-	char *str;
-	char *tmp;
-	
-    if (args[0][0] == '/')
+	char	*path;
+	char	**paths;
+	int		found;
+	int		i;
+	char	*str;
+	char	*tmp;
+
+	if (args[0][0] == '/')
 	{
-        if (access(args[0], F_OK | X_OK) == 0)
+		if (access(args[0], F_OK | X_OK) == 0)
 		{
-            if (fork() == 0)
-                execve(args[0], args, env);
+			if (fork() == 0)
+				execve(args[0], args, env);
 			else
-                wait(NULL);
-        }
+				wait(NULL);
+		}
 		else
-            dprintf(2, "minishell: %s: No such file or directory\n", args[0]);
-    }
+			dprintf(2, "minishell: %s: No such file or directory\n", args[0]);
+	}
 	else
 	{
-        path = get_path(env);
-        if (!path)
+		path = get_path(env);
+		if (!path)
 		{
-            dprintf(2, "minishell: %s: No such file or directory\n", args[0]);
-            return;
-        }
-        paths = ft_split(path, ':');
-        found = 0;
+			dprintf(2, "minishell: %s: No such file or directory\n", args[0]);
+			return ;
+		}
+		paths = ft_split(path, ':');
+		found = 0;
 		i = -1;
-        while (paths[++i])
+		while (paths[++i])
 		{
-            str = ft_strjoin(paths[i], "/");
-            tmp = ft_strjoin(str, args[0]);
-            free(str);
-            if (access(tmp, F_OK | X_OK) == 0)
+			str = ft_strjoin(paths[i], "/");
+			tmp = ft_strjoin(str, args[0]);
+			free(str);
+			if (access(tmp, F_OK | X_OK) == 0)
 			{
-                found = 1;
-                if (fork() == 0)
-                    execve(tmp, args, env);
+				found = 1;
+				if (fork() == 0)
+					execve(tmp, args, env);
 				else
-                    wait(NULL);
-            }
-            free(tmp);
-        }
-        if (!found)
-            dprintf(2, "minishell: %s: command not found\n", args[0]);
-        free_double_demen(paths);
-    }
+					wait(NULL);
+			}
+			free(tmp);
+		}
+		if (!found)
+			dprintf(2, "minishell: %s: command not found\n", args[0]);
+		free_double_demen(paths);
+	}
 }
 
 void	execute_externals(char **arg, char **env)

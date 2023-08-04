@@ -12,12 +12,15 @@
 
 #include "minishell.h"
 
-void run_heredoc(t_list *list)
+void	run_heredoc(t_list *list)
 {
-	int fd[2];
-	char *str;
-	t_list *temp = list;
-	Node *heredoc = list->hairdoc;
+	int		fd[2];
+	char	*str;
+	t_list	*temp;
+	Node	*heredoc;
+
+	temp = list;
+	heredoc = list->hairdoc;
 	while (temp)
 	{
 		while (heredoc)
@@ -32,7 +35,7 @@ void run_heredoc(t_list *list)
 						free(str);
 					else
 						printf("\n");
-					break;
+					break ;
 				}
 				write(fd[1], str, ft_strlen(str));
 				write(fd[1], "\n", 1);
@@ -55,7 +58,7 @@ void run_heredoc(t_list *list)
 	}
 }
 
-void signal_c(int SIGC)
+void	signal_c(int SIGC)
 {
 	if (SIGC == 2)
 	{
@@ -66,11 +69,13 @@ void signal_c(int SIGC)
 	}
 }
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
-	char *read;
-	t_list *list;
-	t_builtins *builts;
+	char		*read;
+	t_list		*list;
+	t_builtins	*builts;
+	int			_old;
+	int			_new;
 
 	signal(SIGINT, signal_c);
 	signal(SIGQUIT, SIG_IGN);
@@ -88,8 +93,8 @@ int main(int ac, char **av, char **env)
 		list = ft_start(read, builts->env);
 		if (list)
 		{
-			int _old = dup(0);
-			int _new = dup(1);
+			_old = dup(0);
+			_new = dup(1);
 			run_heredoc(list);
 			ft_pipe(builts, list);
 			dup2(_old, 0);
