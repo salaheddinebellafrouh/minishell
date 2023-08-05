@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:31:35 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/05 20:13:03 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/05 21:16:05 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	ft_redirection(t_list *list)
 	int		fd_in;
 	char	*file_out;
 	char	*file_in;
-	Node	*tempin;
-	Node	*tempout;
+	t_node	*tempin;
+	t_node	*tempout;
 
 	tempin = NULL;
 	while (list->outfiles)

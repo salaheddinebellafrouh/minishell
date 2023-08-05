@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builts_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 00:18:30 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/05 01:53:57 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/05 21:16:05 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ int	check_arg(char *arg)
 	return (1);
 }
 
-int	ft_lstsize(Node *lst)
+int	ft_lstsize(t_node *lst)
 {
 	int		count;
-	Node	*temp;
+	t_node	*temp;
 
 	count = 0;
-	temp = (Node *)lst;
+	temp = (t_node *)lst;
 	while (temp)
 	{
 		count++;
@@ -57,7 +57,7 @@ int	ft_lstsize(Node *lst)
 
 void	fill_args_arr(t_builtins *builts, t_list *list)
 {
-	Node	*currentarg;
+	t_node	*currentarg;
 	int		i;
 
 	currentarg = list->arg;

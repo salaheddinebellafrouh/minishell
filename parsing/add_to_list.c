@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:32:09 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 16:20:11 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 21:16:05 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_list	*init_list(void)
 	return (list);
 }
 
-Node	*copy_list_red(t_list *currentlist, Node *source)
+t_node	*copy_list_red(t_list *currentlist, t_node *source)
 {
 	add_to_list(&(currentlist->redirect), source->data, 5);
 	if (strcmp(source->data, ">") == 0)
@@ -55,7 +55,7 @@ Node	*copy_list_red(t_list *currentlist, Node *source)
 	return (source);
 }
 
-t_list	*copy_list(Node *source)
+t_list	*copy_list(t_node *source)
 {
 	t_list	*returned;
 	t_list	*currentlist;

@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 20:13:22 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 21:16:05 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	run_heredoc(t_list *list)
 	int		fd[2];
 	char	*str;
 	t_list	*temp;
-	Node	*heredoc;
+	t_node	*heredoc;
 
 	temp = list;
 	heredoc = list->hairdoc;

@@ -6,36 +6,36 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 17:37:18 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/02 19:31:34 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 21:16:05 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_nodes_prev(Node *newnode, Node *temp)
+void	free_t_nodes_prev(t_node *newt_node, t_node *temp)
 {
-	while (newnode)
+	while (newt_node)
 	{
-		temp = newnode->prev;
-		free(newnode->data);
-		free(newnode);
-		newnode = temp;
+		temp = newt_node->prev;
+		free(newt_node->data);
+		free(newt_node);
+		newt_node = temp;
 	}
 }
 
-void	free_nodes_next(Node *newnode, Node *temp)
+void	free_t_nodes_next(t_node *newt_node, t_node *temp)
 {
-	while (newnode)
+	while (newt_node)
 	{
-		temp = newnode->next;
-		free(newnode->data);
-		free(newnode);
-		newnode = temp;
+		temp = newt_node->next;
+		free(newt_node->data);
+		free(newt_node);
+		newt_node = temp;
 	}
 }
 
-void	free_newnode(Node *newnode)
+void	free_newt_node(t_node *newt_node)
 {
-	free(newnode->data);
-	free(newnode);
+	free(newt_node->data);
+	free(newt_node);
 }
