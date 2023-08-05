@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 14:46:25 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/04 18:02:16 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 16:19:59 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,32 +56,49 @@ void	fill_no_quotes(char *data, char *returned, t_vars *var)
 char	*ft_rquotes(char *data)
 {
 	t_vars	var;
-	char	*returned;
 
 	init_vars(&var);
-	returned = malloc(ft_strlen(data) + 1 - count_quotes(data));
+	var.returned = malloc(ft_strlen(data) + 1 - count_quotes(data));
 	while (data[var.i])
 	{
 		if (data[var.i] && data[var.i] == '"')
 		{
 			var.i++;
 			while (data[var.i] && data[var.i] != '"')
-				returned[var.j++] = data[var.i++];
+				var.returned[var.j++] = data[var.i++];
 			var.i++;
 		}
 		if (data[var.i] && data[var.i] == '\'')
 		{
 			var.i++;
 			while (data[var.i] && data[var.i] != '\'')
-				returned[var.j++] = data[var.i++];
+				var.returned[var.j++] = data[var.i++];
 			var.i++;
 		}
 		else
-			fill_no_quotes(data, returned, &var);
+			fill_no_quotes(data, var.returned, &var);
 	}
-	returned[var.j] = '\0';
-	free(data);
-	return (returned);
+	var.returned[var.j] = '\0';
+	return (free(data), var.returned);
+}
+
+void	remove_all_q(Node *arg, Node *in, Node *out)
+{
+	while (arg)
+	{
+		arg->data = ft_rquotes(arg->data);
+		arg = arg->next;
+	}
+	while (in)
+	{
+		in->data = ft_rquotes(in->data);
+		in = in->next;
+	}
+	while (out)
+	{
+		out->data = ft_rquotes(out->data);
+		out = out->next;
+	}
 }
 
 t_list	*ft_remove_quotes(t_list *list)
@@ -97,21 +114,7 @@ t_list	*ft_remove_quotes(t_list *list)
 	copied = list;
 	while (copied)
 	{
-		while (arg)
-		{
-			arg->data = ft_rquotes(arg->data);
-			arg = arg->next;
-		}
-		while (in)
-		{
-			in->data = ft_rquotes(in->data);
-			in = in->next;
-		}
-		while (out)
-		{
-			out->data = ft_rquotes(out->data);
-			out = out->next;
-		}
+		remove_all_q(arg, in, out);
 		copied = copied->next;
 	}
 	return (list);

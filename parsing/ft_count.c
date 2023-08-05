@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 17:07:20 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/04 17:57:35 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 16:20:32 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	ft_count_sq(t_vars *d, char *data)
 
 int	digit_count(char *data, t_vars *d, char **before, char **after)
 {
-	if (data[d->i] == '$' && ++d->i && data[d->i] && !ft_isdigit(data[d->i
-			+ 1]))
+	if (data[d->i] == '$' && ++d->i && data[d->i]
+		&& !ft_isdigit(data[d->i + 1]))
 	{
 		if (!data[d->i])
 			return (0);

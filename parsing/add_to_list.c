@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:32:09 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/04 17:57:17 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 16:20:11 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_list	*copy_list(Node *source)
 			currentlist = currentlist->next;
 		}
 		else if (!strcmp(source->data, ">") || !strcmp(source->data, ">>")
-				|| !strcmp(source->data, "<<") || !strcmp(source->data, "<"))
+			|| !strcmp(source->data, "<<") || !strcmp(source->data, "<"))
 			source = copy_list_red(currentlist, source);
 		else
 			add_elements(&(currentlist->arg), source->data);

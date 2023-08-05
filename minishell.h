@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/04 16:38:03 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 17:01:56 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ typedef struct s_vars
 	int		count;
 	int		kk;
 	char	*id;
+    char    *string;
+    char    *returned;
 }   t_vars;
 
 typedef struct s_headvar
@@ -131,7 +133,7 @@ int	    ft_symbols(char c);
 int	    string_list(char *read, int i, struct Node **head);
 t_list	*init_list(void);
 t_list	*copy_list(Node *source);
-void	print_copy(t_list *list);
+// void	print_copy(t_list *list);
 Node	*syntax_error(Node *head);
 int		ft_syntax_quotes(Node *head);
 t_list	*ft_start(char *read, char **env);
@@ -156,7 +158,8 @@ void	free_nodes_prev(Node *newnode, Node *temp);
 void	free_nodes_next(Node *newnode, Node *temp);
 void	free_newnode(Node *newnode);
 char	*ft_itoa(int n);
-
+void	init_headvar(t_headvar *var);
+int	syntaxq_return(Node *head, Node *temp);
 typedef struct s_subnodes
 {
     t_list	*tmp_list;

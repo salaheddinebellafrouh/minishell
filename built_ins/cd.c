@@ -31,6 +31,7 @@ void	my_cd(t_builtins *builts, char *path)
 	char	*old_pwd;
 	char	*old;
 	char	*new;
+
 	old_pwd = ft_getenv(builts, "PWD");
 	if (!path)
 		path = ft_getenv(builts, "HOME");
