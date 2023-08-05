@@ -6,20 +6,11 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:45:10 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 17:59:14 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 19:55:54 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	init_var(t_headvar *var)
-{
-	var->s = 0;
-	var->d = 0;
-	var->start = 0;
-	var->cp = NULL;
-	var->i = 0;
-}
 
 void	double_single(t_headvar *var, char *read)
 {
@@ -64,6 +55,7 @@ void	free_head(Node *head, Node *temp)
 		head = temp;
 	}
 }
+
 Node	*space_quotes(Node *head)
 {
 	while (head)
@@ -88,6 +80,7 @@ Node	*space_quotes(Node *head)
 	}
 	return (head);
 }
+
 t_list	*ft_start(char *read, char **env)
 {
 	t_list		*copiedlist;

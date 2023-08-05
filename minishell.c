@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/03 16:24:37 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/05 20:13:22 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	signal_c(int SIGC)
 	if (SIGC == 2)
 	{
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		printf("\n");
 		rl_redisplay();
 	}
@@ -93,6 +93,7 @@ int	main(int ac, char **av, char **env)
 		list = ft_start(read, builts->env);
 		if (list)
 		{
+			g_global = 0;
 			_old = dup(0);
 			_new = dup(1);
 			run_heredoc(list);
@@ -102,7 +103,6 @@ int	main(int ac, char **av, char **env)
 		}
 		ft_free_list(list);
 		free(read);
-		// system("leaks minishell | grep 'leaks for'");
 	}
 	return (0);
 }

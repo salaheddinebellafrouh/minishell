@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:50:49 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/04 18:08:07 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 19:45:58 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	syntax_redirections(Node *newnode)
 	if (!newnode->next)
 	{
 		free_nodes_prev(newnode, temp);
+		g_global = 258;
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		return (0);
 	}
@@ -28,6 +29,7 @@ int	syntax_redirections(Node *newnode)
 		free(newnode->next->data);
 		free(newnode->next);
 		free_nodes_prev(newnode, temp);
+		g_global = 258;
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		return (0);
 	}
@@ -47,6 +49,7 @@ int	syntax_pipes(Node *newnode)
 			free_nodes_next(newnode, temp);
 		else if (!newnode->next)
 			free_nodes_prev(newnode, temp);
+		g_global = 258;
 		printf("minishell: syntax error near unexpected token `|'\n");
 		return (0);
 	}
@@ -55,9 +58,10 @@ int	syntax_pipes(Node *newnode)
 		free(newnode->next->data);
 		free(newnode->next);
 		free_nodes_prev(newnode, temp);
+		g_global = 258;
 		printf("minishell: syntax error near unexpected token `|''\n");
 		return (0);
-	}
+	}	
 	return (1);
 }
 
@@ -129,6 +133,7 @@ int	ft_syntax_quotes(Node *head)
 		}
 		if (valid == 0)
 		{
+			g_global = 258;
 			printf("minishell : Syntax Error\n");
 			return (0);
 		}

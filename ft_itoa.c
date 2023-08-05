@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 20:24:51 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/03 20:25:13 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 20:12:57 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static void	ifhol(long n, int len, char *str)
 
 char	*ft_itoa(int n)
 {
-	char *str;
-	int len;
-	long nn;
+	char	*str;
+	int		len;
+	long	nn;
 
 	nn = n;
 	len = lenghtint(nn);

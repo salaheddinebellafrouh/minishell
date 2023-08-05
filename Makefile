@@ -8,7 +8,7 @@ PARSING = ./parsing/ft_free.c ./parsing/ft_expand.c ./parsing/ft_helpers.c  \
 		./parsing/syntax_errors.c ./parsing/add_elements.c ./parsing/ft_free_extend.c \
 		./parsing/remove_quotes.c ./parsing/ft_expander.c ./parsing/ft_expander_2.c \
 		./parsing/count_dollar_expand.c ./parsing/free_syntax_errors.c ./parsing/ft_count.c \
-		ft_itoa.c 
+		ft_itoa.c ./parsing/init_var.c ./parsing/calloc_before_after.c
 BUILT_IN = ./built_ins/cd.c ./built_ins/echo.c ./built_ins/env.c ./built_ins/exit.c ./built_ins/export.c ./built_ins/pwd.c ./built_ins/unset.c
 
 SRCS = $(BUILT_IN) $(PARSING) $(EXECUTION) minishell.c Utils.c

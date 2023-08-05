@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 15:25:08 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 16:25:46 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 20:11:51 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,27 @@ char	*ft_fill_single(t_vars *vars, char *data, char *string)
 	return (string);
 }
 
+char	*expand_exit(t_vars *vars)
+{
+	char	*g_str;
+	int		s;
+
+	vars->i++;
+	g_str = ft_itoa(g_global);
+	s = 0;
+	while (g_str[s])
+	{
+		vars->string[vars->s] = g_str[s];
+		s++;
+		vars->s++;
+	}
+	free(g_str);
+	return (vars->string);
+}
+
 char	*expnd_data(char *data, char **before, char **after)
 {
 	t_vars	vars;
-	char	*g_str;
-	int		s;
 
 	init_vars(&vars);
 	vars.count = ft_count_string(data, before, after) + 1;
@@ -56,18 +72,7 @@ char	*expnd_data(char *data, char **before, char **after)
 	while (data[vars.i])
 	{
 		if (data[vars.i] == '$' && data[vars.i + 1] == '?')
-		{
-			vars.i++;
-			g_str = ft_itoa(g_global);
-			s = 0;
-			while (g_str[s])
-			{
-				vars.string[vars.s] = g_str[s];
-				s++;
-				vars.s++;
-			}
-			free(g_str);
-		}
+			vars.string = expand_exit(&vars);
 		else if (data[vars.i] != '$' && data[vars.i] != '\'')
 			vars.string[vars.s++] = data[vars.i];
 		else if (data[vars.i] == '\'')
@@ -82,33 +87,5 @@ char	*expnd_data(char *data, char **before, char **after)
 			vars.i++;
 	}
 	vars.string[vars.s] = '\0';
-	free(data);
-	return (vars.string);
-}
-
-int	calloc_before(char *string)
-{
-	int	i;
-
-	i = 0;
-	while (string[i] != '=' && string[i])
-		i++;
-	return (i);
-}
-
-int	calloc_after(char *string)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (string[i] != '=' && string[i])
-		i++;
-	while (string[i])
-	{
-		j++;
-		i++;
-	}
-	return (j);
+	return (free(data), vars.string);
 }
