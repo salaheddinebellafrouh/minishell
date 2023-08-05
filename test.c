@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_built_ins.c                                :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/05 19:30:16 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/05 18:54:57 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ int	ft_pipe(t_builtins *builts, t_list *list)
 	j = 0;
 	id = malloc(sizeof(int) * list->pipe + 1);
 	if (if_one_arg(builts, c_list))
-	{
-		free(id);
 		return (0);
-	}
 	while (c_list)
 	{
 		fill_args_arr(builts, c_list);
@@ -95,6 +92,9 @@ int	ft_pipe(t_builtins *builts, t_list *list)
 
 void	ft_execution(t_builtins *builts)
 {
+	int	i;
+
+	i = 0;
 	if (check_command(builts->args_arr[0], "pwd"))
 		my_pwd(1);
 	else if (check_command(builts->args_arr[0], "cd"))
