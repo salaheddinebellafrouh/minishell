@@ -6,27 +6,18 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:12 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/03 14:51:39 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/05 18:14:52 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	my_unset(t_builtins *builts, char *variable)
+int	srch_unset_var_exist(t_builtins *builts, char *variable, int len)
 {
-	int		j;
-	int		len;
 	int		exist;
+	int		j;
 	char	**split;
 
-	if (variable && !check_arg(variable))
-	{
-		printf("export: `%s': not a valid identifier\n", variable);
-		return ;
-	}
-	len = 0;
-	while (variable[len])
-		len++;
 	exist = 0;
 	j = 0;
 	while (builts->env[j])
@@ -38,19 +29,37 @@ void	my_unset(t_builtins *builts, char *variable)
 			{
 				free_double_demen(split);
 				exist = 1;
+				builts->uns_var_place = j;
 				break ;
 			}
 		}
 		free_double_demen(split);
 		j++;
 	}
-	if (exist)
-		free(builts->env[j]);
-	while (builts->env[j] && exist == 1)
+	return (exist);
+}
+
+void	my_unset(t_builtins *b, char *variable)
+{
+	int		len;
+	int		exist;
+
+	if (variable && !check_arg(variable))
 	{
-		builts->env[j] = builts->env[j + 1];
-		j++;
+		printf("export: `%s': not a valid identifier\n", variable);
+		return ;
+	}
+	len = 0;
+	while (variable[len])
+		len++;
+	exist = srch_unset_var_exist(b, variable, len);
+	if (exist)
+		free(b->env[b->uns_var_place]);
+	while (b->env[b->uns_var_place] && exist == 1)
+	{
+		b->env[b->uns_var_place] = b->env[b->uns_var_place + 1];
+		b->uns_var_place++;
 	}
 	if (exist == 1)
-		builts->env_len--;
+		b->env_len--;
 }

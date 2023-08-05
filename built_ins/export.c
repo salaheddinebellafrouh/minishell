@@ -6,39 +6,11 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:04 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/03 14:48:13 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/05 18:13:18 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	free_double_demen(char **split)
-{
-	int	j;
-
-	j = -1;
-	while (split[++j])
-		free(split[j]);
-	free(split);
-}
-
-int	check_arg(char *arg)
-{
-	int	i;
-
-	i = -1;
-	if (arg[0] == '_' || (arg[0] >= 65 && arg[0] <= 90) || (arg[0] >= 97
-			&& arg[0] <= 122))
-		i++;
-	else
-		return (0);
-	while (arg[++i])
-	{
-		if (!ft_isalnum_v2(arg[i]))
-			return (0);
-	}
-	return (1);
-}
 
 void	print_export(t_builtins *builts)
 {
@@ -63,16 +35,72 @@ void	print_export(t_builtins *builts)
 	}
 }
 
+void	export_exist(t_builtins *builts, char *arg, char *var, char *val)
+{
+	char	*new_vrbl;
+
+	if (if_equal_exist(arg) && val)
+	{
+		var = ft_strjoin(var, "=");
+		new_vrbl = var;
+		var = ft_strjoin(new_vrbl, val);
+		free(new_vrbl);
+		free(builts->env[builts->exp_var_place]);
+		builts->env[builts->exp_var_place] = var;
+	}
+	else if (if_equal_exist(arg))
+	{
+		var = ft_strjoin(var, "=");
+		free(builts->env[builts->exp_var_place]);
+		builts->env[builts->exp_var_place] = var;
+	}
+}
+
+void	export_not_exist(t_builtins *builts, char *arg)
+{
+	char	**new_env;
+	int		j;
+
+	builts->env_len++;
+	new_env = malloc(sizeof(char *) * (builts->env_len + 2));
+	j = -1;
+	while (builts->env[++j])
+		new_env[j] = builts->env[j];
+	new_env[j] = ft_strdup(arg);
+	new_env[++j] = NULL;
+	free(builts->env);
+	builts->env = new_env;
+}
+
+int	srch_export_var_exist(t_builtins *builts, char *variable)
+{
+	int	len;
+	int	exist;
+	int	j;
+
+	len = 0;
+	while (variable[len])
+		len++;
+	exist = 0;
+	j = -1;
+	while (builts->env[++j])
+	{
+		if (!ft_strncmp(variable, builts->env[j], len))
+		{
+			exist = 1;
+			builts->exp_var_place = j;
+			break ;
+		}
+	}
+	return (exist);
+}
+
 void	my_export(t_builtins *builts, char *arg)
 {
-	int		j;
-	int		len;
 	int		exist;
 	char	**split;
 	char	*variable;
 	char	*value;
-	char	*new_vrbl;
-	char	**new_env;
 
 	split = ft_split(arg, '=');
 	variable = split[0];
@@ -84,49 +112,11 @@ void	my_export(t_builtins *builts, char *arg)
 	}
 	else
 	{
-		len = 0;
-		while (variable[len])
-			len++;
-		exist = 0;
-		j = -1;
-		while (builts->env[++j])
-		{
-			if (!ft_strncmp(variable, builts->env[j], len))
-			{
-				exist = 1;
-				break ;
-			}
-		}
+		exist = srch_export_var_exist(builts, variable);
 		if (exist)
-		{
-			if (if_equal_exist(arg) && value)
-			{
-				variable = ft_strjoin(variable, "=");
-				new_vrbl = variable;
-				variable = ft_strjoin(new_vrbl, value);
-				free(new_vrbl);
-				free(builts->env[j]);
-				builts->env[j] = variable;
-			}
-			else if (if_equal_exist(arg))
-			{
-				variable = ft_strjoin(variable, "=");
-				free(builts->env[j]);
-				builts->env[j] = variable;
-			}
-		}
+			export_exist(builts, arg, variable, value);
 		else if (!exist)
-		{
-			builts->env_len++;
-			new_env = malloc(sizeof(char *) * (builts->env_len + 2));
-			j = -1;
-			while (builts->env[++j])
-				new_env[j] = builts->env[j];
-			new_env[j] = ft_strdup(arg);
-			new_env[++j] = NULL;
-			free(builts->env);
-			builts->env = new_env;
-		}
+			export_not_exist(builts, arg);
 		free_double_demen(split);
 	}
 }

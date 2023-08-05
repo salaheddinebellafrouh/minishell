@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 17:01:56 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 18:14:17 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ typedef struct s_builtins
     char	**args_arr;
     int 	arg_len;
     int 	pipe_nbr;
+	int		exp_var_place;
+	int		uns_var_place;
+	int		exit_status;
 } t_builtins;
 typedef struct s_vars
 {
@@ -109,17 +112,20 @@ void	my_echo(t_builtins *builts);
 void	fill_env(char **environ, t_builtins *builts);
 void	my_env(t_builtins *builts);
 void	my_unset(t_builtins *builts, char *variable);
+void    my_unset_v2(t_builtins *builts);
 void	my_export(t_builtins *builts, char *arg);
+void    my_export_v2(t_builtins *builts);
 void	print_export(t_builtins *builts);
 int		if_equal_exist(char *str);
+int		check_arg(char *arg);
+int		check_command(char *arg, char *str1);
 void	free_double_demen(char **split);
 void	fill_args_arr(t_builtins *builts, t_list *list);
 void    ft_redirection(t_list *list);
 int		ft_pipe(t_builtins *builts, t_list *list);
-void     ft_execve(char **args, char **env);
+void	ft_execve(char **args, char **env);
 void	execute_externals(char **arg, char **env);
 int     ft_pipe(t_builtins *builts, t_list *list);
-int	check_arg(char *arg);
 // parsing-------------------------------------------------------------
 void    ft_free_list(t_list *list);
 char	*ft_strcpy_before(char *dst, char *src);
