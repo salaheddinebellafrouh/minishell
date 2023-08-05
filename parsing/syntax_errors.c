@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:50:49 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 21:35:39 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 22:19:37 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	syntax_redirections(t_node *newt_node)
 	{
 		free_t_nodes_prev(newt_node, temp);
 		g_global = 258;
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
 		return (0);
 	}
 	else if (strcmp(newt_node->next->data, "|") == 0)
@@ -30,7 +30,7 @@ int	syntax_redirections(t_node *newt_node)
 		free(newt_node->next);
 		free_t_nodes_prev(newt_node, temp);
 		g_global = 258;
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
 		return (0);
 	}
 	return (1);
@@ -50,7 +50,7 @@ int	syntax_pipes(t_node *newt_node)
 		else if (!newt_node->next)
 			free_t_nodes_prev(newt_node, temp);
 		g_global = 258;
-		printf("minishell: syntax error near unexpected token `|'\n");
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
 		return (0);
 	}
 	else if (strcmp(newt_node->next->data, "|") == 0)
@@ -59,7 +59,7 @@ int	syntax_pipes(t_node *newt_node)
 		free(newt_node->next);
 		free_t_nodes_prev(newt_node, temp);
 		g_global = 258;
-		printf("minishell: syntax error near unexpected token `|''\n");
+		ft_putstr_fd("minishell: syntax error near unexpected token `|''\n", 2);
 		return (0);
 	}	
 	return (1);
@@ -134,7 +134,7 @@ int	ft_syntax_quotes(t_node *head)
 		if (valid == 0)
 		{
 			g_global = 258;
-			printf("minishell : Syntax Error\n");
+			ft_putstr_fd("minishell : Syntax Error\n", 2);
 			return (0);
 		}
 		copy = copy->next;
