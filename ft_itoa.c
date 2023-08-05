@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 20:24:51 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 22:17:48 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 22:21:10 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char	*ft_itoa(int n)
 	ifhol(nn, len, str);
 	return (str);
 }
+
 void	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
