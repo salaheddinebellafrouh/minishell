@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:31:35 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/05 18:39:18 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/05 20:13:03 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_redirection(t_list *list)
 			fd_out = open(file_out, O_CREAT | O_WRONLY | O_APPEND, 0644);
 			dup2(fd_out, 1);
 		}
+		close(fd_out);
 		free(list->outfiles->data);
 		free(list->outfiles);
 		list->outfiles = tempin;
@@ -62,6 +63,7 @@ void	ft_redirection(t_list *list)
 			}
 			dup2(fd_in, 0);
 		}
+		close(fd_in);
 		free(list->infiles->data);
 		free(list->infiles);
 		list->infiles = tempout;
