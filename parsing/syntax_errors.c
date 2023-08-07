@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:50:49 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 22:19:37 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/07 15:47:46 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ int	syntax_redirections(t_node *newt_node)
 	{
 		free_t_nodes_prev(newt_node, temp);
 		g_global = 258;
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+		ft_putstr_fd("minishell: syntax error \n", 2);
 		return (0);
 	}
-	else if (strcmp(newt_node->next->data, "|") == 0)
+	else if (ft_strcmp(newt_node->next->data, "|") == 0)
 	{
 		free(newt_node->next->data);
 		free(newt_node->next);
 		free_t_nodes_prev(newt_node, temp);
 		g_global = 258;
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+		ft_putstr_fd("minishell: syntax error \n", 2);
 		return (0);
 	}
 	return (1);
@@ -53,7 +53,7 @@ int	syntax_pipes(t_node *newt_node)
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
 		return (0);
 	}
-	else if (strcmp(newt_node->next->data, "|") == 0)
+	else if (ft_strcmp(newt_node->next->data, "|") == 0)
 	{
 		free(newt_node->next->data);
 		free(newt_node->next);
@@ -73,14 +73,15 @@ t_node	*syntax_error(t_node *head)
 	newt_node = head;
 	while (newt_node)
 	{
-		if (strcmp(newt_node->data, ">") == 0 || strcmp(newt_node->data, ">>") == 0
-			|| strcmp(newt_node->data, "<<") == 0 || strcmp(newt_node->data,
-				"<") == 0)
+		if (ft_strcmp(newt_node->data, ">") == 0
+			|| ft_strcmp(newt_node->data, ">>") == 0
+			|| ft_strcmp(newt_node->data, "<<") == 0
+			|| ft_strcmp(newt_node->data, "<") == 0)
 		{
 			if (!(syntax_redirections(newt_node)))
 				return (NULL);
 		}
-		else if (strcmp(newt_node->data, "|") == 0)
+		else if (ft_strcmp(newt_node->data, "|") == 0)
 		{
 			if (!(syntax_pipes(newt_node)))
 				return (NULL);

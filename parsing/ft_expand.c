@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 15:15:54 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 16:03:02 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/07 15:05:31 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*before_after(char **before, char **after, t_vars *vars, char *string)
 {
 	while (before[vars->l])
 	{
-		if (strcmp(before[vars->l], vars->id) == 0)
+		if (ft_strcmp(before[vars->l], vars->id) == 0)
 		{
 			vars->k = 0;
 			while (after[vars->l][vars->k])

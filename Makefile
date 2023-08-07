@@ -1,6 +1,6 @@
 NAME = minishell
 
-CFLAGS = -Wall -Werror -Wextra  -g -I /Users/sbellafr/.brew/opt/readline/include/ #-fsanitize=leak
+CFLAGS = -Wall -Werror -Wextra  -g -I /Users/sbellafr/.brew/opt/readline/include/ -fsanitize=address
 
 EXECUTION = ./execution/execute_built_ins.c ./execution/execve.c ./execution/redirection.c
 PARSING = ./parsing/ft_free.c ./parsing/ft_expand.c ./parsing/ft_helpers.c  \
@@ -13,7 +13,7 @@ BUILT_IN = ./built_ins/cd.c ./built_ins/echo.c ./built_ins/env.c ./built_ins/exi
 		./built_ins/export.c ./built_ins/pwd.c ./built_ins/unset.c ./built_ins/builts_utils.c \
 		./built_ins/builts_utils2.c
 
-SRCS = $(BUILT_IN) $(PARSING) $(EXECUTION) minishell.c Utils.c
+SRCS = $(BUILT_IN) $(PARSING) $(EXECUTION) minishell.c Utils.c Utils_2.c Utils_3.c
 
 OBJS = $(SRCS:.c=.o)
 

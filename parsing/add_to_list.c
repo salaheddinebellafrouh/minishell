@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:32:09 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 21:16:05 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/07 15:05:31 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,23 @@ t_list	*init_list(void)
 t_node	*copy_list_red(t_list *currentlist, t_node *source)
 {
 	add_to_list(&(currentlist->redirect), source->data, 5);
-	if (strcmp(source->data, ">") == 0)
+	if (ft_strcmp(source->data, ">") == 0)
 	{
 		add_to_list(&(currentlist->outfiles), source->next->data, OUTFILE);
 		source = source->next;
 	}
-	else if (strcmp(source->data, ">>") == 0)
+	else if (ft_strcmp(source->data, ">>") == 0)
 	{
 		add_to_list(&(currentlist->outfiles), source->next->data, APPEND);
 		source = source->next;
 	}
-	else if (strcmp(source->data, "<") == 0)
+	else if (ft_strcmp(source->data, "<") == 0)
 	{
 		add_to_list(&(currentlist->infiles), source->next->data, INFILE);
 		currentlist->in_type = INFILE;
 		source = source->next;
 	}
-	else if (strcmp(source->data, "<<") == 0)
+	else if (ft_strcmp(source->data, "<<") == 0)
 	{
 		add_to_list(&(currentlist->hairdoc), source->next->data, HAIRDOC);
 		currentlist->in_type = HAIRDOC;
@@ -66,15 +66,15 @@ t_list	*copy_list(t_node *source)
 	currentlist = returned;
 	while (source != NULL)
 	{
-		if (strcmp(source->data, "|") == 0)
+		if (ft_strcmp(source->data, "|") == 0)
 		{
 			currentlist->has_pipe = 1;
 			currentlist->next = init_list();
 			pipe++;
 			currentlist = currentlist->next;
 		}
-		else if (!strcmp(source->data, ">") || !strcmp(source->data, ">>")
-			|| !strcmp(source->data, "<<") || !strcmp(source->data, "<"))
+		else if (!ft_strcmp(source->data, ">") || !ft_strcmp(source->data, ">>")
+			|| !ft_strcmp(source->data, "<<") || !ft_strcmp(source->data, "<"))
 			source = copy_list_red(currentlist, source);
 		else
 			add_elements(&(currentlist->arg), source->data);
