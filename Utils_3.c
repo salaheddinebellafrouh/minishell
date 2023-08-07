@@ -34,8 +34,8 @@ char	*ft_strchr(const char *s, int c)
 
 int	ft_isalnum_v2(char n)
 {
-	if ((n >= 'A' && n <= 'Z') || (n >= 'a' && n <= 'z')
-		|| (n >= '0' && n <= '9') || (n == '_') || (n == '='))
+	if ((n >= 'A' && n <= 'Z') || (n >= 'a' && n <= 'z') || (n >= '0'
+			&& n <= '9') || (n == '_') || (n == '='))
 		return (1);
 	else
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/07 15:45:32 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/07 22:00:31 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,6 @@ int		syntaxq_return(t_node *head, t_node *temp);
 void	init_var(t_headvar *var);
 void	ft_putstr_fd(char *s, int fd);
 int 	ft_strcmp(char *s1, char *s2);
-// void	*ft_calloc(unsigned long count, unsigned long size);
 void	*ft_calloc(unsigned long count, unsigned long size);
 typedef struct s_subt_nodes
 {
