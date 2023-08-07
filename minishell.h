@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:46:32 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 18:14:17 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/07 19:38:31 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct t_list {
     int  in_type;
     int pipe;
     int has_pipe;
+	int	check_infile;
 } t_list;
 
 
@@ -65,6 +66,9 @@ typedef struct s_builtins
 	int		exp_var_place;
 	int		uns_var_place;
 	int		exit_status;
+	int		*id_p;
+	int		pid_p;
+	int		input_p;
 } t_builtins;
 typedef struct s_vars
 {
@@ -126,6 +130,7 @@ int		ft_pipe(t_builtins *builts, t_list *list);
 void	ft_execve(char **args, char **env);
 void	execute_externals(char **arg, char **env);
 int     ft_pipe(t_builtins *builts, t_list *list);
+void	print_error(char *str, char *message);
 // parsing-------------------------------------------------------------
 void    ft_free_list(t_list *list);
 char	*ft_strcpy_before(char *dst, char *src);

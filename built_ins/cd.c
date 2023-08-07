@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:58:54 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/04 18:30:49 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/07 19:50:49 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,12 @@ void	my_cd(t_builtins *builts, char *path)
 	if (!path)
 		path = ft_getenv(builts, "HOME");
 	if (chdir(path) == -1)
-		perror("minishell");
+	{
+		if (!path)
+			print_error("cd", "HOME not set");
+		else	
+			print_error(path, "No such file or directory");
+	}
 	else
 	{
 		old = ft_strjoin("OLDPWD=", old_pwd);

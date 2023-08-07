@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/05 19:30:16 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/07 19:03:34 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	if_one_arg(t_builtins *builts, t_list *c_list)
 	{
 		fill_args_arr(builts, c_list);
 		ft_redirection(c_list);
-		ft_execution(builts);
+		if (c_list->check_infile == 1)
+			ft_execution(builts);
 		free_double_demen(builts->args_arr);
 		return (1);
 	}
@@ -39,57 +40,51 @@ void	pid_success(t_builtins *builts, t_list *c_list, int fd[2], int input)
 	exit(0);
 }
 
-// void	pid_unsuccess(int fd[2], int input, int id, int pid)
-// {
-// 	input = fd[0];
-// 	id[i] = pid;
-// 	close(fd[1]);
-// 	if (!input)
-// 		close(input);
-// }
+void	pipe_loop(t_builtins *b, t_list *c_list, int *fd, int *i)
+{
+	while (c_list)
+	{
+		fill_args_arr(b, c_list);
+		pipe(fd);
+		b->pid_p = fork();
+		if (b->pid_p == 0)
+			pid_success(b, c_list, fd, b->input_p);
+		else
+		{
+			b->input_p = fd[0];
+			b->id_p[i[0]] = b->pid_p;
+			close(fd[1]);
+			if (!b->input_p)
+				close(b->input_p);
+		}
+		i[0]++;
+		c_list = c_list->next;
+		free_double_demen(b->args_arr);
+	}
+}
 
-int	ft_pipe(t_builtins *builts, t_list *list)
+int	ft_pipe(t_builtins *b, t_list *list)
 {
 	t_list	*c_list;
 	int		fd[2];
-	int		input;
-	int		*id;
 	int		i;
 	int		j;
-	int		pid;
 
 	c_list = list;
-	input = 0;
+	c_list->check_infile = 1;
+	b->input_p = 0;
 	i = 0;
 	j = 0;
-	id = malloc(sizeof(int) * list->pipe + 1);
-	if (if_one_arg(builts, c_list))
+	b->id_p = malloc(sizeof(int) * list->pipe + 1);
+	if (if_one_arg(b, c_list))
 	{
-		free(id);
+		free(b->id_p);
 		return (0);
 	}
-	while (c_list)
-	{
-		fill_args_arr(builts, c_list);
-		pipe(fd);
-		pid = fork();
-		if (pid == 0)
-			pid_success(builts, c_list, fd, input);
-		else
-		{
-			input = fd[0];
-			id[i] = pid;
-			close(fd[1]);
-			if (!input)
-				close(input);
-		}
-		i++;
-		c_list = c_list->next;
-		free_double_demen(builts->args_arr);
-	}
+	pipe_loop(b, c_list, fd, &i);
 	while (j < i)
-		waitpid(id[j++], NULL, 0);
-	free(id);
+		waitpid(b->id_p[j++], NULL, 0);
+	free(b->id_p);
 	return (0);
 }
 
