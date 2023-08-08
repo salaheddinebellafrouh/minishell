@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 20:52:48 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/07 19:36:51 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/08 11:06:27 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,24 @@ char	*get_path(char **env)
 			return (ft_strchr(env[j], '='));
 	}
 	return (NULL);
+}
+
+static int    check_permission(char *cmd)
+{
+    struct stat    file_state;
+
+    lstat(cmd, &file_state);
+    if (S_ISDIR(file_state.st_mode))
+	{
+        print_error(cmd, "is a directory");
+		return(0);
+	}
+	else if(access(cmd,F_OK))
+	{
+		print_error(cmd,"No such file or directory");
+		return(0);
+	}
+    return (1);
 }
 
 void	has_path(char **args, char **env)
@@ -53,7 +71,8 @@ void	hasnt_path_loop(char **args, char **env, char **paths, int *found)
 		if (access(tmp, F_OK | X_OK) == 0)
 		{
 			found[0] = 1;
-			if (fork() == 0)
+			int pid=fork();
+			if (pid == 0)
 				execve(tmp, args, env);
 			else
 				wait(NULL);
@@ -69,7 +88,11 @@ void	ft_execve(char **args, char **env)
 	int		found;
 
 	if (args[0][0] == '/')
+	{
+		if(!check_permission(args[0]))
+			return ;
 		has_path(args, env);
+	}
 	else
 	{
 		path = get_path(env);
