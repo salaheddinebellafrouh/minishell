@@ -1,41 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_syntax_errors.c                               :+:      :+:    :+:   */
+/*   init_Var.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/02 17:37:18 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 21:16:05 by sbellafr         ###   ########.fr       */
+/*   Created: 2023/08/05 18:06:34 by sbellafr          #+#    #+#             */
+/*   Updated: 2023/08/05 18:08:07 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_t_nodes_prev(t_node *newt_node, t_node *temp)
+void	init_var(t_headvar *var)
 {
-	while (newt_node)
-	{
-		temp = newt_node->prev;
-		free(newt_node->data);
-		free(newt_node);
-		newt_node = temp;
-	}
-}
-
-void	free_t_nodes_next(t_node *newt_node, t_node *temp)
-{
-	while (newt_node)
-	{
-		temp = newt_node->next;
-		free(newt_node->data);
-		free(newt_node);
-		newt_node = temp;
-	}
-}
-
-void	free_newt_node(t_node *newt_node)
-{
-	free(newt_node->data);
-	free(newt_node);
+	var->s = 0;
+	var->d = 0;
+	var->start = 0;
+	var->cp = NULL;
+	var->i = 0;
 }

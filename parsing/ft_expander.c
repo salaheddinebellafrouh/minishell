@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 15:06:27 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/01 15:59:01 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/07 22:36:11 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_fill_arg_her(t_list *copy, char **before, char **after)
 {
-	Node	*arg_copy;
-	Node	*heredoc;
+	t_node	*arg_copy;
+	t_node	*heredoc;
 
 	arg_copy = copy->arg;
 	while (arg_copy)
@@ -33,8 +33,8 @@ void	ft_fill_arg_her(t_list *copy, char **before, char **after)
 
 void	ft_fill_out_in(t_list *copy, char **before, char **after)
 {
-	Node	*infiles;
-	Node	*outfiles;
+	t_node	*infiles;
+	t_node	*outfiles;
 
 	outfiles = copy->outfiles;
 	while (outfiles)
@@ -88,13 +88,13 @@ t_list	*ft_expand(t_list *list, char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	before = calloc(sizeof(char *), (i + 1));
-	after = calloc(sizeof(char *), (i + 1));
+	before = ft_calloc(sizeof(char *), (i + 1));
+	after = ft_calloc(sizeof(char *), (i + 1));
 	i = 0;
 	while (env[i])
 	{
-		before[i] = calloc(sizeof(char), calloc_before(env[i]) + 1);
-		after[i] = calloc(sizeof(char), calloc_after(env[i]) + 1);
+		before[i] = ft_calloc(sizeof(char), calloc_before(env[i]) + 1);
+		after[i] = ft_calloc(sizeof(char), calloc_after(env[i]) + 1);
 		before[i] = ft_strcpy_before(before[i], env[i]);
 		after[i] = ft_strcpy_after(after[i], env[i]);
 		i++;

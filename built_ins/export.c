@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:04 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/05 18:13:18 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:04:13 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ void	my_export(t_builtins *builts, char *arg)
 	value = split[1];
 	if (arg && !check_arg(variable))
 	{
-		printf("export: `%s': not a valid identifier\n", arg);
+		print_error(arg, "not a valid identifier");
+		g_global = 1;
 		free_double_demen(split);
 	}
 	else

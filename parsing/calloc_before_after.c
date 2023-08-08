@@ -1,41 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_syntax_errors.c                               :+:      :+:    :+:   */
+/*   calloc_before_after.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/02 17:37:18 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 21:16:05 by sbellafr         ###   ########.fr       */
+/*   Created: 2023/08/05 20:10:30 by sbellafr          #+#    #+#             */
+/*   Updated: 2023/08/07 15:44:29 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_t_nodes_prev(t_node *newt_node, t_node *temp)
+int	calloc_after(char *string)
 {
-	while (newt_node)
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (string[i] != '=' && string[i])
+		i++;
+	while (string[i])
 	{
-		temp = newt_node->prev;
-		free(newt_node->data);
-		free(newt_node);
-		newt_node = temp;
+		j++;
+		i++;
 	}
+	return (j);
 }
 
-void	free_t_nodes_next(t_node *newt_node, t_node *temp)
+int	calloc_before(char *string)
 {
-	while (newt_node)
-	{
-		temp = newt_node->next;
-		free(newt_node->data);
-		free(newt_node);
-		newt_node = temp;
-	}
-}
+	int	i;
 
-void	free_newt_node(t_node *newt_node)
-{
-	free(newt_node->data);
-	free(newt_node);
+	i = 0;
+	while (string[i] != '=' && string[i])
+		i++;
+	return (i);
 }

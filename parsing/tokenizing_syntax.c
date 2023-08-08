@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 21:59:08 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 16:21:30 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 21:16:05 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_symbols(char c)
 	return (0);
 }
 
-int	string_list(char *read, int i, Node **head)
+int	string_list(char *read, int i, t_node **head)
 {
 	if (read[i] == '|')
 		add_elements(&(*head), "|");
@@ -42,11 +42,11 @@ int	string_list(char *read, int i, Node **head)
 
 // void	print_copy(t_list *list)
 // {
-// 	Node	*currentarg;
-// 	Node	*file;
-// 	Node	*red;
-// 	Node	*outfile;
-// 	Node	*hairdoc;
+// 	t_node	*currentarg;
+// 	t_node	*file;
+// 	t_node	*red;
+// 	t_node	*outfile;
+// 	t_node	*hairdoc;
 
 // 	currentarg = NULL;
 // 	file = NULL;
@@ -87,7 +87,7 @@ int	string_list(char *read, int i, Node **head)
 // 	}
 // }
 
-int	syntaxq_return(Node *head, Node *temp)
+int	syntaxq_return(t_node *head, t_node *temp)
 {
 	if (!ft_syntax_quotes(head))
 	{
@@ -103,9 +103,9 @@ int	syntaxq_return(Node *head, Node *temp)
 	return (1);
 }
 
-Node	*fill_space(Node *head)
+t_node	*fill_space(t_node *head)
 {
-	Node	*copy;
+	t_node	*copy;
 
 	copy = head;
 	while (copy)

@@ -6,20 +6,11 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:45:10 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 17:59:14 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/05 21:16:05 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	init_var(t_headvar *var)
-{
-	var->s = 0;
-	var->d = 0;
-	var->start = 0;
-	var->cp = NULL;
-	var->i = 0;
-}
 
 void	double_single(t_headvar *var, char *read)
 {
@@ -29,7 +20,7 @@ void	double_single(t_headvar *var, char *read)
 		var->d = !var->d;
 }
 
-void	quotes_manage(t_headvar *var, char *read, Node **head)
+void	quotes_manage(t_headvar *var, char *read, t_node **head)
 {
 	int	d;
 	int	s;
@@ -54,7 +45,7 @@ void	quotes_manage(t_headvar *var, char *read, Node **head)
 	}
 }
 
-void	free_head(Node *head, Node *temp)
+void	free_head(t_node *head, t_node *temp)
 {
 	while (head)
 	{
@@ -64,7 +55,8 @@ void	free_head(Node *head, Node *temp)
 		head = temp;
 	}
 }
-Node	*space_quotes(Node *head)
+
+t_node	*space_quotes(t_node *head)
 {
 	while (head)
 	{
@@ -88,11 +80,12 @@ Node	*space_quotes(Node *head)
 	}
 	return (head);
 }
+
 t_list	*ft_start(char *read, char **env)
 {
 	t_list		*copiedlist;
-	Node		*head;
-	Node		*temp;
+	t_node		*head;
+	t_node		*temp;
 	t_headvar	var;
 
 	temp = NULL;

@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 19:41:23 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/07 19:03:34 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:31:28 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	pid_success(t_builtins *builts, t_list *c_list, int fd[2], int input)
 	}
 	ft_redirection(c_list);
 	ft_execution(builts);
-	exit(0);
+	exit(g_global);
 }
 
 void	pipe_loop(t_builtins *b, t_list *c_list, int *fd, int *i)
@@ -69,6 +69,7 @@ int	ft_pipe(t_builtins *b, t_list *list)
 	int		fd[2];
 	int		i;
 	int		j;
+	int		status;
 
 	c_list = list;
 	c_list->check_infile = 1;
@@ -83,7 +84,8 @@ int	ft_pipe(t_builtins *b, t_list *list)
 	}
 	pipe_loop(b, c_list, fd, &i);
 	while (j < i)
-		waitpid(b->id_p[j++], NULL, 0);
+		waitpid(b->id_p[j++], &status, 0);
+	g_global = WEXITSTATUS(status);
 	free(b->id_p);
 	return (0);
 }
@@ -95,7 +97,7 @@ void	ft_execution(t_builtins *builts)
 	else if (check_command(builts->args_arr[0], "cd"))
 		my_cd(builts, builts->args_arr[1]);
 	else if (check_command(builts->args_arr[0], "exit"))
-		my_exit(builts->args_arr[1]);
+		my_exit(builts->args_arr);
 	else if (check_command(builts->args_arr[0], "echo"))
 		my_echo(builts);
 	else if (check_command(builts->args_arr[0], "env"))

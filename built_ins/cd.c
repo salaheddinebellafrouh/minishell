@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:58:54 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/07 19:50:49 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:04:43 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ void	my_cd(t_builtins *builts, char *path)
 	{
 		if (!path)
 			print_error("cd", "HOME not set");
-		else	
+		else
 			print_error(path, "No such file or directory");
+		g_global = 1;
 	}
 	else
 	{
@@ -50,5 +51,6 @@ void	my_cd(t_builtins *builts, char *path)
 		my_export(builts, new);
 		free(old);
 		free(new);
+		g_global = 0;
 	}
 }

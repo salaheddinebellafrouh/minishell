@@ -6,87 +6,92 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:50:49 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/04 18:08:07 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/07 15:47:46 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	syntax_redirections(Node *newnode)
+int	syntax_redirections(t_node *newt_node)
 {
-	Node	*temp;
+	t_node	*temp;
 
 	temp = NULL;
-	if (!newnode->next)
+	if (!newt_node->next)
 	{
-		free_nodes_prev(newnode, temp);
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		free_t_nodes_prev(newt_node, temp);
+		g_global = 258;
+		ft_putstr_fd("minishell: syntax error \n", 2);
 		return (0);
 	}
-	else if (strcmp(newnode->next->data, "|") == 0)
+	else if (ft_strcmp(newt_node->next->data, "|") == 0)
 	{
-		free(newnode->next->data);
-		free(newnode->next);
-		free_nodes_prev(newnode, temp);
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		free(newt_node->next->data);
+		free(newt_node->next);
+		free_t_nodes_prev(newt_node, temp);
+		g_global = 258;
+		ft_putstr_fd("minishell: syntax error \n", 2);
 		return (0);
 	}
 	return (1);
 }
 
-int	syntax_pipes(Node *newnode)
+int	syntax_pipes(t_node *newt_node)
 {
-	Node	*temp;
+	t_node	*temp;
 
 	temp = NULL;
-	if (!newnode->next || !newnode->prev)
+	if (!newt_node->next || !newt_node->prev)
 	{
-		if (!newnode->next && !newnode->prev)
-			free_newnode(newnode);
-		else if (!newnode->prev)
-			free_nodes_next(newnode, temp);
-		else if (!newnode->next)
-			free_nodes_prev(newnode, temp);
-		printf("minishell: syntax error near unexpected token `|'\n");
+		if (!newt_node->next && !newt_node->prev)
+			free_newt_node(newt_node);
+		else if (!newt_node->prev)
+			free_t_nodes_next(newt_node, temp);
+		else if (!newt_node->next)
+			free_t_nodes_prev(newt_node, temp);
+		g_global = 258;
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
 		return (0);
 	}
-	else if (strcmp(newnode->next->data, "|") == 0)
+	else if (ft_strcmp(newt_node->next->data, "|") == 0)
 	{
-		free(newnode->next->data);
-		free(newnode->next);
-		free_nodes_prev(newnode, temp);
-		printf("minishell: syntax error near unexpected token `|''\n");
+		free(newt_node->next->data);
+		free(newt_node->next);
+		free_t_nodes_prev(newt_node, temp);
+		g_global = 258;
+		ft_putstr_fd("minishell: syntax error near unexpected token `|''\n", 2);
 		return (0);
-	}
+	}	
 	return (1);
 }
 
-Node	*syntax_error(Node *head)
+t_node	*syntax_error(t_node *head)
 {
-	Node	*newnode;
+	t_node	*newt_node;
 
-	newnode = NULL;
-	newnode = head;
-	while (newnode)
+	newt_node = NULL;
+	newt_node = head;
+	while (newt_node)
 	{
-		if (strcmp(newnode->data, ">") == 0 || strcmp(newnode->data, ">>") == 0
-			|| strcmp(newnode->data, "<<") == 0 || strcmp(newnode->data,
-				"<") == 0)
+		if (ft_strcmp(newt_node->data, ">") == 0
+			|| ft_strcmp(newt_node->data, ">>") == 0
+			|| ft_strcmp(newt_node->data, "<<") == 0
+			|| ft_strcmp(newt_node->data, "<") == 0)
 		{
-			if (!(syntax_redirections(newnode)))
+			if (!(syntax_redirections(newt_node)))
 				return (NULL);
 		}
-		else if (strcmp(newnode->data, "|") == 0)
+		else if (ft_strcmp(newt_node->data, "|") == 0)
 		{
-			if (!(syntax_pipes(newnode)))
+			if (!(syntax_pipes(newt_node)))
 				return (NULL);
 		}
-		newnode = newnode->next;
+		newt_node = newt_node->next;
 	}
 	return (head);
 }
 
-int	check_syntax_q(int *valid, Node *copy, int i)
+int	check_syntax_q(int *valid, t_node *copy, int i)
 {
 	if (copy->data[i] && copy->data[i] == '"')
 	{
@@ -109,9 +114,9 @@ int	check_syntax_q(int *valid, Node *copy, int i)
 	return (i);
 }
 
-int	ft_syntax_quotes(Node *head)
+int	ft_syntax_quotes(t_node *head)
 {
-	Node	*copy;
+	t_node	*copy;
 	int		i;
 	int		valid;
 
@@ -129,7 +134,8 @@ int	ft_syntax_quotes(Node *head)
 		}
 		if (valid == 0)
 		{
-			printf("minishell : Syntax Error\n");
+			g_global = 258;
+			ft_putstr_fd("minishell : Syntax Error\n", 2);
 			return (0);
 		}
 		copy = copy->next;

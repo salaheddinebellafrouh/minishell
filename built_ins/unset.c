@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:59:12 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/05 18:14:52 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:05:44 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	my_unset(t_builtins *b, char *variable)
 
 	if (variable && !check_arg(variable))
 	{
-		printf("export: `%s': not a valid identifier\n", variable);
+		print_error(variable, "not a valid identifier");
+		g_global = 1;
 		return ;
 	}
 	len = 0;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   Utils_4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 20:24:51 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/03 20:25:13 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:35:38 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static void	ifhol(long n, int len, char *str)
 
 char	*ft_itoa(int n)
 {
-	char *str;
-	int len;
-	long nn;
+	char	*str;
+	int		len;
+	long	nn;
 
 	nn = n;
 	len = lenghtint(nn);
@@ -71,4 +71,19 @@ char	*ft_itoa(int n)
 	}
 	ifhol(nn, len, str);
 	return (str);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (s)
+	{
+		while (s[i] != '\0')
+		{
+			write(fd, &s[i], 1);
+			i++;
+		}
+	}
 }

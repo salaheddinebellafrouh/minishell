@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:31:35 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/08/07 19:35:07 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:31:29 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,37 @@ void	print_error(char *str, char *message)
 	write(2, "\n", 1);
 }
 
+void	run_heredoc(t_list *list)
+{
+	int		fd[2];
+	t_list	*temp;
+	t_node	*heredoc;
+
+	temp = list;
+	heredoc = list->hairdoc;
+	while (temp)
+	{
+		while (heredoc)
+		{
+			pipe(fd);
+			heredoc_loop(heredoc, fd);
+			if (!heredoc->next)
+			{
+				dup2(fd[0], 0);
+				close_fds(fd);
+			}
+			else
+				close_fds(fd);
+			heredoc = heredoc->next;
+		}
+		temp = temp->next;
+	}
+}
+
 void	outfiles_loop(t_list *list, int fd_out)
 {
 	char	*file_out;
-	Node	*tempin;
+	t_node	*tempin;
 
 	file_out = list->outfiles->data;
 	tempin = list->outfiles->next;
@@ -51,7 +78,7 @@ void	outfiles_loop(t_list *list, int fd_out)
 void	infiles_loop(t_list *list, int fd_in)
 {
 	char	*file_in;
-	Node	*tempout;
+	t_node	*tempout;
 
 	file_in = list->infiles->data;
 	tempout = list->infiles->next;

@@ -6,7 +6,7 @@
 /*   By: nchaknan <nchaknan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:37:57 by nchaknan          #+#    #+#             */
-/*   Updated: 2023/07/31 15:37:58 by nchaknan         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:34:24 by nchaknan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,6 @@ int	ft_strlen(const char *str)
 	while (str[i])
 		i++;
 	return (i);
-}
-char	*ft_substr(char const *s, unsigned int start, int len)
-{
-	char	*s2;
-	int		i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	if (len > ft_strlen(s))
-		len = ft_strlen(s);
-	s2 = (char *)malloc(sizeof(char) * (len + 1));
-	if (s2 == NULL)
-		return (NULL);
-	while (len > i && (int)start < ft_strlen(s))
-	{
-		s2[i] = s[start + i];
-		i++;
-	}
-	s2[i] = '\0';
-	return (s2);
 }
 
 int	ft_atoi(char *str)
@@ -86,128 +65,29 @@ char	*ft_strdup(const char *s1)
 	return (s2);
 }
 
-int	ft_strncmp(char *s1, char *s2, int n)
+void	heredoc_loop(t_node	*heredoc, int *fd)
 {
-	int	i;
+	char	*str;
 
-	i = 0;
-	if (s1 && s2)
+	while (1)
 	{
-		while ((s1[i] || s2[i]) && (i < n))
+		str = readline(">");
+		if (!str || !ft_strcmp(str, heredoc->data))
 		{
-			if (s1[i] != s2[i])
-				return (s1[i] - s2[i]);
-			i++;
+			if (str)
+				free(str);
+			else
+				printf("\n");
+			break ;
 		}
+		write(fd[1], str, ft_strlen(str));
+		write(fd[1], "\n", 1);
+		free(str);
 	}
-	return (0);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+void	close_fds(int *fd)
 {
-	char	*finalstr;
-	int		i;
-	int		j;
-
-	if (!s1 || !s2)
-		return (NULL);
-	finalstr = malloc(((ft_strlen(s1)) + (ft_strlen(s2))) + 1);
-	if (!finalstr)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (i < ft_strlen(s1))
-	{
-		finalstr[i] = s1[i];
-		i++;
-	}
-	while (j < ft_strlen(s2))
-	{
-		finalstr[i] = s2[j];
-		i++;
-		j++;
-	}
-	finalstr[i] = '\0';
-	return (finalstr);
-}
-
-static int	words_counter(const char *str, char c)
-{
-	int	counter;
-	int	breaker;
-
-	counter = 0;
-	breaker = 0;
-	while (*str)
-	{
-		if (*str != c && breaker == 0)
-		{
-			counter++;
-			breaker = 1;
-		}
-		else if (*str == c)
-		{
-			breaker = 0;
-		}
-		str++;
-	}
-	return (counter);
-}
-
-char	**ft_split(const char *s, char c)
-{
-	char	**split;
-	int		start;
-	int		i;
-	int		j;
-
-	split = malloc((words_counter(s, c) + 1) * sizeof(char *));
-	if (!split || !s)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (s[i])
-	{
-		start = i;
-		while (s[i] != c && s[i] != '\0')
-			i++;
-		if (i > 0)
-		{
-			split[j] = ft_substr(s, start, i - start);
-			j++;
-		}
-		while (s[i] == c && s[i] != '\0')
-			i++;
-	}
-	split[j] = 0;
-	return (split);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == (char)c)
-		{
-			i++;
-			return ((char *)&s[i]);
-		}
-		else
-			i++;
-	}
-	if ((char)c == 0)
-		return (((char *)&s[i]));
-	return (NULL);
-}
-
-int	ft_isalnum_v2(char n)
-{
-	if ((n >= 'A' && n <= 'Z') || (n >= 'a' && n <= 'z') ||
-		(n >= '0' && n <= '9') || (n == '_') || (n == '='))
-		return (1);
-	else
-		return (0);
+	close(fd[0]);
+	close(fd[1]);
 }

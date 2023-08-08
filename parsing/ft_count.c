@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 17:07:20 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/05 16:20:32 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/07 22:36:52 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,17 @@ int	ft_count_string(char *data, char **before, char **after)
 	while (data[d.i])
 	{
 		ft_count_sq(&d, data);
-		if (data[d.i] == '$' && data[d.i] && ft_isdigit(data[d.i + 1]))
-		{
-			if (!data[d.i + 1])
-				return (strlen(data));
+		if (data[d.i] == '$' && data[d.i + 1] == '?')
+			d.s += 3;
+		else if (data[d.i] == '$' && data[d.i] && ft_isdigit(data[d.i + 1]))
 			ft_count_dn(&d, data);
-		}
 		else if (data[d.i] != '$')
 		{
 			if (data[d.i] == '$')
 				d.s++;
 			d.s++;
 		}
-		if (!digit_count(data, &d, before, after))
+		else if (!digit_count(data, &d, before, after))
 			return (0);
 		if (data[d.i])
 			d.i++;

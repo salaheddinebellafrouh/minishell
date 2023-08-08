@@ -6,25 +6,25 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 19:52:33 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/03 15:34:03 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/07 15:01:35 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_to_list(Node **head, char *data, int type)
+void	add_to_list(t_node **head, char *data, int type)
 {
-	Node	*newnode;
-	Node	*current;
+	t_node	*newt_node;
+	t_node	*current;
 
-	newnode = (Node *)malloc(sizeof(Node));
-	newnode->data = strdup(data);
-	newnode->type = type;
-	newnode->next = NULL;
-	newnode->prev = NULL;
+	newt_node = malloc(sizeof(t_node));
+	newt_node->data = ft_strdup(data);
+	newt_node->type = type;
+	newt_node->next = NULL;
+	newt_node->prev = NULL;
 	if (*head == NULL)
 	{
-		*head = newnode;
+		*head = newt_node;
 	}
 	else
 	{
@@ -33,23 +33,23 @@ void	add_to_list(Node **head, char *data, int type)
 		{
 			current = current->next;
 		}
-		newnode->prev = current;
-		current->next = newnode;
+		newt_node->prev = current;
+		current->next = newt_node;
 	}
 }
 
-void	add_elements(Node **head, char *data)
+void	add_elements(t_node **head, char *data)
 {
-	Node	*newnode;
-	Node	*current;
+	t_node	*newt_node;
+	t_node	*current;
 
-	newnode = (Node *)malloc(sizeof(Node));
-	newnode->data = strdup(data);
-	newnode->next = NULL;
-	newnode->prev = NULL;
+	newt_node = malloc(sizeof(t_node));
+	newt_node->data = ft_strdup(data);
+	newt_node->next = NULL;
+	newt_node->prev = NULL;
 	if (*head == NULL)
 	{
-		*head = newnode;
+		*head = newt_node;
 	}
 	else
 	{
@@ -58,7 +58,7 @@ void	add_elements(Node **head, char *data)
 		{
 			current = current->next;
 		}
-		newnode->prev = current;
-		current->next = newnode;
+		newt_node->prev = current;
+		current->next = newt_node;
 	}
 }
