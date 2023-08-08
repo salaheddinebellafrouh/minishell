@@ -6,7 +6,7 @@
 /*   By: sbellafr <sbellafr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:08:26 by sbellafr          #+#    #+#             */
-/*   Updated: 2023/08/07 21:54:19 by sbellafr         ###   ########.fr       */
+/*   Updated: 2023/08/08 14:26:47 by sbellafr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	main(int ac, char **av, char **env)
 	{
 		read = readline("minishell> ");
 		if (!read)
-			exit(0);
+			exit(g_global);
 		if (read[0])
 			add_history(read);
 		list = ft_start(read, builts->env);
